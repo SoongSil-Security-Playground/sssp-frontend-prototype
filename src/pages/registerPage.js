@@ -1,23 +1,19 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function LoginPage({isLoggedIn, toggleLogin}) {
+function RegisterPage() {
     const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        toggleLogin();
+    const handleRegister = () => {
         navigate('/');
     };
 
-    const handleRegister = () => {
-        navigate('/register');
-    }
-
     return (
         <div style={mainContainerStyle}>
-            <h1 style={headerTextStyle}>LOGIN</h1>
+            <h1 style={headerTextStyle}>REGISTER</h1>
             <b1 style={bodyTextStyle}>hello hello hello </b1>
             <div style={loginContainerStyle}>
                 <label style={labelStyle}>Name</label>
@@ -26,6 +22,15 @@ function LoginPage({isLoggedIn, toggleLogin}) {
                     placeholder="Brian Clark"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    style={inputStyle}
+                />
+
+                <label style={labelStyle}>Email</label>
+                <input
+                    type="text"
+                    placeholder="example@soongsil.ac.kr"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     style={inputStyle}
                 />
 
@@ -39,9 +44,6 @@ function LoginPage({isLoggedIn, toggleLogin}) {
                 />
 
                 <div style={buttonContainerStyle}>
-                    <button style={loginButtonStyle} onClick={handleLogin}>
-                        login →
-                    </button>
                     <button style={registerButtonStyle} onClick={handleRegister}>
                         Register →
                     </button>
@@ -60,6 +62,7 @@ const mainContainerStyle = {
     flexDirection: 'column',
     margin: 0,
 };
+
 
 const loginContainerStyle = {
     backgroundColor: 'white',
@@ -106,7 +109,7 @@ const buttonContainerStyle = {
     marginTop: '10px',
 };
 
-const loginButtonStyle = {
+const registerButtonStyle = {
     backgroundColor: 'var(--medium-blue)',
     color: '#FFFFFF',
     padding: '10px 20px',
@@ -115,13 +118,4 @@ const loginButtonStyle = {
     cursor: 'pointer',
 };
 
-const registerButtonStyle = {
-    backgroundColor: '#FFFFFF',
-    color: 'var(--medium-blue)',
-    padding: '10px 20px',
-    border: '1px solid var(--medium-blue)',
-    borderRadius: '5px',
-    cursor: 'pointer',
-};
-
-export default LoginPage;
+export default RegisterPage;
