@@ -4,6 +4,7 @@ import MainPage from '../pages/mainPage';
 import LoginPage from '../pages/loginPage';
 import RegisterPage from '../pages/registerPage';
 import UsersPage from '../pages/usersPage';
+import ScoreboardPage from '../pages/scoreboardPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} toggleLogin={toggleLogin}/>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/users" element={<UsersPage />} />
+        <Route path="/scoreboard" element={<ScoreboardPage />} />
       </Routes>
     </Router>
   );

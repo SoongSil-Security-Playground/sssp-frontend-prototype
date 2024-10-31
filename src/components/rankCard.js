@@ -1,15 +1,16 @@
 import React from 'react';
 
-function UserCard({ name, description }) {
+function UserRankCard({ rank, name, score }) {
     return (
         <div style={cardContainerStyle}>
+            <div style={rankStyle}>rank</div>
             <div style={profileImageContainerStyle}>
-                <span style={profileIconStyle}></span> {/* Placeholder for profile image */}
+                <span style={profileIconStyle}></span>
             </div>
             <div style={textContainerStyle}>
-                <h3 style={nameStyle}>name</h3>
-                <p style={descriptionStyle}>description</p>
+                <p style={nameStyle}>name</p>
             </div>
+            <div style={scoreStyle}>score</div>
         </div>
     );
 }
@@ -27,6 +28,15 @@ const cardContainerStyle = {
     boxSizing: 'border-box',
 };
 
+const rankStyle = {
+    fontSize: '16px',
+    fontWeight: 'bold',
+    marginLeft: '10px',
+    marginRight: '15px',
+    minWidth: '50px',
+    color: 'var(--dark-blue)',
+};
+
 const profileImageContainerStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -35,7 +45,6 @@ const profileImageContainerStyle = {
     width: '40px',
     borderRadius: '50%',
     backgroundColor: '#f0f0f0',
-    marginLeft: '10px',
     marginRight: '15px',
 };
 
@@ -45,8 +54,7 @@ const profileIconStyle = {
 };
 
 const textContainerStyle = {
-    display: 'flex',
-    flexDirection: 'column',
+    flex: '1',
     textAlign: 'left',
 };
 
@@ -57,11 +65,11 @@ const nameStyle = {
     color: 'var(--dark-blue)',
 };
 
-const descriptionStyle = {
-    margin: 0,
-    fontSize: '14px',
+const scoreStyle = {
+    fontSize: '16px',
     fontWeight: 'bold',
-    color: 'lightgrey',
+    color: 'var(--dark-blue)',
+    marginRight: '10px',
 };
 
-export default UserCard;
+export default UserRankCard;
