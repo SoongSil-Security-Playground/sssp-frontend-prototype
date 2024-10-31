@@ -104,7 +104,7 @@ const buttonBlueStyle = {
 const buttonWhiteBlueStyle = {
     padding: '10px 20px',
     fontSize: '16px',
-    border: '1px solid var(--medium-blue)',
+    border: 'none',
     backgroundColor: 'white',
     color: 'var(--dark-blue)',
     cursor: 'pointer',
