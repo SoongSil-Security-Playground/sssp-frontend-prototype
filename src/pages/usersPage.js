@@ -1,5 +1,7 @@
 import React from 'react';
 import NavigationBar from '../components/navigationBar';
+import UserCard from '../components/userCard';
+import Footer from '../components/footer';
 
 function UsersPage({ isLoggedIn, toggleLogin }) {
     return (
@@ -9,7 +11,9 @@ function UsersPage({ isLoggedIn, toggleLogin }) {
                 <h1 style={headerTextStyle}>Users</h1>
             </div>
             <div style={contentContainerStyle}>
+                <UserCard />
             </div>
+            <Footer />
         </div>
     );
 }
@@ -38,12 +42,12 @@ const headerTextStyle = {
 };
 
 const contentContainerStyle = {
+    flex: '1',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '100%',
-    backgroundColor: 'green',
 };
 
 export default UsersPage;
