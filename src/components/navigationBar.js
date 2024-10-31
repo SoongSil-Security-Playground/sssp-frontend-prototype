@@ -43,14 +43,15 @@ function NavigationBar({ isLoggedIn, toggleLogin }) {
 }
 
 const navStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '10px 20px',
     width: '100vw',
     overflowX: 'hidden',
-    position: 'fixed',
-    top: 0,
     backgroundColor: 'white',
     borderBottom: '1px solid #eaeaea',
     zIndex: 1000,
