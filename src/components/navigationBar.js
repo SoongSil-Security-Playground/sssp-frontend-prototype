@@ -31,13 +31,7 @@ function NavigationBar({ isLoggedIn, toggleLogin }) {
             <Link to="/mypage" style={linkStyle}>
               <button style={buttonWhiteBlueStyle}>My Page</button>
             </Link>
-            <button style={buttonBlueStyle} onClick={() => { 
-                console.log("Logout button clicked"); 
-                toggleLogin();
-            }}>
-                logout →
-            </button>
-            {/* <button style={buttonBlueStyle} onClick={toggleLogin}>logout →</button> */}
+            <button style={buttonBlueStyle} onClick={toggleLogin}>logout →</button>
           </div>
         </>
       ) : (
