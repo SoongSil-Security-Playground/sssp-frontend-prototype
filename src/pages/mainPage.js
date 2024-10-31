@@ -1,5 +1,6 @@
 import React from 'react';
 import NavigationBar from '../components/navigationBar';
+import Footer from '../components/footer';
 import banner from '../assets/images/logo_big.png';
 import logo from '../assets/images/logo.png';
 
@@ -7,23 +8,26 @@ function MainPage({isLoggedIn, toggleLogin}) {
   return (
     <div style={mainContainerStyle}>
         <NavigationBar isLoggedIn={isLoggedIn} toggleLogin={toggleLogin} />
-        <div style={bannerStyle}>
-            <img src={banner} alt="banner" style={bannerImageStyle} />
-        </div>
-        <div style={textContainerStyle}>
-            <div style={headerStyle}>
-                <h1 style={headerTextStyle}>What is </h1>
-                <img src={logo} alt="logo" style={logoImageStyle} />
-                <h1 style={headerTextStyle}>?</h1>
+        <div style={contentContainerStyle} >
+            <div style={bannerStyle}>
+                <img src={banner} alt="banner" style={bannerImageStyle} />
             </div>
-            <div style={bodyStyle}>
-                <b1 style={textStyle}>hi hi hi</b1>
-                <b1 style={textStyle}>&nbsp;</b1>
-                <b1 style={textBoldStyle}>one</b1>
-                <b1 style={textBoldStyle}>two</b1>
-                <b1 style={textBoldStyle}>three</b1>
+            <div style={textContainerStyle}>
+                <div style={headerStyle}>
+                    <h1 style={headerTextStyle}>What is </h1>
+                    <img src={logo} alt="logo" style={logoImageStyle} />
+                    <h1 style={headerTextStyle}>?</h1>
+                </div>
+                <div style={bodyStyle}>
+                    <b1 style={textStyle}>hi hi hi</b1>
+                    <b1 style={textStyle}>&nbsp;</b1>
+                    <b1 style={textBoldStyle}>one</b1>
+                    <b1 style={textBoldStyle}>two</b1>
+                    <b1 style={textBoldStyle}>three</b1>
+                </div>
             </div>
         </div>
+        <Footer />
     </div>
   );
 }
@@ -31,15 +35,17 @@ function MainPage({isLoggedIn, toggleLogin}) {
 const mainContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
+    minHeight: '100vh',
+    overflowX: 'hidden',
+};
+
+const contentContainerStyle = {
+    flex: '1',
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
-    width: '100vw',
-    height: '100vh',
-    overflowX: 'hidden',
-    overflowY: 'auto',
-    overflowX: 'hidden',
     textAlign: 'center',
-    margin: 0,
-}
+};
 
 const bannerStyle = {
     backgroundColor: '#D8E0E3',
