@@ -23,7 +23,7 @@ function LoginPage({isLoggedIn, toggleLogin}) {
                 <label style={labelStyle}>Name</label>
                 <input
                     type="text"
-                    placeholder="Brian Clark"
+                    placeholder="Soongsil Kim"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     style={inputStyle}
