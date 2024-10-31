@@ -7,7 +7,7 @@ function App() {
 
   const toggleLogin = () => {
     setIsLoggedIn((prev) => {
-      console.log("Previous login state:", prev, "New login state:", !prev); // 상태 변화 확인
+      console.log("Previous login state:", prev, "New login state:", !prev);
       return !prev;
     });
   };
