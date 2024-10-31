@@ -7,7 +7,7 @@ function NavigationBar({ isLoggedIn, toggleLogin }) {
     <nav style={navStyle}>
       <div style={logoStyle}>
         <Link to="/" style={linkStyle}>
-          <img src={logo} alt="algo" style={logoImageStyle} />
+          <img src={logo} alt="logo" style={logoImageStyle} />
         </Link>
       </div>
       <div style={globalBarStyle}>
