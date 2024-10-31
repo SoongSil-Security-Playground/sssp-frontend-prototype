@@ -29,18 +29,25 @@ function MainPage({isLoggedIn, toggleLogin}) {
 }
 
 const mainContainerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100vw',
+    height: '100vh',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    overflowX: 'hidden',
     textAlign: 'center',
     margin: 0,
 }
 
 const bannerStyle = {
     backgroundColor: '#D8E0E3',
-    height: '500px',
-    marginLeft: -100,
-    marginRight: -100,
-    justifyContents: 'center',
+    minHeight: '600px',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
-    direction: 'flex',
 };
 
 const bannerImageStyle = {
@@ -50,10 +57,15 @@ const bannerImageStyle = {
 
 const textContainerStyle = {
     backgroundColor: 'white',
-    height: '500px',
-    marginLeft: '150px',
-    marginTop: '200px',
+    minHeight: '500px',
+    width: '100%',
+    maxWidth: '800px',
+    margin: '0 auto',
+    padding: '100px',
+    boxSizing: 'border-box',
+    transform: 'translateX(-180px)',
 };
+
 
 const headerStyle = {
     alignItems: 'center',
