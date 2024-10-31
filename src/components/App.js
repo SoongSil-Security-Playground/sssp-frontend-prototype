@@ -3,16 +3,19 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from '../pages/mainPage';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const toggleLogin = () => {
-    setIsLoggedIn((prev) => !prev);
+    setIsLoggedIn((prev) => {
+      console.log("Previous login state:", prev, "New login state:", !prev); // 상태 변화 확인
+      return !prev;
+    });
   };
-
+  
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage isLoggedIn={isLoggedIn} toggleLoggedIn={toggleLogin} />} />
+        <Route path="/" element={<MainPage isLoggedIn={isLoggedIn} toggleLogin={toggleLogin}/>} />
       </Routes>
     </Router>
   );

@@ -31,7 +31,13 @@ function NavigationBar({ isLoggedIn, toggleLogin }) {
             <Link to="/mypage" style={linkStyle}>
               <button style={buttonWhiteBlueStyle}>My Page</button>
             </Link>
-            <button style={buttonBlueStyle} onClick={toggleLogin}>logout →</button>
+            <button style={buttonBlueStyle} onClick={() => { 
+                console.log("Logout button clicked"); 
+                toggleLogin();
+            }}>
+                logout →
+            </button>
+            {/* <button style={buttonBlueStyle} onClick={toggleLogin}>logout →</button> */}
           </div>
         </>
       ) : (
@@ -52,8 +58,7 @@ const navStyle = {
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '10px',
-  margin: 0,
-  position: 'fixed',
+  width: '100%',
   top: 0,
   backgroundColor: 'white',
 };
@@ -65,13 +70,14 @@ const logoStyle = {
 
 const globalBarStyle = {
     backgroundColor: 'transparent',
-    marginLeft: '150px',
-    marginRight: '200px',
+    marginLeft: '100px',
+    marginRight: '100px',
 };
 
 const privBarStyle = {
     backgroundColor: 'transparent',
     display: 'flex-end',
+    marginRight: '50px',
     justifyContent: 'space-between',
     alignItems: 'center',
 };
@@ -105,8 +111,8 @@ const buttonWhiteBlueStyle = {
   padding: '10px 20px',
   fontSize: '16px',
   border: 'none',
-  backgroundColor: 'transparent',
-  color: 'var(--drak-blue)',
+  backgroundColor: 'white',
+  color: 'var(--dark-blue)',
   cursor: 'pointer',
   margin: '0 5px',
 };
