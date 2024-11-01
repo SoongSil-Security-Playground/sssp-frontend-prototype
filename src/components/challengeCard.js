@@ -1,16 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import ChallengeModal from './challengeModal';
 
 function ChallengeCard({ title, description, tag, isSolved }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        console.log("Opening modal");
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        console.log("Closing modal");
+        setIsModalOpen(false);
+    };
+
+    useEffect(() => {
+        console.log("isModalOpen state in ChallengeCard:", isModalOpen);
+    }, [isModalOpen]);
+
     return (
-        <div style={{...cardContainerStyle, ...(isSolved ? blueBackStyle : whiteBackStyle) }}>
-            <h3 style={{...titleStyle, ...(isSolved ? whiteTextStyle : blueTextStyle)}}>{title}</h3>
-            <div style={descriptionContainerStyle}>
-                <p style={{...descriptionStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{description}</p>
+        <div>
+            <div 
+                style={{ ...cardContainerStyle, ...(isSolved ? blueBackStyle : whiteBackStyle) }} 
+                onClick={handleOpenModal}
+            >
+                <h3 style={{ ...titleStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{title}</h3>
+                <div style={descriptionContainerStyle}>
+                    <p style={{ ...descriptionStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{description}</p>
+                </div>
+                <div style={{ ...tagContainerStyle, ...(isSolved ? whiteBackStyle : blueBackStyle) }}>
+                    <p style={{ ...tagStyle, ...(isSolved ? blueTextStyle : whiteTextStyle) }}>{tag}</p>
+                </div>
             </div>
-            <div style={{...tagContainerStyle, ...(isSolved ? whiteBackStyle : blueBackStyle) }}>
-                <p style={{...tagStyle, ...(isSolved ? blueTextStyle : whiteTextStyle)}}>{tag}</p>
-            </div>
+
+            <ChallengeModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title={title}
+                description={description}
+                tag={tag}
+                isSolved={isSolved}
+            />
         </div>
     );
 }
@@ -27,8 +58,7 @@ const cardContainerStyle = {
     borderRadius: '8px',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
     backgroundColor: '#ffffff',
-    width: '100%',
-    maxWidth: '380px',
+    width: '380px',
     height: '180px',
     margin: '10px auto',
     boxSizing: 'border-box',

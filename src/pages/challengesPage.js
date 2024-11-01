@@ -23,6 +23,18 @@ function ChallengesPage({ isLoggedIn, toggleLogin }) {
                     tag="misc"
                     isSolved={true}
                 />
+                <ChallengeCard 
+                    title="Solved Challenge"
+                    description="This challenge has been solved."
+                    tag="misc"
+                    isSolved={true}
+                />
+                <ChallengeCard 
+                    title="Solved Challenge"
+                    description="This challenge has been solved."
+                    tag="misc"
+                    isSolved={true}
+                />
             </div>
             <Footer />
         </div>
