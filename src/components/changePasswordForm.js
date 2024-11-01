@@ -1,12 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function ChangePasswordForm() {
-    const navigate = useNavigate();
-
-    const handleChangePasswordClick = () => {
-        navigate('/mypage/change-password');
-    };
 
     return (
         <div style={pageContainerStyle}>
@@ -16,31 +10,21 @@ function ChangePasswordForm() {
             </div>
             <form style={formContainerStyle}>
                 <div style={formFieldStyle}>
-                    <label style={labelStyle}>Name</label>
+                    <label style={labelStyle}>Password</label>
                     <input 
-                        type="text" 
-                        placeholder="Kim Soongsil" 
+                        type="password" 
                         style={{ ...inputStyle, ':focus': inputFocusStyle }} 
                     />
                 </div>
                 <div style={formFieldStyle}>
-                    <label style={labelStyle}>Email</label>
+                    <label style={labelStyle}>New Password</label>
                     <input 
-                        type="email" 
-                        placeholder="example@soongsil.ac.kr" 
+                        type="password" 
                         style={{ ...inputStyle, ':focus': inputFocusStyle }} 
                     />
-                </div>
-                <div style={formFieldStyle}>
-                    <label style={labelStyle}>Contents</label>
-                    <textarea 
-                        placeholder="hello world" 
-                        style={{ ...textareaStyle, ':focus': inputFocusStyle }} 
-                    ></textarea>
                 </div>
                 <div style={buttonContainerStyle}>
-                    <button style={saveButtonStyle}>save</button>
-                    <button style={changePasswordButtonStyle} onClick={handleChangePasswordClick}>change password →</button>
+                    <button style={changePasswordButtonStyle} >change password</button>
                 </div>
             </form>
         </div>
@@ -118,17 +102,6 @@ const placeholderStyle = `
   }
 `;
 
-const textareaStyle = {
-    padding: '10px',
-    fontSize: '16px',
-    borderRadius: '8px',
-    border: '1px solid #D1D5DB',
-    backgroundColor: 'white',
-    outline: 'none',
-    minHeight: '80px',
-    resize: 'none',
-};
-
 const buttonContainerStyle = {
     display: 'flex',
     gap: '10px',
@@ -136,7 +109,7 @@ const buttonContainerStyle = {
     marginTop: '20px',
 };
 
-const saveButtonStyle = {
+const changePasswordButtonStyle = {
     backgroundColor: 'var(--dark-blue)',
     color: 'white',
     fontWeight: 'bold',
@@ -144,16 +117,6 @@ const saveButtonStyle = {
     padding: '10px 20px',
     borderRadius: '8px',
     border: 'none',
-    cursor: 'pointer',
-};
-
-const changePasswordButtonStyle = {
-    backgroundColor: 'white',
-    color: 'var(--dark-blue)',
-    fontWeight: 'bold',
-    padding: '10px 20px',
-    borderRadius: '8px',
-    border: '1px solid var(--dark-blue)',
     cursor: 'pointer',
 };
 
