@@ -16,6 +16,24 @@ function ChallengesPage({ isLoggedIn, toggleLogin }) {
         setSelectedState(state);
     };
 
+    const challenges = [
+        { title: "Unsolved Challenge", description: "This challenge has not been solved.", tag: "Pwn", isSolved: false },
+        { title: "Solved Challenge", description: "This challenge has been solved.", tag: "Web", isSolved: true },
+        { title: "Another Challenge", description: "This is a miscellaneous challenge.", tag: "Misc", isSolved: false },
+        { title: "Reversing Challenge", description: "Reverse engineering required.", tag: "Reversing", isSolved: true },
+    ];
+
+    const filteredChallenges = challenges.filter((challenge) => {
+        const categoryMatches = selectedCategory === "All" || challenge.tag === selectedCategory;
+        
+        const stateMatches =
+            selectedState === "All" ||
+            (selectedState === "Solved" && challenge.isSolved) ||
+            (selectedState === "Unsolved" && !challenge.isSolved);
+
+        return categoryMatches && stateMatches;
+    });
+
     return (
         <div style={mainContainerStyle}>
             <NavigationBar isLoggedIn={isLoggedIn} toggleLogin={toggleLogin} />
@@ -30,20 +48,15 @@ function ChallengesPage({ isLoggedIn, toggleLogin }) {
                     onSelectState={handleStateSelect}
                 />
                 <div style={contentContainerStyle}>
-                    <ChallengeCard 
-                        title="Unsolved Challenge"
-                        description="This challenge has not been solved."
-                        connection="server address is here."
-                        tag="Pwn"
-                        isSolved={false}
-                    />
-                    <ChallengeCard 
-                        title="Solved Challenge"
-                        description="This challenge has been solved."
-                        connection="server address is here."
-                        tag="Misc"
-                        isSolved={true}
-                    />
+                    {filteredChallenges.map((challenge, index) => (
+                        <ChallengeCard 
+                            key={index}
+                            title={challenge.title}
+                            description={challenge.description}
+                            tag={challenge.tag}
+                            isSolved={challenge.isSolved}
+                        />
+                    ))}
                 </div>
             </div>
             <Footer />
