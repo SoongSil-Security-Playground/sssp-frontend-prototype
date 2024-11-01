@@ -7,6 +7,7 @@ import UsersPage from '../pages/usersPage';
 import ScoreboardPage from '../pages/scoreboardPage';
 import NotificationsPage from '../pages/notificationsPage';
 import ChallengesPage from '../pages/challengesPage';
+import MypagePage from '../pages/mypagePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,6 +27,7 @@ function App() {
         <Route path="/scoreboard" element={<ScoreboardPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/challenges" element={<ChallengesPage />} />
+        <Route path="/mypage" element={<MypagePage />} />
       </Routes>
     </Router>
   );
