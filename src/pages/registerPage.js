@@ -61,6 +61,7 @@ const mainContainerStyle = {
     textAlign: 'center',
     flexDirection: 'column',
     margin: 0,
+    marginTop: '-30px',
 };
 
 
