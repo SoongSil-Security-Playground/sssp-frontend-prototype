@@ -14,24 +14,28 @@ function ChallengesPage({ isLoggedIn, toggleLogin }) {
                 <ChallengeCard 
                     title="Unsolved Challenge"
                     description="This challenge has not been solved."
+                    connection="server adderess is here."
                     tag="pwn"
                     isSolved={false}
                 />
                 <ChallengeCard 
                     title="Solved Challenge"
                     description="This challenge has been solved."
+                    connection="server adderess is here."
                     tag="misc"
                     isSolved={true}
                 />
                 <ChallengeCard 
                     title="Solved Challenge"
                     description="This challenge has been solved."
+                    connection="server adderess is here."
                     tag="misc"
                     isSolved={true}
                 />
                 <ChallengeCard 
                     title="Solved Challenge"
                     description="This challenge has been solved."
+                    connection="server adderess is here."
                     tag="misc"
                     isSolved={true}
                 />

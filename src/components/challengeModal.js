@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function ChallengeModal({ isOpen, onClose, title, description, tag, isSolved }) {
+function ChallengeModal({ isOpen, onClose, title, description, connection, tag, isSolved }) {
     useEffect(() => {
         console.log("ChallengeModal isOpen prop:", isOpen);
     }, [isOpen]);
@@ -19,10 +19,15 @@ function ChallengeModal({ isOpen, onClose, title, description, tag, isSolved }) 
             <div style={modalContainerStyle} onClick={(e) => e.stopPropagation()}>
                 <button onClick={onClose} style={closeButtonStyle}>×</button>
                 <h2 style={titleStyle}>{title}</h2>
-                <p style={descriptionStyle}>{description}</p>
-                <div style={{...tagStyle, backgroundColor: isSolved ? 'lightgrey' : 'var(--dark-blue)'}}>
-                    <p style={{ color: isSolved ? 'var(--dark-blue)' : 'white' }}>{tag}</p>
+                <div style={tagContainerStyle}>
+                    <p style={tagStyle}>{tag}</p>
                 </div>
+                <div style={informationContainerStyle}>
+                    <p style={descriptionStyle}>{description}</p>
+                    <p style={connectionStyle}>{connection}</p>
+                    <button style={downloadButtonStyle}>Download</button>
+                </div>
+
                 {isSolved ? (
                     <p style={solvedStyle}>solved</p>
                 ) : (
@@ -83,17 +88,61 @@ const titleStyle = {
     color: 'var(--dark-blue)',
 };
 
+const tagContainerStyle = {
+    borderRadius: '18px',
+    backgroundColor: 'var(--dark-blue)',
+    width: '100%',
+    maxWidth: '90px',
+    maxHeight: '28px',
+    margin: '10px auto',
+    marginTop: '-10px',
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
+    border: '1px solid var(--dark-blue)',
+};
+
+const tagStyle = {
+    fontSize: '16px',
+    color: 'white',
+    margin: 0,
+    marginBottom: '10px',
+};
+
+const informationContainerStyle = {
+    backgroundColor: 'transparent',
+    width: '100%',
+    maxWidth: '330px',
+    maxHeight: '300px',
+    margin: '10px auto',
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    overflow: 'hidden',
+    padding: 0,
+    gap: 0,
+};
+
 const descriptionStyle = {
     fontSize: '16px',
     color: 'grey',
     marginTop: '10px',
+    marginBottom: '0px',
 };
 
-const tagStyle = {
-    borderRadius: '18px',
-    padding: '5px 10px',
-    display: 'inline-block',
-    marginTop: '10px',
+const connectionStyle = {
+    fontSize: '16px',
+    color: 'var(--medium-blue)',
+    marginTop: '0px',
+};
+
+const downloadButtonStyle = {
+    backgroundColor: 'white',
+    color: 'var(--light-blue)',
+    border: '1px solid var(--light-blue)',
+    borderRadius: '5px',
 };
 
 const solvedStyle = {
@@ -107,23 +156,27 @@ const inputContainerStyle = {
     display: 'flex',
     alignItems: 'center',
     marginTop: '20px',
+    marginBottom: '10px',
 };
 
 const inputStyle = {
     padding: '8px',
-    borderRadius: '4px',
+    borderRadius: '20px',
     border: '1px solid var(--dark-blue)',
+    marginLeft: '20px',
     marginRight: '10px',
-    flex: '1',
+    flex: '5',
 };
 
 const submitButtonStyle = {
     padding: '8px 16px',
-    backgroundColor: 'var(--dark-blue)',
+    backgroundColor: 'var(--medium-blue)',
     color: 'white',
-    borderRadius: '4px',
+    borderRadius: '15px',
+    marginRight: '20px',
     cursor: 'pointer',
     border: 'none',
+    flex: '1',
 };
 
 export default ChallengeModal;
