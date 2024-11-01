@@ -1,6 +1,6 @@
 import React from 'react';
 import NavigationBar from '../components/navigationBar';
-import ChangePasswordForm from '../components/passwordForm';
+import ChangePasswordForm from '../components/changePasswordForm';
 import Footer from '../components/footer';
 
 function ChangePasswordPage({ isLoggedIn, toggleLogin }) {
