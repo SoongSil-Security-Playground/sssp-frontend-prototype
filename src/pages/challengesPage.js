@@ -18,9 +18,9 @@ function ChallengesPage({ isLoggedIn, toggleLogin }) {
 
     const challenges = [
         { title: "Unsolved Challenge", description: "This challenge has not been solved.", tag: "Pwn", isSolved: false },
-        { title: "Solved Challenge", description: "This challenge has been solved.", tag: "Web", isSolved: true },
-        { title: "Another Challenge", description: "This is a miscellaneous challenge.", tag: "Misc", isSolved: false },
-        { title: "Reversing Challenge", description: "Reverse engineering required.", tag: "Reversing", isSolved: true },
+        // { title: "Solved Challenge", description: "This challenge has been solved.", tag: "Web", isSolved: true },
+        // { title: "Another Challenge", description: "This is a miscellaneous challenge.", tag: "Misc", isSolved: false },
+        // { title: "Reversing Challenge", description: "Reverse engineering required.", tag: "Reversing", isSolved: true },
     ];
 
     const filteredChallenges = challenges.filter((challenge) => {
@@ -68,6 +68,7 @@ const mainContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'space-between',
     minHeight: '100vh',
     textAlign: 'center',
     margin: 0,
@@ -90,9 +91,11 @@ const headerTextStyle = {
 const contentWrapperStyle = {
     display: 'flex',
     alignItems: 'flex-start',
+    paddingLeft: '100px',
     width: '100%',
     padding: '20px',
     boxSizing: 'border-box',
+    flexGrow: 1,
 };
 
 const contentContainerStyle = {
@@ -102,6 +105,7 @@ const contentContainerStyle = {
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '100%',
+    flexGrow: 1,
 };
 
 export default ChallengesPage;
