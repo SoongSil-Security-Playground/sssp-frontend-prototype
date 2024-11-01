@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function ProfileForm() {
+function ChangePasswordForm() {
     const navigate = useNavigate();
 
     const handleChangePasswordClick = () => {
@@ -157,4 +157,4 @@ const changePasswordButtonStyle = {
     cursor: 'pointer',
 };
 
-export default ProfileForm;
+export default ChangePasswordForm;
