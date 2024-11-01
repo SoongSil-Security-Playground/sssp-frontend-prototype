@@ -18,9 +18,9 @@ function ChallengesPage({ isLoggedIn, toggleLogin }) {
 
     const challenges = [
         { title: "Unsolved Challenge", description: "This challenge has not been solved.", tag: "Pwn", isSolved: false },
-        // { title: "Solved Challenge", description: "This challenge has been solved.", tag: "Web", isSolved: true },
-        // { title: "Another Challenge", description: "This is a miscellaneous challenge.", tag: "Misc", isSolved: false },
-        // { title: "Reversing Challenge", description: "Reverse engineering required.", tag: "Reversing", isSolved: true },
+        { title: "Solved Challenge", description: "This challenge has been solved.", tag: "Web", isSolved: true },
+        { title: "Another Challenge", description: "This is a miscellaneous challenge.", tag: "Misc", isSolved: false },
+        { title: "Reversing Challenge", description: "Reverse engineering required.", tag: "Reversing", isSolved: true },
     ];
 
     const filteredChallenges = challenges.filter((challenge) => {
@@ -99,13 +99,17 @@ const contentWrapperStyle = {
 };
 
 const contentContainerStyle = {
-    flex: '1',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: '100%',
-    flexGrow: 1,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '20px',
+    width: 'calc(100% - 600px)',
+    marginLeft: '350px',
+    marginRight: 'auto',
+    paddingTop: '20px',
+    boxSizing: 'border-box',
+    justifyItems: 'center',
+    alignItems: 'start',
 };
+
 
 export default ChallengesPage;
