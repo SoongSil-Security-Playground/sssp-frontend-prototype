@@ -59,7 +59,7 @@ const cardContainerStyle = {
     borderRadius: '8px',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
     backgroundColor: '#ffffff',
-    width: '380px',
+    width: '330px',
     height: '180px',
     margin: '10px auto',
     boxSizing: 'border-box',
