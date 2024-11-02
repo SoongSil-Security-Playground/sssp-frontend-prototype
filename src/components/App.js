@@ -11,6 +11,7 @@ import NotificationsPage from '../pages/NotificationsPage';
 import ChallengesPage from '../pages/ChallengesPage';
 import MypagePage from '../pages/MypagePage';
 import ChangePasswordPage from '../pages/ChangePasswordPage';
+import PrivateRoute from '../routes/PrivateRoute';
 
 function App() {
   return (
@@ -21,12 +22,55 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/users" element={<UsersPage />} />
-            <Route path="/scoreboard" element={<ScoreboardPage />} />
-            <Route path="/notifications" element={<NotificationsPage />} />
-            <Route path="/challenges" element={<ChallengesPage />} />
-            <Route path="/mypage" element={<MypagePage />} />
-            <Route path="/mypage/change-password" element={<ChangePasswordPage />} />
+            <Route
+              path="/users"
+              element={
+                <PrivateRoute>
+                  <UsersPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/scoreboard"
+              element={
+                <PrivateRoute>
+                  <ScoreboardPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/notifications"
+              element={
+                <PrivateRoute>
+                  <NotificationsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/challenges"
+              element={
+                <PrivateRoute>
+                  <ChallengesPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/mypage"
+              element={
+                <PrivateRoute>
+                  <MypagePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/mypage/change-password"
+              element={
+                <PrivateRoute>
+                  <ChangePasswordPage />
+                </PrivateRoute>
+              }
+            />
+
           </Routes>
         </Router>
     </AuthProvider>
