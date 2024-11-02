@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import NavigationBar from '../components/navigationBar';
-import ChallengeCard from '../components/challengeCard';
-import FilterSidebar from '../components/filterSidebar';
-import Footer from '../components/footer';
+import NavigationBar from '../components/NavigationBar';
+import ChallengeCard from '../components/ChallengeCard';
+import FilterSidebar from '../components/FilterSidebar';
+import Footer from '../components/Footer';
 
 function ChallengesPage({ isLoggedIn, toggleLogin }) {
     const [selectedCategory, setSelectedCategory] = useState("All");

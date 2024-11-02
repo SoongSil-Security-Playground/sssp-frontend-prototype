@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ChallengeModal from './challengeModal';
+import ChallengeModal from './ChallengeModal';
 
 function ChallengeCard({ title, description, connection, tag, isSolved }) {
     const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,14 +1,14 @@
 import React, { useState, } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainPage from '../pages/mainPage';
-import LoginPage from '../pages/loginPage';
-import RegisterPage from '../pages/registerPage';
-import UsersPage from '../pages/usersPage';
-import ScoreboardPage from '../pages/scoreboardPage';
-import NotificationsPage from '../pages/notificationsPage';
-import ChallengesPage from '../pages/challengesPage';
-import MypagePage from '../pages/mypagePage';
-import ChangePasswordPage from '../pages/changePasswordPage';
+import MainPage from '../pages/MainPage';
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
+import UsersPage from '../pages/UsersPage';
+import ScoreboardPage from '../pages/ScoreboardPage';
+import NotificationsPage from '../pages/NotificationsPage';
+import ChallengesPage from '../pages/ChallengesPage';
+import MypagePage from '../pages/MypagePage';
+import ChangePasswordPage from '../pages/ChangePasswordPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -1,6 +1,6 @@
 import React from 'react';
-import NavigationBar from '../components/navigationBar';
-import Footer from '../components/footer';
+import NavigationBar from '../components/NavigationBar';
+import Footer from '../components/Footer';
 import banner from '../assets/images/logo_big.png';
 import logo from '../assets/images/logo.png';
 

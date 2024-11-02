@@ -1,8 +1,8 @@
 import React from 'react';
-import NavigationBar from '../components/navigationBar';
-import ScoreChart from '../components/scordChart';
-import RankCard from '../components/rankCard';
-import Footer from '../components/footer';
+import NavigationBar from '../components/NavigationBar';
+import ScoreChart from '../components/ScoreChart';
+import RankCard from '../components/RankCard';
+import Footer from '../components/Footer';
 
 function ScoreboardPage({ isLoggedIn, toggleLogin }) {
     return (

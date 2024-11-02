@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import NavigationBar from '../components/navigationBar';
-import UserCard from '../components/userCard';
-import Footer from '../components/footer';
+import NavigationBar from '../components/NavigationBar';
+import UserCard from '../components/UserCard';
+import Footer from '../components/Footer';
 
 function UsersPage({ isLoggedIn, toggleLogin }) {
     // const [users, setUsers] = useState([]);

@@ -1,7 +1,7 @@
 import React from 'react';
-import NavigationBar from '../components/navigationBar';
-import ProfileForm from '../components/profileForm';
-import Footer from '../components/footer';
+import NavigationBar from '../components/NavigationBar';
+import ProfileForm from '../components/ProfileForm';
+import Footer from '../components/Footer';
 
 function MypagePage({ isLoggedIn, toggleLogin }) {
     return (

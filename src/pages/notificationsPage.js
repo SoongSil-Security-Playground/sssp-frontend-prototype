@@ -1,7 +1,7 @@
 import React from 'react';
-import NavigationBar from '../components/navigationBar';
-import NotificationCard from '../components/notificationCard';
-import Footer from '../components/footer';
+import NavigationBar from '../components/NavigationBar';
+import NotificationCard from '../components/NotificationCard';
+import Footer from '../components/Footer';
 
 function NotificationsPage({ isLoggedIn, toggleLogin }) {
     return (
