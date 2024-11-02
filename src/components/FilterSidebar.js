@@ -74,7 +74,7 @@ const filterOptionStyle = {
 };
 
 const selectedOptionStyle = {
-    backgroundColor: '#F1F3F7',
+    backgroundColor: 'var(--sky-blue)',
     color: 'var(--dark-blue)',
     fontWeight: 'bold',
     borderRadius: '5px',

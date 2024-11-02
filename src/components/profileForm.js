@@ -70,7 +70,7 @@ const profileIconStyle = {
     height: '60px',
     width: '60px',
     borderRadius: '50%',
-    backgroundColor: '#F1F3F7',
+    backgroundColor: 'var(--sky-blue)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
