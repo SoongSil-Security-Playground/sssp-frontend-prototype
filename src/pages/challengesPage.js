@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import NavigationBar from '../components/navigationBar';
 import ChallengeCard from '../components/challengeCard';
-import FilterSidebar from '../components/FilterSidebar';
+import FilterSidebar from '../components/filterSidebar';
 import Footer from '../components/footer';
 
 function ChallengesPage({ isLoggedIn, toggleLogin }) {

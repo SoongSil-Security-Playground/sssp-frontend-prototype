@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function FilterSidebar({ selectedCategory, onSelectCategory, selectedState, onSelectState }) {
     const categories = ["All", "Pwn", "Web", "Reversing", "Crypto", "Forensic", "Misc"];
