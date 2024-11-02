@@ -59,14 +59,15 @@ const cardContainerStyle = {
     borderRadius: '8px',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
     backgroundColor: '#ffffff',
-    width: '330px',
-    height: '180px',
+    width: '22vw',
+    height: '25vh',
     margin: '10px auto',
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
     border: '1px solid var(--dark-blue)',
     overflow: 'hidden',
+    cursor: 'pointer',
 };
 
 const whiteBackStyle = {
@@ -96,7 +97,7 @@ const titleStyle = {
 const descriptionContainerStyle = {
     backgroundColor: 'transparent',
     width: '100%',
-    maxWidth: '330px',
+    maxWidth: '22vw',
     height: '50px',
     margin: '10px auto',
     boxSizing: 'border-box',
@@ -116,8 +117,8 @@ const tagContainerStyle = {
     borderRadius: '18px',
     backgroundColor: 'var(--dark-blue)',
     width: '100%',
-    maxWidth: '90px',
-    maxHeight: '28px',
+    width: '6vw',
+    height: '3.5vh',
     margin: '10px auto',
     boxSizing: 'border-box',
     display: 'flex',

@@ -25,12 +25,11 @@ const mainContainerStyle = {
     minHeight: '100vh',
     textAlign: 'center',
     margin: 0,
-    paddingTop: '60px',
 };
 
 const titleContainerStyle = {
-    marginTop: '50px',
-    marginBottom: '10px',
+    marginTop: '12vh',
+    marginBottom: '1vh',
     width: '100%',
     textAlign: 'center',
     padding: '20px 0',

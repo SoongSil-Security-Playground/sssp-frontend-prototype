@@ -143,6 +143,7 @@ const downloadButtonStyle = {
     color: 'var(--light-blue)',
     border: '1px solid var(--light-blue)',
     borderRadius: '5px',
+    cursor: 'pointer',
 };
 
 const solvedStyle = {
