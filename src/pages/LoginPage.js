@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-function LoginPage({isLoggedIn, toggleLogin}) {
+function LoginPage() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { toggleLogin } = useAuth();
 
     const handleLogin = () => {
         toggleLogin();

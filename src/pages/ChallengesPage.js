@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import NavigationBar from '../components/NavigationBar';
 import ChallengeCard from '../components/ChallengeCard';
 import FilterSidebar from '../components/FilterSidebar';
 import Footer from '../components/Footer';
 
-function ChallengesPage({ isLoggedIn, toggleLogin }) {
+function ChallengesPage() {
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [selectedState, setSelectedState] = useState("All");
 
@@ -36,7 +35,6 @@ function ChallengesPage({ isLoggedIn, toggleLogin }) {
 
     return (
         <div style={mainContainerStyle}>
-            <NavigationBar isLoggedIn={isLoggedIn} toggleLogin={toggleLogin} />
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Challenges</h1>
             </div>

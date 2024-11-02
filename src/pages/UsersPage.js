@@ -1,46 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import NavigationBar from '../components/NavigationBar';
+import React from 'react';
 import UserCard from '../components/UserCard';
 import Footer from '../components/Footer';
 
-function UsersPage({ isLoggedIn, toggleLogin }) {
-    // const [users, setUsers] = useState([]);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
-
-    // useEffect(() => {
-    //     const fetchUsers = async () => {
-    //         try {
-    //             setLoading(true);
-    //             const response = await axios.get('');
-    //             setUsers(response.data);
-    //         } catch (err) {
-    //             setError('Failed to load users');
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     fetchUsers();
-    // }, []);
+function UsersPage() {
 
     return (
         <div style={mainContainerStyle}>
-            <NavigationBar isLoggedIn={isLoggedIn} toggleLogin={toggleLogin} />
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Users</h1>
             </div>
             <div style={contentContainerStyle}>
                 <UserCard />
-                {/* {loading ? (
-                    <p>Loading...</p>
-                ) : error ? (
-                    <p>{error}</p>
-                ) : (
-                    users.map(user => (
-                        <UserCard key={user.id} name={user.name} description={user.description} />
-                    ))
-                )} */}
             </div>
             <Footer />
         </div>

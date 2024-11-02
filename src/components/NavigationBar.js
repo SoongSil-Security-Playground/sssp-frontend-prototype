@@ -1,11 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/images/logo.png';
 
 function NavigationBar() {
     const { isLoggedIn, toggleLogin } = useAuth();
-    
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        toggleLogin();
+        navigate('/');
+    };
+
     return (
         <nav style={navStyle}>
             <div style={logoContainerStyle}>
@@ -33,7 +40,7 @@ function NavigationBar() {
                         <Link to="/mypage" style={linkStyle}>
                             <button style={buttonWhiteBlueStyle}>My Page</button>
                         </Link>
-                        <button style={buttonBlueStyle} onClick={toggleLogin}>logout →</button>
+                        <button style={buttonBlueStyle} onClick={handleLogout}>logout →</button>
                     </>
                 ) : (
                     <Link to="/login" style={linkStyle}>

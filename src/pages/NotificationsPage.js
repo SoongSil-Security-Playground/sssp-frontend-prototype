@@ -1,12 +1,10 @@
 import React from 'react';
-import NavigationBar from '../components/NavigationBar';
 import NotificationCard from '../components/NotificationCard';
 import Footer from '../components/Footer';
 
-function NotificationsPage({ isLoggedIn, toggleLogin }) {
+function NotificationsPage() {
     return (
         <div style={mainContainerStyle}>
-            <NavigationBar isLoggedIn={isLoggedIn} toggleLogin={toggleLogin} />
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Notifications</h1>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '../contexts/AuthContext';
 import NavigationBar from './NavigationBar';
@@ -13,13 +13,6 @@ import MypagePage from '../pages/MypagePage';
 import ChangePasswordPage from '../pages/ChangePasswordPage';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  function toggleLogin() {
-    setIsLoggedIn(!isLoggedIn);
-    console.log("Login status changed:", !isLoggedIn);  
-  }
-
   return (
     <AuthProvider>
       <Router>

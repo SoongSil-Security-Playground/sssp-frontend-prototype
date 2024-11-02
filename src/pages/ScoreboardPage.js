@@ -1,13 +1,11 @@
 import React from 'react';
-import NavigationBar from '../components/NavigationBar';
 import ScoreChart from '../components/ScoreChart';
 import RankCard from '../components/RankCard';
 import Footer from '../components/Footer';
 
-function ScoreboardPage({ isLoggedIn, toggleLogin }) {
+function ScoreboardPage() {
     return (
         <div style={mainContainerStyle}>
-            <NavigationBar isLoggedIn={isLoggedIn} toggleLogin={toggleLogin} />
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Scoreboard</h1>
             </div>

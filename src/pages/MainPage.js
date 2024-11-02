@@ -1,13 +1,11 @@
 import React from 'react';
-import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
 import banner from '../assets/images/logo_big.png';
 import logo from '../assets/images/logo.png';
 
-function MainPage({isLoggedIn, toggleLogin}) {
+function MainPage() {
   return (
     <div style={mainContainerStyle}>
-        <NavigationBar isLoggedIn={isLoggedIn} toggleLogin={toggleLogin} />
         <div style={contentContainerStyle} >
             <div style={bannerStyle}>
                 <img src={banner} alt="banner" style={bannerImageStyle} />

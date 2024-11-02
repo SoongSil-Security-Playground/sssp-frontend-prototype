@@ -1,12 +1,10 @@
 import React from 'react';
-import NavigationBar from '../components/NavigationBar';
 import ProfileForm from '../components/ProfileForm';
 import Footer from '../components/Footer';
 
-function MypagePage({ isLoggedIn, toggleLogin }) {
+function MypagePage() {
     return (
         <div style={mainContainerStyle}>
-            <NavigationBar isLoggedIn={isLoggedIn} toggleLogin={toggleLogin} />
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Mypage</h1>
             </div>

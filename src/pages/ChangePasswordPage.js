@@ -1,12 +1,10 @@
 import React from 'react';
-import NavigationBar from '../components/NavigationBar';
 import ChangePasswordForm from '../components/ChangePasswordForm';
 import Footer from '../components/Footer';
 
-function ChangePasswordPage({ isLoggedIn, toggleLogin }) {
+function ChangePasswordPage() {
     return (
         <div style={mainContainerStyle}>
-            <NavigationBar isLoggedIn={isLoggedIn} toggleLogin={toggleLogin} />
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Change Password</h1>
             </div>
