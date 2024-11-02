@@ -1,5 +1,6 @@
 import React from 'react';
 import NavigationBar from '../components/navigationBar';
+import ScoreChart from '../components/scordChart';
 import RankCard from '../components/rankCard';
 import Footer from '../components/footer';
 
@@ -10,6 +11,7 @@ function ScoreboardPage({ isLoggedIn, toggleLogin }) {
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Scoreboard</h1>
             </div>
+            <ScoreChart />
             <div style={contentContainerStyle}>
                 <RankCard />
             </div>
@@ -30,7 +32,7 @@ const mainContainerStyle = {
 
 const titleContainerStyle = {
     marginTop: '50px',
-    marginBottom: '30px',
+    marginBottom: '10px',
     width: '100%',
     textAlign: 'center',
     padding: '20px 0',
