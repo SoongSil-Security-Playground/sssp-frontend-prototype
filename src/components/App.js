@@ -1,5 +1,7 @@
 import React, { useState, } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '../contexts/AuthContext';
+import NavigationBar from './NavigationBar';
 import MainPage from '../pages/MainPage';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
@@ -19,19 +21,22 @@ function App() {
   }
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainPage isLoggedIn={isLoggedIn} toggleLogin={toggleLogin}/>} />
-        <Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} toggleLogin={toggleLogin}/>} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/users" element={<UsersPage />} />
-        <Route path="/scoreboard" element={<ScoreboardPage />} />
-        <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/challenges" element={<ChallengesPage />} />
-        <Route path="/mypage" element={<MypagePage />} />
-        <Route path="/mypage/change-password" element={<ChangePasswordPage />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+          <NavigationBar />
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/users" element={<UsersPage />} />
+            <Route path="/scoreboard" element={<ScoreboardPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/challenges" element={<ChallengesPage />} />
+            <Route path="/mypage" element={<MypagePage />} />
+            <Route path="/mypage/change-password" element={<ChangePasswordPage />} />
+          </Routes>
+        </Router>
+    </AuthProvider>
   );
 }
 

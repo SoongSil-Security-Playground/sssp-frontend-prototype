@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/images/logo.png';
 
-function NavigationBar({ isLoggedIn, toggleLogin }) {
+function NavigationBar() {
+    const { isLoggedIn, toggleLogin } = useAuth();
+    
     return (
         <nav style={navStyle}>
             <div style={logoContainerStyle}>
