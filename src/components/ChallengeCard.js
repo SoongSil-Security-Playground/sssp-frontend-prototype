@@ -116,7 +116,6 @@ const descriptionStyle = {
 const tagContainerStyle = {
     borderRadius: '18px',
     backgroundColor: 'var(--dark-blue)',
-    width: '100%',
     width: '6vw',
     height: '3.5vh',
     margin: '10px auto',

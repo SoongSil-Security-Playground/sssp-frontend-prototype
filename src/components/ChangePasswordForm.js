@@ -35,7 +35,7 @@ const pageContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: '430px',
+    width: '25vw',
     margin: '0 auto',
     boxSizing: 'border-box',
     border: '1px solid lightgrey',
@@ -47,7 +47,7 @@ const profileContainerStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '50px',
+    marginBottom: '5px',
 };
 
 const profileIconStyle = {

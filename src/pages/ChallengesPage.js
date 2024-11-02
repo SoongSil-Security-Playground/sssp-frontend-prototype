@@ -66,7 +66,6 @@ const mainContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-between',
     minHeight: '100vh',
     textAlign: 'center',
     margin: 0,

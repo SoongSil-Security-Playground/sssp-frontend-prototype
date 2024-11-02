@@ -43,9 +43,9 @@ function FilterSidebar({ selectedCategory, onSelectCategory, selectedState, onSe
 
 const sidebarStyle = {
     position: 'fixed',
-    top: '200px',
-    left: '50px',
-    width: '200px',
+    top: '22vh',
+    left: '4vw',
+    width: '15vw',
     padding: '10px',
     border: '1px solid lightgrey',
     borderRadius: '8px',

@@ -67,7 +67,7 @@ const modalContainerStyle = {
     backgroundColor: 'white',
     borderRadius: '8px',
     padding: '20px',
-    width: '400px',
+    width: '27vw',
     position: 'relative',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
 };
@@ -91,9 +91,8 @@ const titleStyle = {
 const tagContainerStyle = {
     borderRadius: '18px',
     backgroundColor: 'var(--dark-blue)',
-    width: '100%',
-    maxWidth: '90px',
-    maxHeight: '28px',
+    width: '5.8vw',
+    height: '3.2vh',
     margin: '10px auto',
     marginTop: '-10px',
     boxSizing: 'border-box',
@@ -103,7 +102,7 @@ const tagContainerStyle = {
 };
 
 const tagStyle = {
-    fontSize: '16px',
+    fontSize: '14px',
     color: 'white',
     margin: 0,
     marginBottom: '10px',
