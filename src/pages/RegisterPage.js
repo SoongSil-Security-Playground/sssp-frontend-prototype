@@ -14,7 +14,7 @@ function RegisterPage() {
     return (
         <div style={mainContainerStyle}>
             <h1 style={headerTextStyle}>REGISTER</h1>
-            <b1 style={bodyTextStyle}>hello hello hello </b1>
+            {/* <b1 style={bodyTextStyle}>hello hello hello </b1> */}
             <div style={loginContainerStyle}>
                 <label style={labelStyle}>Name</label>
                 <input
