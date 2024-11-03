@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function ChallengeModal({ isOpen, onClose, title, description, connection, tag, isSolved }) {
+function ChallengeModal({ isOpen, onClose, title, description, connection, tag, isSolved: initialSolved }) {
+    const [isSolved, setIsSolved] = useState(initialSolved);
+
     useEffect(() => {
         console.log("ChallengeModal isOpen prop:", isOpen);
     }, [isOpen]);
@@ -12,6 +14,10 @@ function ChallengeModal({ isOpen, onClose, title, description, connection, tag, 
         if (e.target === e.currentTarget) {
             onClose();
         }
+    };
+
+    const handleSubmitFlag = () => {
+        setIsSolved(true);
     };
 
     return (
@@ -33,7 +39,7 @@ function ChallengeModal({ isOpen, onClose, title, description, connection, tag, 
                 ) : (
                     <div style={inputContainerStyle}>
                         <input type="text" placeholder="flag" style={inputStyle} />
-                        <button style={submitButtonStyle}>submit</button>
+                        <button style={submitButtonStyle} onClick={handleSubmitFlag}>submit</button>
                     </div>
                 )}
             </div>
