@@ -1,46 +1,34 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../services/auth';
 
-function RegisterPage() {
-    const [name, setName] = useState('');
+const RegisterPage = () => {
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
     const handleRegister = async () => {
         setLoading(true);
         setError(null);
 
-        const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-        const url = `${BACKEND_URL}/api/v1/auth/register`;
-
-        const requestBody = {
-            username: name,
-            email: email,
-            password: password,
-        };
+        console.log('Register request started with:', { username, email, password });
 
         try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody),
-            });
+            const data = await registerUser(username, email, password);
+            console.log('Registration successful:', data);
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.detail || 'Registration failed');
-            }
-
-            navigate('/');
+            setSuccess(true);
+            setTimeout(() => navigate('/login'), 2000);
         } catch (error) {
+            console.error('Registration error:', error.message);
             setError(error.message);
         } finally {
             setLoading(false);
+            console.log('Register request completed.');
         }
     };
 
@@ -48,12 +36,12 @@ function RegisterPage() {
         <div style={mainContainerStyle}>
             <h1 style={headerTextStyle}>REGISTER</h1>
             <div style={loginContainerStyle}>
-                <label style={labelStyle}>Name</label>
+                <label style={labelStyle}>Username</label>
                 <input
                     type="text"
                     placeholder="Soongsil Kim"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     style={inputStyle}
                 />
 
@@ -81,15 +69,16 @@ function RegisterPage() {
                         onClick={handleRegister}
                         disabled={loading}
                     >
-                        {loading ? 'Registering...' : 'Register →'}
+                        {loading ? 'Registering...' : 'Register'}
                     </button>
                 </div>
 
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <p style={errorTextStyle}>{error}</p>}
+                {success && <p style={successTextStyle}>회원가입을 완료하였습니다. 리다이렉션 중...</p>}
             </div>
         </div>
     );
-}
+};
 
 const mainContainerStyle = {
     display: 'flex',
@@ -101,6 +90,7 @@ const mainContainerStyle = {
     margin: 0,
     marginTop: '-30px',
 };
+
 
 const loginContainerStyle = {
     backgroundColor: 'white',
@@ -150,5 +140,18 @@ const registerButtonStyle = {
     borderRadius: '5px',
     cursor: 'pointer',
 };
+
+
+const successTextStyle = {
+    color: 'var(--dark-blue)',
+    fontSize: '14px',
+
+}
+
+const errorTextStyle = {
+    color: 'var(--dark-grey)',
+    fontSize: '14px',
+
+}
 
 export default RegisterPage;
