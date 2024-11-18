@@ -4,7 +4,7 @@ function UserCard({ name, description }) {
     return (
         <div style={cardContainerStyle}>
             <div style={profileImageContainerStyle}>
-                <span style={profileIconStyle}></span> {/* Placeholder for profile image */}
+                <span style={profileIconStyle}></span>
             </div>
             <div style={textContainerStyle}>
                 <h3 style={nameStyle}>name</h3>
