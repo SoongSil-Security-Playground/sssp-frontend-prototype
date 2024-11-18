@@ -1,0 +1,25 @@
+ 
+.search-bar {
+    margin-bottom: 10px;
+    width: 45%;
+    margin: 0 auto;
+}
+
+.search-bar input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 24px;
+    font-size: 16px;
+    outline: none;
+    transition: transform 0.2s;
+}
+
+.search-bar input:focus {
+    border-color: #ccc;  
+    box-shadow: 0 0 5px #006e93;
+    opacity: 0.8;
+}
+
+.search-bar input:hover {
+    transform: scale(1.02);
+}

@@ -1,0 +1,43 @@
+.user-list {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px 0;
+}
+
+
+.add-user-button {
+    margin-left: 4px;
+    margin-right: 4px;
+    display: flex;
+    border-radius: 14px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 8px;
+    width: 97.3%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+.add-user-button:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+.plus-icon {
+    align-self: center;
+    color: grey;
+}
+
+
+.plus-icon {
+    align-self: center;
+    color: grey;
+}
+
+.user-list div::-webkit-scrollbar-track {
+    background-color: transparent;
+}
