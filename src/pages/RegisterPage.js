@@ -1,20 +1,52 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const handleRegister = () => {
-        navigate('/');
+    const handleRegister = async () => {
+        setLoading(true);
+        setError(null);
+
+        const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+        const url = `${BACKEND_URL}/api/v1/auth/register`;
+
+        const requestBody = {
+            username: name,
+            email: email,
+            password: password,
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || 'Registration failed');
+            }
+
+            navigate('/');
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <div style={mainContainerStyle}>
             <h1 style={headerTextStyle}>REGISTER</h1>
-            {/* <b1 style={bodyTextStyle}>hello hello hello </b1> */}
             <div style={loginContainerStyle}>
                 <label style={labelStyle}>Name</label>
                 <input
@@ -27,7 +59,7 @@ function RegisterPage() {
 
                 <label style={labelStyle}>Email</label>
                 <input
-                    type="text"
+                    type="email"
                     placeholder="example@soongsil.ac.kr"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -44,10 +76,16 @@ function RegisterPage() {
                 />
 
                 <div style={buttonContainerStyle}>
-                    <button style={registerButtonStyle} onClick={handleRegister}>
-                        Register →
+                    <button
+                        style={registerButtonStyle}
+                        onClick={handleRegister}
+                        disabled={loading}
+                    >
+                        {loading ? 'Registering...' : 'Register →'}
                     </button>
                 </div>
+
+                {error && <p style={{ color: 'red' }}>{error}</p>}
             </div>
         </div>
     );
@@ -64,7 +102,6 @@ const mainContainerStyle = {
     marginTop: '-30px',
 };
 
-
 const loginContainerStyle = {
     backgroundColor: 'white',
     border: '2px solid var(--medium-grey)',
@@ -78,11 +115,6 @@ const loginContainerStyle = {
 const headerTextStyle = {
     color: 'var(--dark-blue)',
     marginBottom: '2px',
-};
-
-const bodyTextStyle = {
-    color: 'var(--dark-blue)',
-    marginBottom: '5px',
 };
 
 const labelStyle = {
