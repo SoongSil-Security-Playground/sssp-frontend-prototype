@@ -25,24 +25,28 @@ export const registerUser = async (username, email, password) => {
 };
 
 export const loginUser = async (username, password) => {
-    const response = await fetch(`${BACKEND_URL}/api/v1/auth/login`, {
+    const payload = new URLSearchParams();
+    payload.append('username', username);
+    payload.append('password', password);
+
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify({ username, password }),
+        body: payload.toString(),
     });
 
-    const contentType = response.headers.get('content-type');
-    console.log(response)
-
     if (!response.ok) {
-        if (contentType && contentType.includes('application/json')) {
-            const errorData = await response.json();
-            throw new Error(errorData.detail || 'Login failed.');
-        } else {
-            throw new Error('Unexpected response from the server.');
+        const errorData = await response.json();
+        console.error('Error response data:', errorData);
+
+        if (Array.isArray(errorData.detail)) {
+            const errorMessages = errorData.detail.map((err) => `${err.loc.join('.')}: ${err.msg}`);
+            throw new Error(errorMessages.join(', '));
         }
+
+        throw new Error(errorData.detail || 'Login failed');
     }
 
     return await response.json();
