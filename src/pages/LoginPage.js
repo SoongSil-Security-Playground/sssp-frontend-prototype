@@ -21,7 +21,9 @@ function LoginPage() {
         try {
             const response = await loginUser(username, password);
             login(response.access_token);
+            setSuccess(true);
             console.log('Login successful:', response);
+            navigate('/');
         } catch (error) {
             console.error('Login failed:', error.message);
             setError(error.message);
@@ -59,11 +61,15 @@ function LoginPage() {
                 <div style={buttonContainerStyle}>
                     <button style={loginButtonStyle} onClick={handleLogin}>
                         login →
+                        {loading ? 'Logging in...' : 'Login'}
                     </button>
                     <button style={registerButtonStyle} onClick={handleRegister}>
                         Register →
                     </button>
                 </div>
+
+                {error && <p style={errorTextStyle}>{error}</p>}
+                {success && <p style={successTextStyle}>redirecting...</p>}
             </div>
         </div>
     );
@@ -142,5 +148,17 @@ const registerButtonStyle = {
     borderRadius: '5px',
     cursor: 'pointer',
 };
+
+const successTextStyle = {
+    color: 'var(--dark-blue)',
+    fontSize: '14px',
+
+}
+
+const errorTextStyle = {
+    color: 'var(--dark-grey)',
+    fontSize: '14px',
+
+}
 
 export default LoginPage;
