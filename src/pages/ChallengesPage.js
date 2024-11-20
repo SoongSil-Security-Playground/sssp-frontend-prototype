@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChallengeCard from '../components/ChallengeCard';
 import FilterSidebar from '../components/FilterSidebar';
 import Footer from '../components/Footer';
+import { fetchAllChallenges } from '../services/challenge';
+import { toast } from 'react-toastify';
 
 function ChallengesPage() {
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [selectedState, setSelectedState] = useState("All");
+    const [challenges, setChallenges] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const handleCategorySelect = (category) => {
         setSelectedCategory(category);
@@ -15,12 +20,36 @@ function ChallengesPage() {
         setSelectedState(state);
     };
 
-    const challenges = [
-        { title: "Unsolved Challenge", description: "This challenge has not been solved.", tag: "Pwn", isSolved: false },
-        { title: "Solved Challenge", description: "This challenge has been solved.", tag: "Web", isSolved: true },
-        { title: "Another Challenge", description: "This is a miscellaneous challenge.", tag: "Misc", isSolved: false },
-        { title: "Reversing Challenge", description: "Reverse engineering required.", tag: "Reversing", isSolved: true },
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    throw new Error("No token found. Please log in.");
+                }
+
+                const data = await fetchAllChallenges(token);
+                setChallenges(data);
+            } catch (error) {
+                console.error("Error fetching challenges:", error.message);
+                toast.error(
+                    <div>
+                        <p className="toast-title">Failed to fetch challenges</p>
+                        <p className="toast-content">{error.message}</p>
+                        <p className="toast-time">{new Date().toLocaleString()}</p>
+                    </div>
+                );
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const filteredChallenges = challenges.filter((challenge) => {
         const categoryMatches = selectedCategory === "All" || challenge.tag === selectedCategory;
@@ -45,16 +74,20 @@ function ChallengesPage() {
                     selectedState={selectedState}
                     onSelectState={handleStateSelect}
                 />
-                <div style={contentContainerStyle}>
-                    {filteredChallenges.map((challenge, index) => (
-                        <ChallengeCard 
-                            key={index}
-                            title={challenge.title}
-                            description={challenge.description}
-                            tag={challenge.tag}
-                            isSolved={challenge.isSolved}
-                        />
-                    ))}
+
+            <div style={contentContainerStyle}>
+                {filteredChallenges.map((challenge) => (
+                    <ChallengeCard
+                        key={challenge.id}
+                        name={challenge.name}
+                        description={challenge.description}
+                        points={challenge.points}
+                        category={challenge.category}
+                        createdAt={new Date(challenge.created_at).toLocaleString()}
+                        filePath={challenge.file_path}
+                        isSolved={challenge.isSolved}
+                    />
+                ))}
                 </div>
             </div>
             <Footer />

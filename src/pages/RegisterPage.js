@@ -1,44 +1,114 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { registerUser, sendAuthCode, verifyAuthCode } from '../services/auth';
+import { toast, } from 'react-toastify';
 
-function RegisterPage() {
-    const [name, setName] = useState('');
+const RegisterPage = () => {
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
+    const [authCode, setAuthCode] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [sent, setSent] = useState(false);
+    const [verified, setVerified] = useState(false);
+    const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
     const handleRegister = async () => {
         setLoading(true);
         setError(null);
+    
+        console.log('Register request started with:', { username, email, password });
+    
+        try {
+            if (!verified) {
+                throw new Error('Verification required. Please verify your email before registering.');
+            }
+    
+            const data = await registerUser(username, email, password);
+            console.log('Registration successful:', data);
+    
+            setSuccess(true);
+            navigate('/login');
+        } catch (error) {
+            console.error('Registration error:', error.message);
+            setError(error.message);
+    
+            toast.error(
+                <div>
+                    <p className="toast-title">Registration Failed</p>
+                    <p className="toast-content">{error.message}</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>,
+                { icon: false }
+            );
+        } finally {
+            setLoading(false);
+            console.log('Register request completed.');
+        }
+    };    
 
-        const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-        const url = `${BACKEND_URL}/api/v1/auth/register`;
+    const handleSend = async () => {
+        setError(null);
 
-        const requestBody = {
-            username: name,
-            email: email,
-            password: password,
-        };
+        toast.info(
+            <div>
+                <p className="toast-title">Sending Email</p>
+                <p className="toast-content">이메일을 보내고 있습니다.</p>
+                <p className="toast-time">{new Date().toLocaleString()}</p>
+            </div>,
+            { autoClose: false }
+        );
 
         try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.detail || 'Registration failed');
-            }
-
-            navigate('/');
+            await sendAuthCode(email); 
+            toast.dismiss();
+            toast.success(
+                <div>
+                    <p className="toast-title">Email Sent</p>
+                    <p className="toast-content">이메일이 전송되었습니다.</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+            setSent(true);
         } catch (error) {
             setError(error.message);
+            toast.dismiss();
+            toast.error(
+                <div>
+                    <p className="toast-title">Failed to Send Email</p>
+                    <p className="toast-content">{error.message}</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleVerfication = async () => {
+        setError(null);
+
+        try {
+            await verifyAuthCode(email, authCode);
+            toast.success(
+                <div>
+                    <p className="toast-title">Verification Successful</p>
+                    <p className="toast-content">인증되었습니다.</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+            setVerified(true);
+        } catch (error) {
+            setError(error.message);
+            toast.error(
+                <div>
+                    <p className="toast-title">Verification Failed</p>
+                    <p className="toast-content">{error.message}</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
         } finally {
             setLoading(false);
         }
@@ -48,23 +118,52 @@ function RegisterPage() {
         <div style={mainContainerStyle}>
             <h1 style={headerTextStyle}>REGISTER</h1>
             <div style={loginContainerStyle}>
-                <label style={labelStyle}>Name</label>
+                <label style={labelStyle}>Username</label>
                 <input
                     type="text"
                     placeholder="Soongsil Kim"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     style={inputStyle}
                 />
 
                 <label style={labelStyle}>Email</label>
-                <input
-                    type="email"
-                    placeholder="example@soongsil.ac.kr"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={inputStyle}
-                />
+                <div style={emailContainerStyle}>
+                    <input
+                        type="email"
+                        placeholder="example@soongsil.ac.kr"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        style={inputStyle}
+                    />
+                    <button
+                        style={authButtonStyle}
+                        onClick={handleSend}
+                        disabled={loading || sent}
+                    >
+                        { sent ? 'Sent' : 'Send' }
+                    </button>
+                </div>
+
+                <label style={labelStyle}>Verification Code</label>
+                <div style={emailContainerStyle}>
+                    <input
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="Enter verification code"
+                        value={authCode}
+                        onChange={(e) => setAuthCode(e.target.value.replace(/[^0-9]/g, ''))}
+                        maxLength={6}
+                        style={inputStyle}
+                    />
+                    <button
+                        style={authButtonStyle}
+                        onClick={handleVerfication}
+                        disabled={loading || verified}
+                    >
+                        { verified ? 'Verified' : 'Verify' }
+                    </button>
+                </div>
 
                 <label style={labelStyle}>Password</label>
                 <input
@@ -81,15 +180,13 @@ function RegisterPage() {
                         onClick={handleRegister}
                         disabled={loading}
                     >
-                        {loading ? 'Registering...' : 'Register →'}
+                        {loading ? 'Registering...' : 'Register'}
                     </button>
                 </div>
-
-                {error && <p style={{ color: 'red' }}>{error}</p>}
             </div>
         </div>
     );
-}
+};
 
 const mainContainerStyle = {
     display: 'flex',
@@ -101,6 +198,7 @@ const mainContainerStyle = {
     margin: 0,
     marginTop: '-30px',
 };
+
 
 const loginContainerStyle = {
     backgroundColor: 'white',
@@ -128,11 +226,18 @@ const labelStyle = {
 
 const inputStyle = {
     width: '100%',
-    padding: '10px',
+    padding: '10px 15px', 
+    height: '40px', 
     marginBottom: '20px',
     border: '1px solid var(--light-grey)',
     borderRadius: '5px',
     boxSizing: 'border-box',
+};
+
+const emailContainerStyle = {
+    display: 'flex',
+    alignItems: 'center', 
+    gap: '10px', 
 };
 
 const buttonContainerStyle = {
@@ -142,13 +247,29 @@ const buttonContainerStyle = {
     marginTop: '10px',
 };
 
-const registerButtonStyle = {
-    backgroundColor: 'var(--medium-blue)',
+const authButtonStyle = {
+    backgroundColor: 'var(--light-blue)',
     color: '#FFFFFF',
     padding: '10px 20px',
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
+    marginBottom: '20px',
+};
+
+const registerButtonStyle = {
+    backgroundColor: 'var(--medium-blue)',
+    color: '#FFFFFF',
+    padding: '10px 20px',
+    height: '40px',
+    fontSize: '16px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center', 
+    justifyContent: 'center',
+    boxSizing: 'border-box',
 };
 
 export default RegisterPage;
