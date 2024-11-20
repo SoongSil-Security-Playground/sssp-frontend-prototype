@@ -36,6 +36,8 @@ function ChallengeCard({ name, description, points, category, createdAt, filePat
             </div>
 
             <ChallengeModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
                 name={name}
                 description={description}
                 points={points}
