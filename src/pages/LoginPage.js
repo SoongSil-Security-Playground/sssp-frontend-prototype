@@ -6,14 +6,12 @@ import { loginUser } from '../services/auth';
 function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
     const {login} = useAuth();
 
     const handleLogin = async () => {
-        setLoading(true);
         setError(null);
 
         console.log('Attempting to login with:', { username, password });
@@ -23,12 +21,10 @@ function LoginPage() {
             login(response.access_token);
             setSuccess(true);
             console.log('Login successful:', response);
-            setTimeout(() => navigate('/'), 2000);
+            setTimeout(() => navigate('/'), 1000);
         } catch (error) {
             console.error('Login failed:', error.message);
             setError(error.message);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -61,7 +57,6 @@ function LoginPage() {
                 <div style={buttonContainerStyle}>
                     <button style={loginButtonStyle} onClick={handleLogin}>
                         login →
-                        {loading ? 'Logging in...' : 'Login'}
                     </button>
                     <button style={registerButtonStyle} onClick={handleRegister}>
                         Register →
