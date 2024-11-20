@@ -27,6 +27,7 @@ function ChallengeCard({ name, description, points, category, createdAt, filePat
             >
                 <h3 style={{ ...titleStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{name}</h3>
                 <div style={descriptionContainerStyle}>
+                    <p style={pointsStyle}>{points}</p>
                     <p style={{ ...descriptionStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{description}</p>
                 </div>
                 <div style={{ ...categoryContainerStyle, ...(isSolved ? whiteBackStyle : blueBackStyle) }}>
@@ -110,6 +111,14 @@ const descriptionStyle = {
     fontSize: '16px',
     color: 'var(--dark-blue)',
     margin: 0,
+    marginBottom: '10px',
+};
+
+const pointsStyle = {
+    fontSize: '16px',
+    color: 'var(--dark-blue)',
+    margin: 0,
+    fontWeight: 'bold',
     marginBottom: '10px',
 };
 
