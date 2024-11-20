@@ -5,9 +5,12 @@ import { registerUser } from '../services/auth';
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
+    const [authCode, setAuthCode] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [sent, setSent] = useState(false);
+    const [verified, setVerified] = useState(false);
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
@@ -22,7 +25,7 @@ const RegisterPage = () => {
             console.log('Registration successful:', data);
 
             setSuccess(true);
-            setTimeout(() => navigate('/login'), 2000);
+            setTimeout(() => navigate('/login'), 1000);
         } catch (error) {
             console.error('Registration error:', error.message);
             setError(error.message);
@@ -30,6 +33,14 @@ const RegisterPage = () => {
             setLoading(false);
             console.log('Register request completed.');
         }
+    };
+
+    const handleSend = () => {
+        setSent(true);
+    };
+
+    const handleVerfication = () => {
+        setVerified(true);
     };
 
     return (
@@ -46,13 +57,42 @@ const RegisterPage = () => {
                 />
 
                 <label style={labelStyle}>Email</label>
-                <input
-                    type="email"
-                    placeholder="example@soongsil.ac.kr"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={inputStyle}
-                />
+                <div style={emailContainerStyle}>
+                    <input
+                        type="email"
+                        placeholder="example@soongsil.ac.kr"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        style={inputStyle}
+                    />
+                    <button
+                        style={authButtonStyle}
+                        onClick={handleSend}
+                        disabled={loading || sent}
+                    >
+                        { sent ? 'Sent' : 'Send' }
+                    </button>
+                </div>
+
+                <label style={labelStyle}>Verification Code</label>
+                <div style={emailContainerStyle}>
+                    <input
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="Enter verification code"
+                        value={authCode}
+                        onChange={(e) => setAuthCode(e.target.value.replace(/[^0-9]/g, ''))}
+                        maxLength={6}
+                        style={inputStyle}
+                    />
+                    <button
+                        style={authButtonStyle}
+                        onClick={handleVerfication}
+                        disabled={loading || verified}
+                    >
+                        { verified ? 'Verified' : 'Verify' }
+                    </button>
+                </div>
 
                 <label style={labelStyle}>Password</label>
                 <input
@@ -74,7 +114,7 @@ const RegisterPage = () => {
                 </div>
 
                 {error && <p style={errorTextStyle}>{error}</p>}
-                {success && <p style={successTextStyle}>회원가입을 완료하였습니다. 리다이렉션 중...</p>}
+                {success && <p style={successTextStyle}>Resitered</p>}
             </div>
         </div>
     );
@@ -118,11 +158,18 @@ const labelStyle = {
 
 const inputStyle = {
     width: '100%',
-    padding: '10px',
+    padding: '10px 15px', 
+    height: '40px', 
     marginBottom: '20px',
     border: '1px solid var(--light-grey)',
     borderRadius: '5px',
     boxSizing: 'border-box',
+};
+
+const emailContainerStyle = {
+    display: 'flex',
+    alignItems: 'center', 
+    gap: '10px', 
 };
 
 const buttonContainerStyle = {
@@ -132,15 +179,30 @@ const buttonContainerStyle = {
     marginTop: '10px',
 };
 
-const registerButtonStyle = {
-    backgroundColor: 'var(--medium-blue)',
+const authButtonStyle = {
+    backgroundColor: 'var(--light-blue)',
     color: '#FFFFFF',
     padding: '10px 20px',
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
+    marginBottom: '20px',
 };
 
+const registerButtonStyle = {
+    backgroundColor: 'var(--medium-blue)',
+    color: '#FFFFFF',
+    padding: '10px 20px',
+    height: '40px',
+    fontSize: '16px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center', 
+    justifyContent: 'center',
+    boxSizing: 'border-box',
+};
 
 const successTextStyle = {
     color: 'var(--dark-blue)',
