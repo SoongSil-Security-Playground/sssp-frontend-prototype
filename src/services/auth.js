@@ -49,7 +49,30 @@ export const loginUser = async (username, password) => {
         }
         throw new Error(errorData.detail || 'Login failed');
     }
-    
 
     return await response.json();
+};
+
+export const logoutUser = async (token) => {
+    if (!token) return;
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/v1/auth/logout`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error during logout:', errorData);
+            throw new Error(errorData.message || 'Failed to log out');
+        }
+
+        console.log('/auth/logout API call successful');
+    } catch (error) {
+        console.error('Error during logout API call:', error.message);
+    }
 };

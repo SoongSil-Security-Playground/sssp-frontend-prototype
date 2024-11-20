@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { logoutUser } from '../services/auth';
 
 const AuthContext = createContext();
 
@@ -19,23 +20,13 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         try {
             const storedToken = localStorage.getItem('token');
-            if (storedToken) {
-                await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/auth/logout`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${storedToken}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-            }
-            console.log('/auth/logout fetched')
+            await logoutUser(storedToken);
         } catch (error) {
-            console.error('Error during logout API call:', error);
+            console.error('Logout failed:', error.message);
         } finally {
             localStorage.removeItem('token');
             setToken(null);
             setIsLoggedIn(false);
-            console.log('logout');
         }
     };
 
