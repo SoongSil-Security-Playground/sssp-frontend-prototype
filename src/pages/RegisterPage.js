@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registerUser } from '../services/auth';
+import { registerUser, sendAuthCode, verifyAuthCode } from '../services/auth';
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
@@ -35,12 +35,29 @@ const RegisterPage = () => {
         }
     };
 
-    const handleSend = () => {
-        setSent(true);
+    const handleSend = async () => {
+        setError(null);
+        try {
+            await sendAuthCode(email); 
+            setSent(true);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleVerfication = () => {
-        setVerified(true);
+    const handleVerfication = async () => {
+        setError(null);
+
+        try {
+            await verifyAuthCode(email, authCode);
+            setVerified(true);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (

@@ -24,6 +24,50 @@ export const registerUser = async (username, email, password) => {
     return await response.json();
 };
 
+export const sendAuthCode = async (email) => {
+    const response = await fetch(
+        `${BACKEND_URL}/api/v1/auth/send-auth-code?receiver_email=${encodeURIComponent(email)}`,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+            },
+            body: null,
+        }
+    );
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to send auth code.');
+    }
+};
+
+export const verifyAuthCode = async (email, authCode) => {
+    try {
+        const response = await fetch(
+            `${BACKEND_URL}/api/v1/auth/verify-auth-code?email=${encodeURIComponent(email)}&auth_code=${encodeURIComponent(authCode)}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                },
+                body: null,
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to verify auth code');
+        }
+
+        console.log('Auth code verified successfully');
+        return await response.json();
+    } catch (error) {
+        console.error('Error in verifyAuthCode:', error.message);
+        throw error;
+    }
+};
+
 export const loginUser = async (username, password) => {
     const payload = new URLSearchParams();
     payload.append('username', username);
