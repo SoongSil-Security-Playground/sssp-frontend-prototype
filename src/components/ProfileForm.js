@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchUserInfo, } from '../services/user';
+import { fetchUserInfo, updateUserInfo } from '../services/user';
+import { toast, } from 'react-toastify';
 
 function ProfileForm() {
     const navigate = useNavigate();
@@ -38,6 +39,40 @@ function ProfileForm() {
         fetchData();
     }, [navigate]);
     
+    const handleSaveClick = async () => {
+        setLoading(true);
+        setError(null);
+    
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("No token found. Please log in again.");
+            }
+    
+            const updatedData = await updateUserInfo(token, contents);
+            console.log("Contents updated successfully:", updatedData);
+            toast.dismiss();
+            toast.success(
+                <div>
+                    <p className="toast-title">Profile Updated!</p>
+                    <p className="toast-content">성공적으로 변경되었습니다.</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+        } catch (error) {
+            console.error("Error updating contents:", error.message);
+            toast.error(
+                    <div>
+                    <p className="toast-title">Profile Update Error</p>
+                    <p className="toast-content">{error.message}</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };    
 
     const handleChangePasswordClick = (event) => {
         event.preventDefault();
@@ -80,7 +115,7 @@ function ProfileForm() {
                     ></textarea>
                 </div>
                 <div style={buttonContainerStyle}>
-                    <button style={saveButtonStyle}  disabled={loading}>
+                    <button style={saveButtonStyle} onClick={handleSaveClick} disabled={loading}>
                         {loading ? 'Saving...' : 'Save'}
                     </button>
                     <button style={changePasswordButtonStyle} onClick={handleChangePasswordClick}>
