@@ -10,6 +10,7 @@ function LoginPage() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
+    const {login} = useAuth();
 
     const handleLogin = async () => {
         setLoading(true);
@@ -19,6 +20,7 @@ function LoginPage() {
 
         try {
             const response = await loginUser(username, password);
+            login(response.access_token);
             console.log('Login successful:', response);
         } catch (error) {
             console.error('Login failed:', error.message);
