@@ -6,11 +6,13 @@ import logo from '../assets/images/logo.png';
 
 function NavigationBar() {
     const { isLoggedIn, toggleLogin } = useAuth();
+    const {logout} = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        toggleLogin();
-        navigate('/');
+        console.log('Attempting to logout');
+        logout();
+        setTimeout(() => navigate('/'), 1000);
     };
 
     return (
