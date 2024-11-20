@@ -40,14 +40,16 @@ export const loginUser = async (username, password) => {
     if (!response.ok) {
         const errorData = await response.json();
         console.error('Error response data:', errorData);
-
+    
         if (Array.isArray(errorData.detail)) {
-            const errorMessages = errorData.detail.map((err) => `${err.loc.join('.')}: ${err.msg}`);
-            throw new Error(errorMessages.join(', '));
+            const errorMessages = errorData.detail.map((err) => 
+                `${err.loc.slice(1).join('.')}: ${err.msg}`
+            );
+            throw new Error(errorMessages.join('\n'));
         }
-
         throw new Error(errorData.detail || 'Login failed');
     }
+    
 
     return await response.json();
 };

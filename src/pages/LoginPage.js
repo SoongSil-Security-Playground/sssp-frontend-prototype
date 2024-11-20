@@ -23,8 +23,8 @@ function LoginPage() {
             console.log('Login successful:', response);
             setTimeout(() => navigate('/'), 1000);
         } catch (error) {
-            console.error('Login failed:', error.message);
-            setError(error.message);
+            const formattedError = error.message.replace(/\n/g, '<br>');
+            setError(<span dangerouslySetInnerHTML={{ __html: formattedError }} />);
         }
     };
 
