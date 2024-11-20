@@ -1,7 +1,7 @@
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const fetchUserInfo = async (token) => {
-    const response = await fetch('https://sssp.live/api/v1/user', {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -19,7 +19,7 @@ export const fetchUserInfo = async (token) => {
 };
 
 export const updateUserInfo = async (token, contents) => {
-    const response = await fetch("https://sssp.live/api/v1/user", {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user`, {
         method: "PATCH",
         headers: {
             "Authorization": `Bearer ${token}`,
