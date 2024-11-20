@@ -18,10 +18,10 @@ function LoginPage() {
 
         try {
             const response = await loginUser(username, password);
-            login(response.access_token);
+            await login(response.access_token);
             setSuccess(true);
             console.log('Login successful:', response);
-            setTimeout(() => navigate('/'), 1000);
+            navigate('/');
         } catch (error) {
             const formattedError = error.message.replace(/\n/g, '<br>');
             setError(<span dangerouslySetInnerHTML={{ __html: formattedError }} />);

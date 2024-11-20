@@ -9,10 +9,10 @@ function NavigationBar() {
     const {logout} = useAuth();
     const navigate = useNavigate();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         console.log('Attempting to logout');
-        logout();
-        setTimeout(() => navigate('/'), 1000);
+        await logout();
+        navigate('/');
     };
 
     return (
