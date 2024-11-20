@@ -23,7 +23,7 @@ function LoginPage() {
             login(response.access_token);
             setSuccess(true);
             console.log('Login successful:', response);
-            navigate('/');
+            setTimeout(() => navigate('/'), 2000);
         } catch (error) {
             console.error('Login failed:', error.message);
             setError(error.message);
