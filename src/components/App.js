@@ -12,12 +12,21 @@ import ChallengesPage from '../pages/ChallengesPage';
 import MypagePage from '../pages/MypagePage';
 import ChangePasswordPage from '../pages/ChangePasswordPage';
 import PrivateRoute from '../routes/PrivateRoute';
+import 'react-toastify/dist/ReactToastify.css';
+import '../assets/styles/toast.css'
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
           <NavigationBar />
+          <ToastContainer
+            position='bottom-right'
+            style={{ margin: '0px 40px' }}
+            hideProgressBar={true}
+            closeOnClick
+          />
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<LoginPage />} />

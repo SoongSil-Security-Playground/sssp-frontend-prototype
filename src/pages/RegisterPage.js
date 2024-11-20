@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser, sendAuthCode, verifyAuthCode } from '../services/auth';
+import { toast, ToastContainer } from 'react-toastify';
+import '../assets/styles/toast.css';
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
@@ -37,11 +39,37 @@ const RegisterPage = () => {
 
     const handleSend = async () => {
         setError(null);
+
+        toast.info(
+            <div>
+                <p className="toast-title">Sending Email</p>
+                <p className="toast-content">This may take a few moments.</p>
+                <p className="toast-time">{new Date().toLocaleString()}</p>
+            </div>,
+            { autoClose: false }
+        );
+
         try {
             await sendAuthCode(email); 
+            toast.dismiss();
+            toast.success(
+                <div>
+                    <p className="toast-title">Email Sent</p>
+                    <p className="toast-content">이메일이 전송되었습니다.</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
             setSent(true);
         } catch (error) {
             setError(error.message);
+            toast.dismiss();
+            toast.error(
+                <div>
+                    <p className="toast-title">Failed to Send Email</p>
+                    <p className="toast-content">{error.message}</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
         } finally {
             setLoading(false);
         }
@@ -52,9 +80,23 @@ const RegisterPage = () => {
 
         try {
             await verifyAuthCode(email, authCode);
+            toast.success(
+                <div>
+                    <p className="toast-title">Verification Successful</p>
+                    <p className="toast-content">인증되었습니다.</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
             setVerified(true);
         } catch (error) {
             setError(error.message);
+            toast.error(
+                <div>
+                    <p className="toast-title">Verification Failed</p>
+                    <p className="toast-content">{error.message}</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
         } finally {
             setLoading(false);
         }
@@ -130,8 +172,8 @@ const RegisterPage = () => {
                     </button>
                 </div>
 
-                {error && <p style={errorTextStyle}>{error}</p>}
-                {success && <p style={successTextStyle}>Resitered</p>}
+                {/* {error && <p style={errorTextStyle}>{error}</p>} */}
+                {/* {success && <p style={successTextStyle}>Resitered</p>} */}
             </div>
         </div>
     );
