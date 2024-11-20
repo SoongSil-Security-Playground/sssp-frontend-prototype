@@ -24,16 +24,17 @@ export const registerUser = async (username, email, password) => {
     return await response.json();
 };
 
-export const loginUser = async (email, password) => {
+export const loginUser = async (username, password) => {
     const response = await fetch(`${BACKEND_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
     });
 
     const contentType = response.headers.get('content-type');
+    console.log(response)
 
     if (!response.ok) {
         if (contentType && contentType.includes('application/json')) {

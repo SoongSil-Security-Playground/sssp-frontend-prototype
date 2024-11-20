@@ -1,16 +1,31 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { loginUser } from '../services/auth';
 
 function LoginPage() {
-    const [userName, setUserName] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
-    const { toggleLogin } = useAuth();
 
-    const handleLogin = () => {
-        toggleLogin();
-        navigate('/');
+    const handleLogin = async () => {
+        setLoading(true);
+        setError(null);
+
+        console.log('Attempting to login with:', { username, password });
+
+        try {
+            const response = await loginUser(username, password);
+            console.log('Login successful:', response);
+        } catch (error) {
+            console.error('Login failed:', error.message);
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleRegister = () => {
@@ -21,12 +36,12 @@ function LoginPage() {
         <div style={mainContainerStyle}>
             <h1 style={headerTextStyle}>LOGIN</h1>
             <div style={loginContainerStyle}>
-                <label style={labelStyle}>UserName</label>
+                <label style={labelStyle}>Username</label>
                 <input
                     type="text"
                     placeholder="Soongsil Kim"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     style={inputStyle}
                 />
 
