@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { registerUser, sendAuthCode, verifyAuthCode } from '../services/auth';
-import { toast, ToastContainer } from 'react-toastify';
-import '../assets/styles/toast.css';
+import { toast, } from 'react-toastify';
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
@@ -19,23 +18,36 @@ const RegisterPage = () => {
     const handleRegister = async () => {
         setLoading(true);
         setError(null);
-
+    
         console.log('Register request started with:', { username, email, password });
-
+    
         try {
+            if (!verified) {
+                throw new Error('Verification required. Please verify your email before registering.');
+            }
+    
             const data = await registerUser(username, email, password);
             console.log('Registration successful:', data);
-
+    
             setSuccess(true);
-            navigate('/login')
+            navigate('/login');
         } catch (error) {
             console.error('Registration error:', error.message);
             setError(error.message);
+    
+            toast.error(
+                <div>
+                    <p className="toast-title">Registration Failed</p>
+                    <p className="toast-content">{error.message}</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>,
+                { icon: false }
+            );
         } finally {
             setLoading(false);
             console.log('Register request completed.');
         }
-    };
+    };    
 
     const handleSend = async () => {
         setError(null);
@@ -43,7 +55,7 @@ const RegisterPage = () => {
         toast.info(
             <div>
                 <p className="toast-title">Sending Email</p>
-                <p className="toast-content">This may take a few moments.</p>
+                <p className="toast-content">이메일을 보내고 있습니다.</p>
                 <p className="toast-time">{new Date().toLocaleString()}</p>
             </div>,
             { autoClose: false }
@@ -171,9 +183,6 @@ const RegisterPage = () => {
                         {loading ? 'Registering...' : 'Register'}
                     </button>
                 </div>
-
-                {/* {error && <p style={errorTextStyle}>{error}</p>} */}
-                {/* {success && <p style={successTextStyle}>Resitered</p>} */}
             </div>
         </div>
     );
@@ -262,17 +271,5 @@ const registerButtonStyle = {
     justifyContent: 'center',
     boxSizing: 'border-box',
 };
-
-const successTextStyle = {
-    color: 'var(--dark-blue)',
-    fontSize: '14px',
-
-}
-
-const errorTextStyle = {
-    color: 'var(--dark-grey)',
-    fontSize: '14px',
-
-}
 
 export default RegisterPage;
