@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 function LoginPage() {
-    const [name, setName] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const { toggleLogin } = useAuth();
@@ -21,12 +21,12 @@ function LoginPage() {
         <div style={mainContainerStyle}>
             <h1 style={headerTextStyle}>LOGIN</h1>
             <div style={loginContainerStyle}>
-                <label style={labelStyle}>Name</label>
+                <label style={labelStyle}>UserName</label>
                 <input
                     type="text"
                     placeholder="Soongsil Kim"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
                     style={inputStyle}
                 />
 
