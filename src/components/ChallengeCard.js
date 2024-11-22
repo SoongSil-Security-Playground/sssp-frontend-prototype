@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ChallengeModal from './ChallengeModal';
 
-function ChallengeCard({ name, description, points, category, createdAt, filePath, isSolved }) {
+function ChallengeCard({ id, name, description, points, category, createdAt, filePath, initialSolved}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSolved, setIsSolved] = useState(initialSolved);
 
     const handleOpenModal = () => {
         console.log("Opening modal");
@@ -38,6 +39,7 @@ function ChallengeCard({ name, description, points, category, createdAt, filePat
             <ChallengeModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
+                id={id}
                 name={name}
                 description={description}
                 points={points}
@@ -45,16 +47,17 @@ function ChallengeCard({ name, description, points, category, createdAt, filePat
                 createdAt={new Date(createdAt).toLocaleString()}
                 filePath={filePath}
                 isSolved={isSolved}
+                onSolvedChange={setIsSolved}
             />
         </div>
     );
 }
 
 ChallengeCard.propTypes = {
-    title: PropTypes.string.isRequired,
+    name : PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    tag: PropTypes.string.isRequired,
-    isSolved: PropTypes.bool.isRequired,
+    category: PropTypes.string.isRequired,
+    initialSolved: PropTypes.number.isRequired,
 };
 
 const cardContainerStyle = {

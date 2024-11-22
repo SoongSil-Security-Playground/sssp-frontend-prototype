@@ -7,8 +7,8 @@ function UserCard({ name, description }) {
                 <span style={profileIconStyle}></span>
             </div>
             <div style={textContainerStyle}>
-                <h3 style={nameStyle}>name</h3>
-                <p style={descriptionStyle}>description</p>
+                <h3 style={nameStyle}>{name}</h3>
+                <p style={descriptionStyle}>{description}</p>
             </div>
         </div>
     );

@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { submitFlag } from '../services/challenge';
+import { toast } from 'react-toastify';
 
-function ChallengeModal({ isOpen, onClose, name, description, points, category, createdAt, filePath, isSolved: initialSolved }) {
+function ChallengeModal({ isOpen, onClose, id, name, description, points, category, createdAt, filePath, isSolved: initialSolved, onSolvedChange }) {
     const [isSolved, setIsSolved] = useState(initialSolved);
+    const [flag, setFlag] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         console.log("ChallengeModal isOpen prop:", isOpen);
@@ -16,9 +21,40 @@ function ChallengeModal({ isOpen, onClose, name, description, points, category, 
         }
     };
 
-    const handleSubmitFlag = () => {
-        setIsSolved(true);
+    const handleSubmitFlag = async () => {
+        setLoading(true);
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("No token found. Please log in.");
+            }
+            const response = await submitFlag(token, id, flag);
+            console.log(response.detail);
+            if (response.detail === "Correct!") {
+                setIsSolved(true);
+                onSolvedChange(true);
+                toast.success("Correct!");
+            } else if (response.detail === "Wrong Flag!") {
+                toast.error("Wrong Flag!");
+            }
+            setFlag('');
+        } catch (error) {
+            console.error("Error submit flag:", error.message);
+            toast.error(
+                <div>
+                    <p className="toast-title">Failed to submit flag</p>
+                    <p className="toast-content">{error.message}</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     const handleDownload = () => {
         if (filePath) {
@@ -54,7 +90,7 @@ function ChallengeModal({ isOpen, onClose, name, description, points, category, 
                     <p style={solvedStyle}>solved</p>
                 ) : (
                     <div style={inputContainerStyle}>
-                        <input type="text" placeholder="flag" style={inputStyle} />
+                        <input type="text" placeholder="flag" style={inputStyle} value={flag} onChange={(e) => setFlag(e.target.value)}/>
                         <button style={submitButtonStyle} onClick={handleSubmitFlag}>submit</button>
                     </div>
                 )}
@@ -66,13 +102,14 @@ function ChallengeModal({ isOpen, onClose, name, description, points, category, 
 ChallengeModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    points: PropTypes.number.isRequired,
-    category: PropTypes.string.isRequired,
+    // name: PropTypes.string.isRequired,
+    // description: PropTypes.string.isRequired,
+    // points: PropTypes.number.isRequired,
+    // category: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
     filePath: PropTypes.string,
-    isSolved: PropTypes.bool.isRequired,
+    // isSolved: PropTypes.number.isRequired,
+    onSolvedChange: PropTypes.func.isRequired,
 };
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
-function FilterSidebar({ selectedCategory, onSelectCategory, selectedState, onSelectState }) {
-    const categories = ["All", "Pwn", "Web", "Reversing", "Crypto", "Forensic", "Misc"];
+function FilterSidebar({ categories, selectedCategory, onSelectCategory, selectedState, onSelectState }) {
+    // const categories = ["All", "Pwn", "Web", "Reversing", "Crypto", "Forensic", "Misc"];
     const states = ["All", "Solved", "Unsolved"];
 
     return (
