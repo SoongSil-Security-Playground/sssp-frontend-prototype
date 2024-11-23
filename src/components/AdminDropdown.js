@@ -1,23 +1,23 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
-function Dropdown() {
+function AdminDropdown() {
     const [isOpen, setIsOpen] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState(null);
-    const dropdownRef = useRef(null);
+    const AdmindropdownRef = useRef(null);
 
-    const toggleDropdown = () => {
+    const toggleAdminDropdown = () => {
         setIsOpen(!isOpen);
     };
 
     const pages = [
-        { value: "Users", link: "/UserSettingPage" },
-        { value: "Challenges", link: "/ChallSettingPage" },
-        { value: "Notifications", link: "/NotiSettingPage" },
+        { value: "Users", link: "/admin/users" },
+        { value: "Challenges", link: "/admin/challenges" },
+        { value: "Notifications", link: "/admin/notifications" },
     ];
 
     const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        if (AdmindropdownRef.current && !AdmindropdownRef.current.contains(event.target)) {
             setIsOpen(false);
         }
     };
@@ -30,17 +30,17 @@ function Dropdown() {
     }, []);
 
     return (
-        <div style={mainContainerStyle} ref={dropdownRef}>
-            <button style={settingsButtonStyle} onClick={toggleDropdown}>
-                Settings<span style={dropdownArrowStyle}>{isOpen ? "▲" : "▼"}</span>          
+        <div style={mainContainerStyle} ref={AdmindropdownRef}>
+            <button style={settingsButtonStyle} onClick={toggleAdminDropdown}>
+                Settings<span style={AdmindropdownArrowStyle}>{isOpen ? "▲" : "▼"}</span>          
             </button>
             {isOpen && (
-                <div style={dropdownBoxStyle}>
+                <div style={AdmindropdownBoxStyle}>
                     {pages.map((page, index) => (
                         <Link 
                             key={index} 
                             to={page.link} 
-                            style={dropdownMenuLinkStyle(hoveredIndex === index)}
+                            style={AdmindropdownMenuLinkStyle(hoveredIndex === index)}
                             onMouseEnter={() => setHoveredIndex(index)}
                             onMouseLeave={() => setHoveredIndex(null)}
                         >
@@ -53,7 +53,7 @@ function Dropdown() {
     );
 }
 
-export default Dropdown;
+export default AdminDropdown;
 
 const mainContainerStyle = {
     position: 'relative',
@@ -68,11 +68,11 @@ const settingsButtonStyle = {
     cursor: 'pointer'
 };
 
-const dropdownArrowStyle = {
+const AdmindropdownArrowStyle = {
     backgroundColor: 'transparent',
 };
 
-const dropdownBoxStyle = {
+const AdmindropdownBoxStyle = {
     position: 'absolute',
     top: '100%',
     backgroundColor: 'white',
@@ -83,7 +83,7 @@ const dropdownBoxStyle = {
     marginTop: '5px',
 };
 
-const dropdownMenuLinkStyle = (isHovered) => ({
+const AdmindropdownMenuLinkStyle = (isHovered) => ({
     display: 'block',
     padding: '10px 16px',
     margin: '4px',
