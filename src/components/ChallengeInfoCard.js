@@ -55,6 +55,7 @@ const cardContainerStyle = {
     boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
     flexDirection: 'row',
     margin: '8px',
+    width: '100%',
 };
 
 const contentWrapperStyle = {

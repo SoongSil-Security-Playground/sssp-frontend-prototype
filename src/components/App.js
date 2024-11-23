@@ -17,6 +17,7 @@ import UsersSettingPage from '../pages/UsersSettingPage';
 import NotificationsSettingPage from '../pages/NotificationsSettingPage';
 
 import UserForm from './UserForm';
+import ChallengeForm from './ChallengeForm';
 
 function App() {
   return (
@@ -99,7 +100,9 @@ function App() {
                 </PrivateRoute>
               }
             />
-            <Route path="/edit-user/:userId" element={<UserForm />} />
+            <Route path="/admin/users/edit/:userId" element={<UserForm />} />
+            <Route path="/admin/challenges/add" element={<ChallengeForm />} />
+            <Route path="/admin/challenges/edit/:challengeId" element={<ChallengeForm/>} />
           </Routes>
         </Router>
     </AuthProvider>

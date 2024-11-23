@@ -2,6 +2,7 @@ import React , { useState } from "react";
 import ChallengeInfoCard from "../components/ChallengeInfoCard";
 import SearchBar from "../components/SearchBar";
 import { useNavigate, Link } from "react-router-dom";
+import ChallengeForm from "../components/ChallengeForm";
 
 
 function ChallengesSettingPage() {
@@ -18,9 +19,13 @@ function ChallengesSettingPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
+    const handleAdd = () => {
+        navigate('/admin/challenges/add');
+    }
+
     const handleEdit = (challengeId) => {
         const challengeToEdit = challenges.find(challenge => challenge.id === challengeId);
-        navigate(`/edit-challenge/${challengeId}`, { state: { challenge: challengeToEdit } });
+        navigate(`/admin/challenges/edit/${challengeId}`, { state: { challenge: challengeToEdit } });
     };
 
     const handleDelete = (challengeId) => {
@@ -40,26 +45,19 @@ function ChallengesSettingPage() {
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Challenges</h1>
             </div>
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <div style={contentContatinerStyle}>
-                <div style={addChallengeButtonStyle}>
-                    <Link to='/add-challenge' style={buttonStyle}>
-                        +
-                    </Link>
-                </div>
-                <div style={{padding: '8px', width: '100%', overflowY: 'auto', maxHeight: '400px',}}>
-                    {filteredChallenges.map(challenge => (
-                        <ChallengeInfoCard
-                            key={challenge.id}
-                            title={challenge.title}
-                            category={challenge.category}
-                            tag={challenge.tag}
-                            state={challenge.state}
-                            onEdit={() => handleEdit(challenge.id)}
-                            onDelete={() => handleDelete(challenge.id)}
-                        />
-                    ))}
-                </div>
+            <div style={contentContainerStyle}>
+                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                {filteredChallenges.map(challenge => (
+                    <ChallengeInfoCard
+                        key={challenge.id}
+                        title={challenge.title}
+                        category={challenge.category}
+                        tag={challenge.tag}
+                        state={challenge.state}
+                        onEdit={() => handleEdit(challenge.id)}
+                        onDelete={() => handleDelete(challenge.id)}
+                    />
+                ))}
             </div>
         </div>
     );
@@ -86,26 +84,12 @@ const headerTextStyle = {
     color: 'var(--dark-blue)',
     marginBottom: '2px',
 };
-const contentContatinerStyle = {
-    width: '100%',
-};
 
-const addChallengeButtonStyle = {
+const contentContainerStyle = {
+    flex: '1',
     display: 'flex',
-    borderRadius: '16px',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    transition: 'box-shadow 0.2s',
-    padding: '12px 16px',
-    margin: '8px',
+    justifyContent: 'flex-start',
+    width: '50vw',
 };
-
-const buttonStyle = {
-    textDecoration: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    alignContent: 'center',
-}

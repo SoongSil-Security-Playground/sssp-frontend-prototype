@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-function ChallengeForm({ id }) {
+function ChallengeForm() {
     const navigate = useNavigate();
     const location = useLocation();
     const challenge = location.state?.challenge || null;
@@ -77,7 +77,7 @@ function ChallengeForm({ id }) {
     return (
         <div style={mainContainerStyle}>
             <div style={titleContainerStyle}>
-                <h1>Challenge</h1>
+                <h1 style={headerTextStyle}>Challenge</h1>
             </div>
             <div style={contentContainerStyle}>
                 <form style={formContainerStyle} onSubmit={handleSubmitClick}>
@@ -177,6 +177,17 @@ const mainContainerStyle = {
     padding: '0 80px',
 };
 
+const titleContainerStyle = {
+    marginTop: '12vh',
+    textAlign: 'center',
+    padding: '20px 0',
+};
+
+const headerTextStyle = {
+    color: 'var(--dark-blue)',
+    marginBottom: '2px',
+};
+
 const contentContainerStyle = {
     marginTop: '20px',
     position: 'relative',
@@ -186,14 +197,6 @@ const contentContainerStyle = {
     borderRadius: '8px',
     boxShadow: '0 0 8px lightgray',
     height: 'fit-content',
-};
-
-const titleContainerStyle = {
-    marginTop: '6vh',
-    width: '100%',
-    textAlign: 'center',
-    marginBottom: '30px',
-    color: '#006e93',
 };
 
 const formContainerStyle = {
