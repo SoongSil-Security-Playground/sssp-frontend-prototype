@@ -17,11 +17,11 @@ function MainPage() {
                     <h1 style={headerTextStyle}>?</h1>
                 </div>
                 <div style={bodyStyle}>
-                    <b1 style={textStyle}>Soongsil Security Playground</b1>
-                    <b1 style={textStyle}>&nbsp;</b1>
-                    <b1 style={textBoldStyle}>• Customize Your Platform</b1>
-                    <b1 style={textBoldStyle}>• Host and Manage Competitions</b1>
-                    <b1 style={textBoldStyle}>• Enjoy the Game!</b1>
+                    <b style={textStyle}>Soongsil Security Playground</b>
+                    <b style={textStyle}>&nbsp;</b>
+                    <b style={textBoldStyle}>• Customize Your Platform</b>
+                    <b style={textBoldStyle}>• Host and Manage Competitions</b>
+                    <b style={textBoldStyle}>• Enjoy the Game!</b>
                 </div>
             </div>
         </div>

@@ -1,16 +1,31 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { loginUser } from '../services/auth';
 
 function LoginPage() {
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
-    const { toggleLogin } = useAuth();
+    const {login} = useAuth();
 
-    const handleLogin = () => {
-        toggleLogin();
-        navigate('/');
+    const handleLogin = async () => {
+        setError(null);
+
+        console.log('Attempting to login with:', { username, password });
+
+        try {
+            const response = await loginUser(username, password);
+            await login(response.access_token);
+            setSuccess(true);
+            console.log('Login successful:', response);
+            navigate('/');
+        } catch (error) {
+            const formattedError = error.message.replace(/\n/g, '<br>');
+            setError(<span dangerouslySetInnerHTML={{ __html: formattedError }} />);
+        }
     };
 
     const handleRegister = () => {
@@ -20,14 +35,13 @@ function LoginPage() {
     return (
         <div style={mainContainerStyle}>
             <h1 style={headerTextStyle}>LOGIN</h1>
-            {/* <b1 style={bodyTextStyle}>hello hello hello </b1> */}
             <div style={loginContainerStyle}>
-                <label style={labelStyle}>Name</label>
+                <label style={labelStyle}>Username</label>
                 <input
                     type="text"
                     placeholder="Soongsil Kim"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     style={inputStyle}
                 />
 
@@ -48,6 +62,9 @@ function LoginPage() {
                         Register →
                     </button>
                 </div>
+
+                {error && <p style={errorTextStyle}>{error}</p>}
+                {success && <p style={successTextStyle}>redirecting...</p>}
             </div>
         </div>
     );
@@ -126,5 +143,17 @@ const registerButtonStyle = {
     borderRadius: '5px',
     cursor: 'pointer',
 };
+
+const successTextStyle = {
+    color: 'var(--dark-blue)',
+    fontSize: '14px',
+
+}
+
+const errorTextStyle = {
+    color: 'var(--dark-grey)',
+    fontSize: '14px',
+
+}
 
 export default LoginPage;

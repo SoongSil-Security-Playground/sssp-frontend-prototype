@@ -8,10 +8,12 @@ import AdminDropdown from './AdminDropdown';
 function NavigationBar() {
     const { isLoggedIn, toggleLogin } = useAuth();
     const { isAdmin, toggleAdmin } = useAuth();
+    const {logout} = useAuth();
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        toggleLogin();
+    const handleLogout = async () => {
+        console.log('Attempting to logout');
+        await logout();
         navigate('/');
     };
 

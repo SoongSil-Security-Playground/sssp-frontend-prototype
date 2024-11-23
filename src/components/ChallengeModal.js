@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function ChallengeModal({ isOpen, onClose, title, description, connection, tag, isSolved: initialSolved }) {
+function ChallengeModal({ isOpen, onClose, name, description, points, category, createdAt, filePath, isSolved: initialSolved }) {
     const [isSolved, setIsSolved] = useState(initialSolved);
 
     useEffect(() => {
@@ -20,18 +20,34 @@ function ChallengeModal({ isOpen, onClose, title, description, connection, tag, 
         setIsSolved(true);
     };
 
+    const handleDownload = () => {
+        if (filePath) {
+            const link = document.createElement('a');
+            link.href = filePath;
+            link.download = filePath.split('/').pop();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            console.error("No file path available for download.");
+        }
+    };
+
     return (
         <div style={overlayStyle} onClick={handleOverlayClick}>
             <div style={modalContainerStyle} onClick={(e) => e.stopPropagation()}>
                 <button onClick={onClose} style={closeButtonStyle}>×</button>
-                <h2 style={titleStyle}>{title}</h2>
-                <div style={tagContainerStyle}>
-                    <p style={tagStyle}>{tag}</p>
+                <h2 style={titleStyle}>{name}</h2>
+                <div style={categoryContainerStyle}>
+                    <p style={categoryStyle}>{category}</p>
                 </div>
                 <div style={informationContainerStyle}>
                     <p style={descriptionStyle}>{description}</p>
-                    <p style={connectionStyle}>{connection}</p>
-                    <button style={downloadButtonStyle}>Download</button>
+                    {filePath && (
+                        <button style={downloadButtonStyle} onClick={handleDownload}>
+                            Download
+                        </button>
+                    )}
                 </div>
 
                 {isSolved ? (
@@ -50,11 +66,15 @@ function ChallengeModal({ isOpen, onClose, title, description, connection, tag, 
 ChallengeModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    tag: PropTypes.string.isRequired,
+    points: PropTypes.number.isRequired,
+    category: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    filePath: PropTypes.string,
     isSolved: PropTypes.bool.isRequired,
 };
+
 
 const overlayStyle = {
     position: 'fixed',
@@ -94,7 +114,7 @@ const titleStyle = {
     color: 'var(--dark-blue)',
 };
 
-const tagContainerStyle = {
+const categoryContainerStyle = {
     borderRadius: '18px',
     backgroundColor: 'var(--dark-blue)',
     width: '5.8vw',
@@ -107,7 +127,7 @@ const tagContainerStyle = {
     border: '1px solid var(--dark-blue)',
 };
 
-const tagStyle = {
+const categoryStyle = {
     fontSize: '14px',
     color: 'white',
     margin: 0,

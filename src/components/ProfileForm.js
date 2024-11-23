@@ -1,46 +1,126 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { fetchUserInfo, updateUserInfo } from '../services/user';
+import { toast, } from 'react-toastify';
 
 function ProfileForm() {
     const navigate = useNavigate();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [contents, setContents] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    const handleChangePasswordClick = () => {
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            setError(null);
+    
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    setError('No token found. Redirecting to login...');
+                    navigate('/login');
+                    return;
+                }
+    
+                const data = await fetchUserInfo(token);
+                setName(data.name || '');
+                setEmail(data.email || '');
+                setContents(data.contents || '');
+            } catch (error) {
+                console.error('Error fetching user data:', error.message);
+                setError(error.message || 'Failed to fetch user data.');
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchData();
+    }, [navigate]);
+    
+    const handleSaveClick = async () => {
+        setLoading(true);
+        setError(null);
+    
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("No token found. Please log in again.");
+            }
+    
+            const updatedData = await updateUserInfo(token, contents);
+            console.log("Contents updated successfully:", updatedData);
+            toast.dismiss();
+            toast.success(
+                <div>
+                    <p className="toast-title">Profile Updated!</p>
+                    <p className="toast-content">성공적으로 변경되었습니다.</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+        } catch (error) {
+            console.error("Error updating contents:", error.message);
+            toast.error(
+                    <div>
+                    <p className="toast-title">Profile Update Error</p>
+                    <p className="toast-content">{error.message}</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };    
+
+    const handleChangePasswordClick = (event) => {
+        event.preventDefault();
         navigate('/mypage/change-password');
     };
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+
     return (
         <div style={pageContainerStyle}>
-            <style>{placeholderStyle}</style>
             <div style={profileContainerStyle}>
                 <div style={profileIconStyle}></div>
             </div>
             <form style={formContainerStyle}>
                 <div style={formFieldStyle}>
                     <label style={labelStyle}>Name</label>
-                    <input 
-                        type="text" 
-                        placeholder="Kim Soongsil" 
-                        style={{ ...inputStyle, ':focus': inputFocusStyle }} 
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        style={inputStyle}
                     />
                 </div>
                 <div style={formFieldStyle}>
                     <label style={labelStyle}>Email</label>
-                    <input 
-                        type="email" 
-                        placeholder="example@soongsil.ac.kr" 
-                        style={{ ...inputStyle, ':focus': inputFocusStyle }} 
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        style={inputStyle}
                     />
                 </div>
                 <div style={formFieldStyle}>
                     <label style={labelStyle}>Contents</label>
-                    <textarea 
-                        placeholder="hello world" 
-                        style={{ ...textareaStyle, ':focus': inputFocusStyle }} 
+                    <textarea
+                        value={contents}
+                        onChange={(e) => setContents(e.target.value)}
+                        style={textareaStyle}
                     ></textarea>
                 </div>
                 <div style={buttonContainerStyle}>
-                    <button style={saveButtonStyle}>save</button>
-                    <button style={changePasswordButtonStyle} onClick={handleChangePasswordClick}>change password →</button>
+                    <button style={saveButtonStyle} onClick={handleSaveClick} disabled={loading}>
+                        {loading ? 'Saving...' : 'Save'}
+                    </button>
+                    <button style={changePasswordButtonStyle} onClick={handleChangePasswordClick}>
+                        Change Password →
+                    </button>
                 </div>
             </form>
         </div>
@@ -107,16 +187,6 @@ const inputStyle = {
     outline: 'none',
     transition: 'border-color 0.2s ease',
 };
-
-const inputFocusStyle = {
-    borderColor: 'var(--dark-blue)',
-};
-
-const placeholderStyle = `
-  input::placeholder, textarea::placeholder {
-    color: var(--dark-blue);
-  }
-`;
 
 const textareaStyle = {
     padding: '10px',

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ChallengeModal from './ChallengeModal';
 
-function ChallengeCard({ title, description, connection, tag, isSolved }) {
+function ChallengeCard({ name, description, points, category, createdAt, filePath, isSolved }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => {
@@ -25,22 +25,25 @@ function ChallengeCard({ title, description, connection, tag, isSolved }) {
                 style={{ ...cardContainerStyle, ...(isSolved ? blueBackStyle : whiteBackStyle) }} 
                 onClick={handleOpenModal}
             >
-                <h3 style={{ ...titleStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{title}</h3>
+                <h3 style={{ ...titleStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{name}</h3>
                 <div style={descriptionContainerStyle}>
+                    <p style={pointsStyle}>{points}</p>
                     <p style={{ ...descriptionStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{description}</p>
                 </div>
-                <div style={{ ...tagContainerStyle, ...(isSolved ? whiteBackStyle : blueBackStyle) }}>
-                    <p style={{ ...tagStyle, ...(isSolved ? blueTextStyle : whiteTextStyle) }}>{tag}</p>
+                <div style={{ ...categoryContainerStyle, ...(isSolved ? whiteBackStyle : blueBackStyle) }}>
+                    <p style={{ ...categoryStyle, ...(isSolved ? blueTextStyle : whiteTextStyle) }}>{category}</p>
                 </div>
             </div>
 
             <ChallengeModal
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
-                title={title}
+                name={name}
                 description={description}
-                connection={connection}
-                tag={tag}
+                points={points}
+                category={category}
+                createdAt={new Date(createdAt).toLocaleString()}
+                filePath={filePath}
                 isSolved={isSolved}
             />
         </div>
@@ -113,7 +116,15 @@ const descriptionStyle = {
     marginBottom: '10px',
 };
 
-const tagContainerStyle = {
+const pointsStyle = {
+    fontSize: '16px',
+    color: 'var(--dark-blue)',
+    margin: 0,
+    fontWeight: 'bold',
+    marginBottom: '10px',
+};
+
+const categoryContainerStyle = {
     borderRadius: '18px',
     backgroundColor: 'var(--dark-blue)',
     width: '6vw',
@@ -125,7 +136,7 @@ const tagContainerStyle = {
     border: '1px solid var(--dark-blue)',
 };
 
-const tagStyle = {
+const categoryStyle = {
     fontSize: '16px',
     color: 'white',
     margin: 0,
