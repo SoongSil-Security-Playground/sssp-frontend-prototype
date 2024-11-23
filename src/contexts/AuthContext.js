@@ -38,11 +38,9 @@ export const AuthProvider = ({ children }) => {
             setIsLoggedIn(true);
         }
     }, []);
-
-    const toggleAdmin = () => setIsAdmin(prev => !prev);
-
+    
     return (
-        <AuthContext.Provider value={{ isLoggedIn, toggleLogin, isAdmin, toggleAdmin }}>
+        <AuthContext.Provider value={{ isLoggedIn, isAdmin, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
