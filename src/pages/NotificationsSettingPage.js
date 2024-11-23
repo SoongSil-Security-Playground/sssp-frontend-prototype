@@ -1,6 +1,6 @@
 import React, {useState} from "react";
+import { useNavigate } from "react-router-dom";
 import NotificationInfoCard from "../components/NotificationInfoCard";
-import NotificationForm from "../components/NotificationForm";
 
 function NotificationsSettingsPage() {
 
@@ -14,26 +14,27 @@ function NotificationsSettingsPage() {
 
     ]);
 
-    const handleDelete = (notificationId) => {
-        if (window.confirm("정말로 이 공지를 삭제하시겠습니까?")) {
-            const updatednotifications = notifications.filter(notification => notification.id !== notificationId);
-            setNotifications(updatednotifications);
-        }
-    };
+    const navigate = useNavigate();
+
+    const handleAdd = () => {
+        navigate('/admin/notifications/add');
+    }
 
     return (
         <div style={mainContainerStyle}>
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Notifications</h1>
             </div>
-                <div style={contentContatinerStyle}>
+                <div style={contentContainerStyle}>
+                    <button style={addChallengeButtonStyle} onClick={handleAdd}>
+                        +
+                    </button>
                     {notifications.map(notification => (
                         <NotificationInfoCard
                             key={notification.id}
                             title={notification.title}
                             content={notification.content}
                             timestamp={notification.timestamp}
-                            onDelete={() => handleDelete(notification.id)}
                         />
                     ))}
                 </div>
@@ -64,9 +65,30 @@ const headerTextStyle = {
     marginBottom: '2px',
 };
 
-const contentContatinerStyle = {
-    width: '100%',
+const contentContainerStyle = {
+    flex: '1',
     display: 'flex',
-    flexDirection: 'row',
-    gap: '20px',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: '50vw',
+};
+
+const addChallengeButtonStyle = {
+    display: 'flex',
+    borderRadius: '16px',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    transition: 'box-shadow 0.2s',
+    padding: '12px 20px',
+    margin: '20px',
+    textDecoration: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    backgroundColor: 'var(--dark-blue)',
+    color: 'white',
+    alignContent: 'center',
+    width: '150px',
 };

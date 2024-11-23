@@ -16,69 +16,74 @@ function NotificationForm() {
 
     return (
         <div style={mainContainerStyle}>
-            <form style={formContainerStyle} onSubmit={handleSubmitClick}>
-                <div style={formFieldStyle}>
-                    <label style={labelStyle}>Title</label>
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        style={inputStyle}
-                    />
-                </div>
-                <div style={formFieldStyle}>
-                    <label style={labelStyle}>Description</label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        style={textareaStyle}
-                    ></textarea>
-                </div>
-                <div style={formFieldStyle}>
-                    <label style={labelStyle}>Notification Type</label>
-                    <div style={rowFormFieldStyle}>
-                        <input 
-                            type="radio" 
-                            id="check-toast" 
-                            name="notification" 
-                            value="toast" 
-                            checked={notificationType === 'toast'} 
-                            onChange={(e) => setNotificationType(e.target.value)} 
+            <div style={titleContainerStyle}>
+                <h1 style={headerTextStyle}>Notification</h1>
+            </div>
+            <div style={contentContainerStyle} >
+                <form style={formContainerStyle} onSubmit={handleSubmitClick}>
+                    <div style={formFieldStyle}>
+                        <label style={labelStyle}>Title</label>
+                        <input
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            style={inputStyle}
                         />
-                        <div htmlFor="check-toast">toast</div>
-                        
-                        <input 
-                            type="radio" 
-                            id="check-alert" 
-                            name="notification" 
-                            value="alert" 
-                            checked={notificationType === 'alert'} 
-                            onChange={(e) => setNotificationType(e.target.value)} 
-                        />
-                        <div htmlFor="check-alert">alert</div>
-                        
-                        <input 
-                            type="radio" 
-                            id="check-background" 
-                            name="notification" 
-                            value="background" 
-                            checked={notificationType === 'background'} 
-                            onChange={(e) => setNotificationType(e.target.value)} 
-                        />
-                        <div htmlFor="check-background">background</div>
                     </div>
-                </div>
-                <div style={buttonContainerStyle}>
-                    <button
-                        style={submitButtonStyle(isHovered)}
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
-                        type="submit"
-                    >
-                        Submit →
-                    </button>
-                </div>
-            </form>
+                    <div style={formFieldStyle}>
+                        <label style={labelStyle}>Description</label>
+                        <textarea
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            style={textareaStyle}
+                        ></textarea>
+                    </div>
+                    <div style={formFieldStyle}>
+                        <label style={labelStyle}>Notification Type</label>
+                        <div style={rowFormFieldStyle}>
+                            <input 
+                                type="radio" 
+                                id="check-toast" 
+                                name="notification" 
+                                value="toast" 
+                                checked={notificationType === 'toast'} 
+                                onChange={(e) => setNotificationType(e.target.value)} 
+                            />
+                            <div htmlFor="check-toast">toast</div>
+                            
+                            <input 
+                                type="radio" 
+                                id="check-alert" 
+                                name="notification" 
+                                value="alert" 
+                                checked={notificationType === 'alert'} 
+                                onChange={(e) => setNotificationType(e.target.value)} 
+                            />
+                            <div htmlFor="check-alert">alert</div>
+                            
+                            <input 
+                                type="radio" 
+                                id="check-background" 
+                                name="notification" 
+                                value="background" 
+                                checked={notificationType === 'background'} 
+                                onChange={(e) => setNotificationType(e.target.value)} 
+                            />
+                            <div htmlFor="check-background">background</div>
+                        </div>
+                    </div>
+                    <div style={buttonContainerStyle}>
+                        <button
+                            style={submitButtonStyle(isHovered)}
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
+                            type="submit"
+                        >
+                            Submit →
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }
@@ -86,8 +91,30 @@ function NotificationForm() {
 export default NotificationForm;
 
 const mainContainerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    top: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0 80px',
+};
+
+const titleContainerStyle = {
+    marginTop: '12vh',
+    textAlign: 'center',
+    padding: '20px 0',
+};
+
+const headerTextStyle = {
+    color: 'var(--dark-blue)',
+    marginBottom: '2px',
+};
+
+const contentContainerStyle = {
+    marginTop: '20px',
     position: 'relative',
     backgroundColor: 'transparent',
+    width: 'fit-content',
     padding: '24px',
     borderRadius: '8px',
     boxShadow: '0 0 8px lightgray',

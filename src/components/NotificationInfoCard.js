@@ -13,9 +13,6 @@ function NotificationInfoCard({ title, content, timestamp }) {
 
     return (
         <div style={cardContainerStyle}>
-            <button style={deleteButtonStyle} onClick={handleDelete} aria-label="Delete notification">
-            ×
-            </button>
             <div>
                 <h3 style={titleStyle}>{title}</h3>
                 <p style={contentStyle}>{content}</p>

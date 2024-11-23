@@ -1,8 +1,7 @@
 import React , { useState } from "react";
 import ChallengeInfoCard from "../components/ChallengeInfoCard";
 import SearchBar from "../components/SearchBar";
-import { useNavigate, Link } from "react-router-dom";
-import ChallengeForm from "../components/ChallengeForm";
+import { useNavigate } from "react-router-dom";
 
 
 function ChallengesSettingPage() {
