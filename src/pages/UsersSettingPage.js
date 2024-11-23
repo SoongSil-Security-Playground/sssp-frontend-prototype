@@ -3,7 +3,7 @@ import UserInfoCard from "../components/UserInfoCard";
 import SearchBar from "../components/SearchBar";
 import { useNavigate, Link } from "react-router-dom";
 
-function UserSettingPage() {
+function UsersSettingPage() {
 
     const [users, setUsers] = useState([
         { id: 1, name: "User 1", email: "user1@gmail.com", content: "This is user 1's content" },
@@ -64,7 +64,7 @@ function UserSettingPage() {
     );
 }
 
-export default UserSettingPage;
+export default UsersSettingPage;
 
 const mainContainerStyle = {
     display: 'flex',

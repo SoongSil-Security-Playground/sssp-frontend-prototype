@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import NotificationInfoCard from "../components/NotificationInfoCard";
 import NotificationForm from "../components/NotificationForm";
 
-function NotiSettingPage() {
+function NotificationsSettingsPage() {
 
     const [notifications, setNotifications] = useState([
         { id: 1, title: "title1", content: "This is noti 1's content", timestamp: "2024.11.23"},
@@ -46,7 +46,7 @@ function NotiSettingPage() {
     );
 }
 
-export default NotiSettingPage;
+export default NotificationsSettingsPage;
 
 
 const mainContainerStyle = {

@@ -12,11 +12,9 @@ import ChallengesPage from '../pages/ChallengesPage';
 import MypagePage from '../pages/MypagePage';
 import ChangePasswordPage from '../pages/ChangePasswordPage';
 import PrivateRoute from '../routes/PrivateRoute';
-import ChallSettingPage from '../pages/ChallSettingPage';
-import UserSettingPage from '../pages/UserSettingPage';
-import NotiSettingPage from '../pages/NotiSettingPage';
-import UserForm from '../components/UserForm';
-import ChallengeForm from '../components/ChallengeForm';
+import ChallengesSettingPage from '../pages/ChallengesSettingPage';
+import UsersSettingPage from '../pages/UsersSettingPage';
+import NotificationsSettingPage from '../pages/NotificationsSettingPage';
 
 function App() {
   return (
@@ -76,34 +74,29 @@ function App() {
               }
             />
             <Route
-              path="/challSettingPage"
+              path="/admin/challenges"
               element={
                 <PrivateRoute>
-                  <ChallSettingPage />
+                  <ChallengesSettingPage />
                 </PrivateRoute>
               }
             />
             <Route
-              path="/userSettingPage"
+              path="/admin/users"
               element={
                 <PrivateRoute>
-                  <UserSettingPage />
+                  <UsersSettingPage />
                 </PrivateRoute>
               }
             />
             <Route
-              path="/notiSettingPage"
+              path="/admin/notifications"
               element={
                 <PrivateRoute>
-                  <NotiSettingPage />
+                  <NotificationsSettingPage />
                 </PrivateRoute>
               }
             />
-            <Route path="/edit-user/:userId" element={<UserForm />} />
-            <Route path="/add-user" element={<UserForm/>} />
-            <Route path="/edit-Challenge/:ChallengeId" element={<ChallengeForm />} />
-            <Route path="/add-challenge" element={<ChallengeForm/>} />
-
           </Routes>
         </Router>
     </AuthProvider>

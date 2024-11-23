@@ -4,7 +4,7 @@ import SearchBar from "../components/SearchBar";
 import { useNavigate, Link } from "react-router-dom";
 
 
-function ChallSettingPage() {
+function ChallengesSettingPage() {
 
     const [challenges, setChallenges] = useState([
         {id:1, title: "chall1", category: "pwn", tag: "none", state: "visible"},
@@ -65,7 +65,7 @@ function ChallSettingPage() {
     );
 }
 
-export default ChallSettingPage;
+export default ChallengesSettingPage;
 
 const mainContainerStyle = {
     display: 'flex',
