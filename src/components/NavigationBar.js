@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/images/logo.png';
 import AdminDropdown from './AdminDropdown';
+import { isAdmin } from '../services/auth';
 
 function NavigationBar() {
-    const { isLoggedIn, toggleLogin } = useAuth();
-    const { isAdmin, toggleAdmin } = useAuth();
-    const {logout} = useAuth();
+    const { isLoggedIn, isAdmin, logout } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
