@@ -32,5 +32,7 @@ const inputStyle = ({ isFocused }) => ({
     fontSize: '16px',
     outline: 'none',
     transition: 'transform 0.2s',
-    width: '400px',
+    width: '500px',
+    marginTop: '20px',
+    marginBottom: '20px',
 });

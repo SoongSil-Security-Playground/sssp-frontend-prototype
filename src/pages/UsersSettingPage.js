@@ -3,6 +3,7 @@ import UserInfoCard from "../components/UserInfoCard";
 import SearchBar from "../components/SearchBar";
 import { useNavigate, Link } from "react-router-dom";
 import UserForm from '../components/UserForm';
+import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
 
 function UsersSettingPage() {
 
@@ -41,20 +42,18 @@ function UsersSettingPage() {
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Users</h1>
             </div>
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            <div style={contentContatinerStyle}>
-                <div style={{padding: '8px', width: '100%', overflowY: 'auto', maxHeight: '400px',}}>
-                    {filteredUsers.map(user => (
-                        <UserInfoCard
-                            key={user.id}
-                            name={user.name}
-                            email={user.email}
-                            content={user.content}
-                            onEdit={() => handleEdit(user.id)}
-                            onDelete={() => handleDelete(user.id)}
-                        />
-                    ))}
-                </div>
+            <div style={contentContainerStyle}>
+                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                {filteredUsers.map(user => (
+                    <UserInfoCard
+                        key={user.id}
+                        name={user.name}
+                        email={user.email}
+                        content={user.content}
+                        onEdit={() => handleEdit(user.id)}
+                        onDelete={() => handleDelete(user.id)}
+                    />
+                ))}
             </div>
         </div>
     );
@@ -82,27 +81,11 @@ const headerTextStyle = {
     marginBottom: '2px',
 };
 
-const contentContatinerStyle = {
-    width: '100%',
-    heigth: '100%',
-};
-
-const addUserButtonStyle = {
+const contentContainerStyle = {
+    flex: '1',
     display: 'flex',
-    borderRadius: '16px',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    transition: 'box-shadow 0.2s',
-    padding: '12px 16px',
-    margin: '8px',
+    justifyContent: 'flex-start',
+    width: '50vw',
 };
-
-const buttonStyle = {
-    textDecoration: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    alignContent: 'center',
-}
