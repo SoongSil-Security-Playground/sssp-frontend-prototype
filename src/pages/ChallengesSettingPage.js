@@ -47,6 +47,9 @@ function ChallengesSettingPage() {
             </div>
             <div style={contentContainerStyle}>
                 <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                <button style={addChallengeButtonStyle} onClick={handleAdd}>
+                    +
+                </button>
                 {filteredChallenges.map(challenge => (
                     <ChallengeInfoCard
                         key={challenge.id}
@@ -92,4 +95,23 @@ const contentContainerStyle = {
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '50vw',
+};
+
+const addChallengeButtonStyle = {
+    display: 'flex',
+    borderRadius: '16px',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    transition: 'box-shadow 0.2s',
+    padding: '12px 20px',
+    margin: '20px',
+    textDecoration: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    backgroundColor: 'var(--dark-blue)',
+    color: 'white',
+    alignContent: 'center',
+    width: '150px',
 };

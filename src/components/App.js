@@ -18,6 +18,7 @@ import NotificationsSettingPage from '../pages/NotificationsSettingPage';
 
 import UserForm from './UserForm';
 import ChallengeForm from './ChallengeForm';
+import NotificationForm from './NotificationForm';
 
 function App() {
   return (
@@ -103,6 +104,8 @@ function App() {
             <Route path="/admin/users/edit/:userId" element={<UserForm />} />
             <Route path="/admin/challenges/add" element={<ChallengeForm />} />
             <Route path="/admin/challenges/edit/:challengeId" element={<ChallengeForm/>} />
+            <Route path="/admin/notifications/add/:notificationId" element={<NotificationForm/>} />
+            <Route path="/admin/notifications/edit/:notificationId" element={<NotificationForm/>} />
           </Routes>
         </Router>
     </AuthProvider>

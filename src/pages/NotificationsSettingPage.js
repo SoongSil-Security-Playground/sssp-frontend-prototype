@@ -27,20 +27,15 @@ function NotificationsSettingsPage() {
                 <h1 style={headerTextStyle}>Notifications</h1>
             </div>
                 <div style={contentContatinerStyle}>
-                    <div style={{padding: '8px', width: '100%'}}>
-                        <NotificationForm />
-                    </div>
-                    <div style={{padding: '8px', width: '100%', overflowY: 'auto', maxHeight: '400px',}}>
-                        {notifications.map(notification => (
-                            <NotificationInfoCard
-                                key={notification.id}
-                                title={notification.title}
-                                content={notification.content}
-                                timestamp={notification.timestamp}
-                                onDelete={() => handleDelete(notification.id)}
-                            />
-                        ))}
-                    </div>
+                    {notifications.map(notification => (
+                        <NotificationInfoCard
+                            key={notification.id}
+                            title={notification.title}
+                            content={notification.content}
+                            timestamp={notification.timestamp}
+                            onDelete={() => handleDelete(notification.id)}
+                        />
+                    ))}
                 </div>
         </div>
     );
