@@ -1,7 +1,7 @@
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const fetchNotices = async (token) => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/notice`, {
+    const response = await fetch(`${BACKEND_URL}/api/v1/notice`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`,

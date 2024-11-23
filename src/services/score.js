@@ -1,7 +1,7 @@
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const fetchAllScores = async (token) => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/score`, {
+    const response = await fetch(`${BACKEND_URL}/api/v1/score`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`,
