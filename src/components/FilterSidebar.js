@@ -1,7 +1,6 @@
 import React from 'react';
 
 function FilterSidebar({ categories, selectedCategory, onSelectCategory, selectedState, onSelectState }) {
-    // const categories = ["All", "Pwn", "Web", "Reversing", "Crypto", "Forensic", "Misc"];
     const states = ["All", "Solved", "Unsolved"];
 
     return (
@@ -43,9 +42,9 @@ function FilterSidebar({ categories, selectedCategory, onSelectCategory, selecte
 
 const sidebarStyle = {
     position: 'fixed',
-    top: '22vh',
+    top: '30vh',
     left: '4vw',
-    width: '15vw',
+    width: '12vw',
     padding: '10px',
     border: '1px solid lightgrey',
     borderRadius: '8px',
