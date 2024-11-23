@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/images/logo.png';
+import AdminDropdown from './AdminDropdown';
 
 function NavigationBar() {
     const { isLoggedIn, toggleLogin } = useAuth();
+    const { isAdmin, toggleAdmin } = useAuth();
     const {logout} = useAuth();
     const navigate = useNavigate();
 
@@ -36,6 +38,16 @@ function NavigationBar() {
                     <button style={buttonStyle}>Notifications</button>
                 </Link>
             </div>
+            <div style={adminBarStyle}>
+                {isAdmin && isLoggedIn ? (
+                    <>
+                        <AdminDropdown />
+                    </>
+                ):(
+                    <>
+                    </>
+                )}
+            </div>
             <div style={privBarStyle}>
                 {isLoggedIn ? (
                     <>
@@ -63,7 +75,7 @@ const navStyle = {
     alignItems: 'center',
     padding: '10px 20px',
     width: '100vw',
-    overflowX: 'hidden',
+    //overflowX: 'hidden',
     backgroundColor: 'white',
     borderBottom: '1px solid #eaeaea',
     zIndex: 1000,
@@ -80,6 +92,13 @@ const globalBarStyle = {
     justifyContent: 'center',
     gap: '10px',
     flex: '1',
+};
+
+const adminBarStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '10px',
+    felx: '1',
 };
 
 const privBarStyle = {

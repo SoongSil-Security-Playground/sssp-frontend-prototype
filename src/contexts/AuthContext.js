@@ -7,6 +7,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(true);
     const [token, setToken] = useState(null);
 
     const login = (newToken) => {
@@ -38,8 +39,10 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
+    const toggleAdmin = () => setIsAdmin(prev => !prev);
+
     return (
-        <AuthContext.Provider value={{ isLoggedIn, token, login, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, toggleLogin, isAdmin, toggleAdmin }}>
             {children}
         </AuthContext.Provider>
     );

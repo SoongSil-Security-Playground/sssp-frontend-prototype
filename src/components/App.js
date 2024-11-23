@@ -12,6 +12,15 @@ import ChallengesPage from '../pages/ChallengesPage';
 import MypagePage from '../pages/MypagePage';
 import ChangePasswordPage from '../pages/ChangePasswordPage';
 import PrivateRoute from '../routes/PrivateRoute';
+
+import ChallengesSettingPage from '../pages/ChallengesSettingPage';
+import UsersSettingPage from '../pages/UsersSettingPage';
+import NotificationsSettingPage from '../pages/NotificationsSettingPage';
+
+import UserForm from './UserForm';
+import ChallengeForm from './ChallengeForm';
+import NotificationForm from './NotificationForm';
+
 import 'react-toastify/dist/ReactToastify.css';
 import '../assets/styles/toast.css'
 import { ToastContainer } from 'react-toastify';
@@ -79,7 +88,35 @@ function App() {
                 </PrivateRoute>
               }
             />
-
+            <Route
+              path="/admin/challenges"
+              element={
+                <PrivateRoute>
+                  <ChallengesSettingPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <PrivateRoute>
+                  <UsersSettingPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin/notifications"
+              element={
+                <PrivateRoute>
+                  <NotificationsSettingPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/admin/users/edit/:userId" element={<UserForm />} />
+            <Route path="/admin/challenges/add" element={<ChallengeForm />} />
+            <Route path="/admin/challenges/edit/:challengeId" element={<ChallengeForm/>} />
+            <Route path="/admin/notifications/add" element={<NotificationForm/>} />
+            <Route path="/admin/notifications/edit/:notificationId" element={<NotificationForm/>} />
           </Routes>
         </Router>
     </AuthProvider>
