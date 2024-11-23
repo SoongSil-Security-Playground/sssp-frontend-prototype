@@ -28,7 +28,7 @@ function UserForm({ id }) {
     return (
         <div style={mainContainerStyle}>
             <div style={titleContainerStyle}>
-                <h1>User</h1>
+                <h1 style={headerTextStyle}>User</h1>
             </div>
             <div style={contentContainerStyle}>
                 <div style={profileContainerStyle}>
@@ -91,10 +91,21 @@ export default UserForm;
 const mainContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    top: 0,
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0 80px',
+    minHeight: '100vh',
+    textAlign: 'center',
+    margin: 0,
+};
+
+const titleContainerStyle = {
+    marginTop: '12vh',
+    textAlign: 'center',
+    padding: '20px 0',
+};
+
+const headerTextStyle = {
+    color: 'var(--dark-blue)',
+    marginBottom: '2px',
 };
 
 const contentContainerStyle = {
@@ -106,14 +117,6 @@ const contentContainerStyle = {
     borderRadius: '8px',
     boxShadow: '0 0 8px lightgray',
     height: 'fit-content',
-};
-
-const titleContainerStyle = {
-    color: '#006e93',
-    marginTop: '6vh',
-    width: '100%',
-    textAlign: 'center',
-    marginBottom: '30px',
 };
 
 const profileContainerStyle = {
