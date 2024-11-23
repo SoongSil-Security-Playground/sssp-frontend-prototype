@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchUserInfo, updateUserInfo } from '../services/user';
+import { fetchUserInfo, updateUserInfo, deleteUserInfo } from '../services/user';
 import { toast, } from 'react-toastify';
+import { useAuth } from '../contexts/AuthContext';
 
 function ProfileForm() {
     const navigate = useNavigate();
@@ -10,6 +11,8 @@ function ProfileForm() {
     const [contents, setContents] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const {logout} = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -79,6 +82,51 @@ function ProfileForm() {
         navigate('/mypage/change-password');
     };
 
+    
+    const handleDeleteAccountClick = async () => {
+        const confirmDelete = window.confirm("정말로 계정을 삭제하시겠습니까?");
+
+        if (!confirmDelete) {
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("No token found. Please log in again.");
+            }
+
+            const response = await deleteUserInfo(token);
+            console.log("Delete Account successfully:", response); 
+            await logout();
+            navigate('/');
+
+            toast.dismiss();
+            toast.success(
+                <div>
+                    <p className="toast-title">Account Deleted!</p>
+                    <p className="toast-content">성공적으로 탈퇴되었습니다.</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+        } catch (error) {
+            console.error("Error delete contents:", error.message);
+            toast.error(
+                    <div>
+                    <p className="toast-title">Account Delete Error</p>
+                    <p className="toast-content">{error.message}</p>
+                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
@@ -115,11 +163,14 @@ function ProfileForm() {
                     ></textarea>
                 </div>
                 <div style={buttonContainerStyle}>
+                    <button style={changePasswordButtonStyle} onClick={handleChangePasswordClick}>
+                        Change Password
+                    </button>
+                    <button style={deleteAccountButtonStyle} onClick={handleDeleteAccountClick}>
+                        Delete Account
+                    </button>
                     <button style={saveButtonStyle} onClick={handleSaveClick} disabled={loading}>
                         {loading ? 'Saving...' : 'Save'}
-                    </button>
-                    <button style={changePasswordButtonStyle} onClick={handleChangePasswordClick}>
-                        Change Password →
                     </button>
                 </div>
             </form>
@@ -201,20 +252,10 @@ const textareaStyle = {
 
 const buttonContainerStyle = {
     display: 'flex',
-    gap: '10px',
-    justifyContent: 'flex-start',
+    gap: '12px',
+    justifyContent: 'center',
     marginTop: '20px',
-};
-
-const saveButtonStyle = {
-    backgroundColor: 'var(--dark-blue)',
-    color: 'white',
-    fontWeight: 'bold',
-    marginRight: '15px',
-    padding: '10px 20px',
-    borderRadius: '8px',
-    border: 'none',
-    cursor: 'pointer',
+    alignItems: 'center',
 };
 
 const changePasswordButtonStyle = {
@@ -225,6 +266,27 @@ const changePasswordButtonStyle = {
     borderRadius: '8px',
     border: '1px solid var(--dark-blue)',
     cursor: 'pointer',
+};
+
+const deleteAccountButtonStyle = {
+    backgroundColor: 'var(--dark-grey)',
+    color: 'white',
+    fontWeight: 'bold',
+    padding: '10px 20px',
+    borderRadius: '8px',
+    border: '1px solid var(--dark-grey)',
+    cursor: 'pointer',
+};
+
+const saveButtonStyle = {
+    backgroundColor: 'var(--dark-blue)',
+    color: 'white',
+    fontWeight: 'bold',
+    padding: '10px 20px',
+    borderRadius: '8px',
+    border: 'none',
+    cursor: 'pointer',
+    marginLeft: '25px',
 };
 
 export default ProfileForm;
