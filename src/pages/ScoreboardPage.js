@@ -48,7 +48,7 @@ function ScoreboardPage() {
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Scoreboard</h1>
             </div>
-            <ScoreChart />
+            {/* <ScoreChart /> */}
             <div style={contentContainerStyle}>
                 {scores.map((score, index) => (
                     <RankCard
