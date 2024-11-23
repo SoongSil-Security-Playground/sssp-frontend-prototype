@@ -24,7 +24,7 @@ function NotificationsSettingsPage() {
     return (
         <div style={mainContainerStyle}>
             <div style={titleContainerStyle}>
-                <h1>Notifications</h1>
+                <h1 style={headerTextStyle}>Notifications</h1>
             </div>
                 <div style={contentContatinerStyle}>
                     <div style={{padding: '8px', width: '100%'}}>
@@ -52,19 +52,21 @@ export default NotificationsSettingsPage;
 const mainContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    top: 0,
     alignItems: 'center',
-    justifyContent: 'center',
+    minHeight: '100vh',
     textAlign: 'center',
-    padding: '0 80px',
+    margin: 0,
 };
 
 const titleContainerStyle = {
-    marginTop: '6vh',
-    width: '100%',
+    marginTop: '12vh',
     textAlign: 'center',
-    marginBottom: '30px',
-    color: '#006e93',
+    padding: '20px 0',
+};
+
+const headerTextStyle = {
+    color: 'var(--dark-blue)',
+    marginBottom: '2px',
 };
 
 const contentContatinerStyle = {

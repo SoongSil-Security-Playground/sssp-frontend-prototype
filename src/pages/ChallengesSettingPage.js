@@ -38,7 +38,7 @@ function ChallengesSettingPage() {
     return (
         <div style={mainContainerStyle}>
             <div style={titleContainerStyle}>
-                <h1>Challenges</h1>
+                <h1 style={headerTextStyle}>Challenges</h1>
             </div>
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <div style={contentContatinerStyle}>
@@ -70,20 +70,22 @@ export default ChallengesSettingPage;
 const mainContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    top: 0,
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0 80px',
+    minHeight: '100vh',
+    textAlign: 'center',
+    margin: 0,
 };
 
 const titleContainerStyle = {
-    marginTop: '6vh',
-    width: '100%',
+    marginTop: '12vh',
     textAlign: 'center',
-    marginBottom: '30px',
-    color: '#006e93',
+    padding: '20px 0',
 };
 
+const headerTextStyle = {
+    color: 'var(--dark-blue)',
+    marginBottom: '2px',
+};
 const contentContatinerStyle = {
     width: '100%',
 };

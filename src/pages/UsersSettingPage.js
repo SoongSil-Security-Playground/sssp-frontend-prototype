@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UserInfoCard from "../components/UserInfoCard";
 import SearchBar from "../components/SearchBar";
 import { useNavigate, Link } from "react-router-dom";
+import UserForm from '../components/UserForm';
 
 function UsersSettingPage() {
 
@@ -38,15 +39,10 @@ function UsersSettingPage() {
     return (
         <div style={mainContainerStyle}>
             <div style={titleContainerStyle}>
-                <h1>Users</h1>
+                <h1 style={headerTextStyle}>Users</h1>
             </div>
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <div style={contentContatinerStyle}>
-                <div style={addUserButtonStyle}>
-                    <Link to='/add-user' style={buttonStyle}>
-                        +
-                    </Link>
-                </div>
                 <div style={{padding: '8px', width: '100%', overflowY: 'auto', maxHeight: '400px',}}>
                     {filteredUsers.map(user => (
                         <UserInfoCard
@@ -69,22 +65,26 @@ export default UsersSettingPage;
 const mainContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
-    top: 0,
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0 80px',
+    minHeight: '100vh',
+    textAlign: 'center',
+    margin: 0,
 };
 
 const titleContainerStyle = {
-    marginTop: '6vh',
-    width: '100%',
+    marginTop: '12vh',
     textAlign: 'center',
-    marginBottom: '30px',
-    color: '#006e93',
+    padding: '20px 0',
+};
+
+const headerTextStyle = {
+    color: 'var(--dark-blue)',
+    marginBottom: '2px',
 };
 
 const contentContatinerStyle = {
     width: '100%',
+    heigth: '100%',
 };
 
 const addUserButtonStyle = {
