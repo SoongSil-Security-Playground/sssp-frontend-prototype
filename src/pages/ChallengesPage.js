@@ -51,13 +51,15 @@ function ChallengesPage() {
         fetchData();
     }, []);
 
+    const challengeCategories = ["All",...new Set(challenges.map(item => item.category))];
+
     const filteredChallenges = challenges.filter((challenge) => {
-        const categoryMatches = selectedCategory === "All" || challenge.tag === selectedCategory;
+        const categoryMatches = selectedCategory === "All" || challenge.category === selectedCategory;
         
         const stateMatches =
             selectedState === "All" ||
-            (selectedState === "Solved" && challenge.isSolved) ||
-            (selectedState === "Unsolved" && !challenge.isSolved);
+            (selectedState === "Solved" && challenge.is_user_solved) ||
+            (selectedState === "Unsolved" && !challenge.is_user_solved);
 
         return categoryMatches && stateMatches;
     });
@@ -68,7 +70,8 @@ function ChallengesPage() {
                 <h1 style={headerTextStyle}>Challenges</h1>
             </div>
             <div style={contentWrapperStyle}>
-                <FilterSidebar 
+                <FilterSidebar
+                    categories={challengeCategories}
                     selectedCategory={selectedCategory}
                     onSelectCategory={handleCategorySelect}
                     selectedState={selectedState}
@@ -79,13 +82,15 @@ function ChallengesPage() {
                 {filteredChallenges.map((challenge) => (
                     <ChallengeCard
                         key={challenge.id}
+                        id={challenge.id}
                         name={challenge.name}
                         description={challenge.description}
                         points={challenge.points}
                         category={challenge.category}
                         createdAt={new Date(challenge.created_at).toLocaleString()}
                         filePath={challenge.file_path}
-                        isSolved={challenge.isSolved}
+                        isSolved={challenge.is_user_solved}
+                        initialSolved={challenge.is_user_solved}
                     />
                 ))}
                 </div>

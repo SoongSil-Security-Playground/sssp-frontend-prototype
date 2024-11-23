@@ -1,9 +1,48 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ScoreChart from '../components/ScoreChart';
 import RankCard from '../components/RankCard';
 import Footer from '../components/Footer';
+import { fetchAllScores } from '../services/score';
+import { toast } from 'react-toastify';
 
 function ScoreboardPage() {
+    const [scores, setScores] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    throw new Error("No token found. Please log in.");
+                }
+
+                const data = await fetchAllScores(token);
+                const sortedScores = data.sort((a, b) => b.total_score - a.total_score);
+                
+                setScores(sortedScores);
+            } catch (error) {
+                console.error("Error fetching scores:", error.message);
+                toast.error(
+                    <div>
+                        <p className="toast-title">Failed to fetch scores</p>
+                        <p className="toast-content">{error.message}</p>
+                        <p className="toast-time">{new Date().toLocaleString()}</p>
+                    </div>
+                );
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div style={mainContainerStyle}>
             <div style={titleContainerStyle}>
@@ -11,7 +50,14 @@ function ScoreboardPage() {
             </div>
             <ScoreChart />
             <div style={contentContainerStyle}>
-                <RankCard />
+                {scores.map((score, index) => (
+                    <RankCard
+                        key={index}
+                        rank={index + 1}
+                        name={score.username}
+                        score={score.total_score}
+                    />
+                ))}
             </div>
             <Footer />
         </div>

@@ -3,14 +3,14 @@ import React from 'react';
 function UserRankCard({ rank, name, score }) {
     return (
         <div style={cardContainerStyle}>
-            <div style={rankStyle}>rank</div>
+            <div style={rankStyle}>{rank}</div>
             <div style={profileImageContainerStyle}>
                 <span style={profileIconStyle}></span>
             </div>
             <div style={textContainerStyle}>
-                <p style={nameStyle}>name</p>
+                <p style={nameStyle}>{name}</p>
             </div>
-            <div style={scoreStyle}>score</div>
+            <div style={scoreStyle}>{score}</div>
         </div>
     );
 }

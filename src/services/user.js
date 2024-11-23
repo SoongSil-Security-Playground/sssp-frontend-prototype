@@ -36,3 +36,42 @@ export const updateUserInfo = async (token, contents) => {
 
     return await response.json();
 };
+
+export const deleteUserInfo = async (token) => {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/delete`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/json",
+        },
+    });
+    console.log(response);
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.log("fail");
+        throw new Error(errorData.detail || "Failed to delete user.")
+    }
+
+    return await response.json();
+
+};
+
+export const fetchAllUsers = async (token) => {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/user_list`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/json",
+        },
+    });
+    console.log(response);
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Failed to fetch users.")
+    }
+
+    return await response.json();
+
+};
