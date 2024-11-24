@@ -75,3 +75,22 @@ export const fetchAllUsers = async (token) => {
     return await response.json();
 
 };
+
+export const updatePassword = async (curPassword, newPassword, token) => {
+    const response = await fetch(`${BACKEND_URL}/api/v1/user/update_password?cur_password=${curPassword}&new_password=${newPassword}`, {
+        method: 'GET',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    console.log(response);
+    
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData);
+        throw new Error(errorData.detail || 'Failed to update password.');
+    }
+
+    return await response.json();
+};
