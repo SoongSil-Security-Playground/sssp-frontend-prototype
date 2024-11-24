@@ -3,7 +3,7 @@ import editIcon from "../assets/images/edit.png";
 import deleteIcon from "../assets/images/delete.png";
 
 function UserInfoCard({ id, name, email, content, onDelete }) {
-    const [isEditHovered, setIsEditHovered] = useState(false);
+    // const [isEditHovered, setIsEditHovered] = useState(false);
     const [isDeleteHovered, setIsDeleteHovered] = useState(false);
 
     return (
