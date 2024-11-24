@@ -58,3 +58,31 @@ export const submitFlag = async (token, challenge_id, flag) => {
 
     return await response.json();
 };
+
+export const createChallenge = async (formData, token) => {
+    console.log("Submitting challenge data:");
+    formData.forEach((value, key) => {
+        console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`); // todo: check service works
+    });
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/v1/admin/challenges/`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            body: formData,
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to create challenge.');
+        }
+
+        const data = await response.json();
+        return data; 
+    } catch (error) {
+        console.error('Error creating challenge:', error.message);
+        throw error;
+    }
+};

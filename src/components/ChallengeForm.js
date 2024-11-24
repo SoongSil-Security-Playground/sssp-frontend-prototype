@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { createChallenge } from '../services/challenge';
 
 function ChallengeForm() {
     const navigate = useNavigate();
@@ -9,14 +10,14 @@ function ChallengeForm() {
     const [isUploadHovered, setIsUploadHovered] = useState(false);
     const [isSubmitHovered, setIsSubmitHovered] = useState(false);
 
-    const [title, setTitle] = useState(challenge ? challenge.title : "");
+    const [id, setId] = useState(challenge ? challenge.id : 0);
+    const [name, setName] = useState(challenge ? challenge.name : "");
     const [category, setCategory] = useState(challenge ? challenge.category : "");
     const [description, setDescription] = useState(challenge ? challenge.description : "");
     const [flag, setFlag] = useState(challenge ? challenge.flag : "");
-    const [tag, setTag] = useState(challenge ? challenge.tag : "");
-    const [value, setValue] = useState(challenge ? challenge.value : "");
     const [state, setState] = useState(challenge ? challenge.state : "");
-    const [fileName, setFileName] = useState(challenge ? challenge.file : '');
+    const [points, setPoints] = useState(challenge ? challenge.points : 0);
+    const [filePath, setFilePath] = useState(challenge ? challenge.filePath : '');
 
     const handleFileUpload = () => {
         document.getElementById('file').click();
@@ -25,69 +26,73 @@ function ChallengeForm() {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setFileName(file.name);
+            setFilePath(file.name);
         }
     };
 
     useEffect(() => {
         if (challenge) {
-            setTitle(challenge.title);
+            setName(challenge.name);
             setCategory(challenge.category);
             setDescription(challenge.description);
             setFlag(challenge.flag);
-            setTag(challenge.tag);
-            setValue(challenge.value);
-            setState(challenge.state);
-            setFileName(challenge.fileName);
+            setPoints(challenge.points);
+            setFilePath(challenge.filePath);
         }
     }, [challenge]);
 
-    const handleSubmitClick = (e) => {
+    const handleSubmitClick = async (e) => {
         e.preventDefault();
-        if (!title || !category || !description || !flag) {
-            alert("모든 필드를 채워주세요.");
-            return;
+
+        const formData = new FormData();
+
+        formData.append('name', name);
+        formData.append('category', category);
+        formData.append('points', points);
+        formData.append('flag', flag);
+        formData.append('description', description);
+    
+        const fileInput = document.getElementById('file');
+        if (fileInput && fileInput.files.length > 0) {
+            formData.append('file', fileInput.files[0]);
         }
-
-        const updatedChallenge = {
-            id: challenge ? challenge.id : Date.now(),
-            title,
-            category,
-            description,
-            flag,
-            tag,
-            value,
-            state,
-            fileName
-        };
+    
+        console.log("FormData entries with types:");
+        formData.forEach((value, key) => {
+            console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`);
+        });
 
 
-        setTitle("");
-        setCategory("");
-        setDescription("");
-        setFlag("");
-        setTag("");
-        setValue("");
-        setState("visible");
-        setFileName("");
-
-        navigate("/ChallSettingPage");
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("No token found. Please log in.");
+            }
+    
+            console.log("Submitting challenge data:", Object.fromEntries(formData.entries()));
+    
+            await createChallenge(formData, token);
+    
+            navigate("/admin/challenges");
+        } catch (error) {
+            console.error('challenge create failed:', error);
+        }
     };
 
     return (
         <div style={mainContainerStyle}>
-            <div style={titleContainerStyle}>
+            <div style={nameContainerStyle}>
                 <h1 style={headerTextStyle}>Challenge</h1>
             </div>
             <div style={contentContainerStyle}>
                 <form style={formContainerStyle} onSubmit={handleSubmitClick}>
                     <div style={rowformFieldStyle}>
                         <div style={formFieldStyle}>
-                            <label style={labelStyle}>Title</label>
+                            <label style={labelStyle}>name</label>
                             <input
                                 type="text"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 style={inputStyle}
                             />
                         </div>
@@ -113,29 +118,41 @@ function ChallengeForm() {
                     </div>
                     <div style={rowformFieldStyle}>
                         <div style={formFieldStyle}>
-                            <label style={labelStyle}>Value</label>
+                            <label style={labelStyle}>Flag</label>
+                            <textarea
+                                type="text"
+                                value={flag}
+                                onChange={(e) => setFlag(e.target.value)}
+                                style={inputStyle}
+                            />
+                        </div>
+                    </div>
+                    <div style={rowformFieldStyle}>
+                        <div style={formFieldStyle}>
+                            <label style={labelStyle}>points</label>
                             <input 
                                 type="number" 
-                                value={value} 
-                                onChange={(e) => setValue(e.target.value)}
+                                value={points} 
+                                onChange={(e) => setPoints(e.target.value)}
                                 style={inputStyle} 
                             />
                         </div>
                         <div style={formFieldStyle}>
                             <label style={labelStyle}>State</label>
-                            <select value={state} 
+                            <select 
+                                value={state} 
                                 onChange={(e) => setState(e.target.value)}
                                 style={selectStyle}
                             >
-                                <option value="visible">visible</option>
-                                <option value="hidden">hidden</option>
+                                <option points="visible">visible</option>
+                                <option points="hidden">hidden</option>
                             </select>
                         </div>
                     </div>
                     <div style={formFieldStyle}>
                         <label style={labelStyle}>File</label>
                         <div style={rowformFieldStyle}>
-                            {fileName && <span>Selected file: {fileName}</span>}
+                            {filePath && <span>Selected file: {filePath}</span>}
                             <input type="file" id="file" style={{ display: 'none' }} onChange={handleFileChange} />
                             <div style={buttonContainerStyle}>
                                 <button
@@ -177,7 +194,7 @@ const mainContainerStyle = {
     padding: '0 80px',
 };
 
-const titleContainerStyle = {
+const nameContainerStyle = {
     marginTop: '12vh',
     textAlign: 'center',
     padding: '20px 0',
@@ -237,6 +254,7 @@ const inputStyle = {
     backgroundColor: 'white',
     color: '#707070',
     outline: 'none',
+    resize: 'none',
 };
 
 const textareaStyle = {
