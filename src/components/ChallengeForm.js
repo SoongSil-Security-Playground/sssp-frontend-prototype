@@ -16,9 +16,11 @@ function ChallengeForm() {
     const [category, setCategory] = useState(challenge ? challenge.category : "");
     const [description, setDescription] = useState(challenge ? challenge.description : "");
     const [flag, setFlag] = useState(challenge ? challenge.flag : "");
-    const [state, setState] = useState(challenge ? challenge.state : "");
     const [points, setPoints] = useState(challenge ? challenge.points : 0);
     const [filePath, setFilePath] = useState(challenge ? challenge.filePath : '');
+    const [decay, setDecay] = useState(challenge ? challenge.decay : 0);
+    const [minPoints, setMinPoints] = useState(challenge ? challenge.minPoints : 0);
+    const [isDynamic, setIsDynamic] = useState(challenge ? challenge.isDynamic : false);
 
     const handleFileUpload = () => {
         document.getElementById('file').click();
@@ -39,6 +41,9 @@ function ChallengeForm() {
             setFlag(challenge.flag);
             setPoints(challenge.points);
             setFilePath(challenge.filePath);
+            setDecay(challenge.decay);
+            setMinPoints(challenge.minPoints);
+            setIsDynamic(challenge.isDynamic);
         }
     }, [challenge]);
 
@@ -52,17 +57,19 @@ function ChallengeForm() {
         formData.append('points', points);
         formData.append('flag', flag);
         formData.append('description', description);
-    
+        formData.append('decay', decay);
+        formData.append('minimum_point', minPoints);
+        formData.append('is_dynamic', isDynamic);
+
         const fileInput = document.getElementById('file');
         if (fileInput && fileInput.files.length > 0) {
             formData.append('file', fileInput.files[0]);
         }
-    
+
         console.log("FormData entries with types:");
         formData.forEach((value, key) => {
             console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`);
         });
-
 
         try {
             const token = localStorage.getItem("token");
@@ -91,7 +98,7 @@ function ChallengeForm() {
                 <form style={formContainerStyle} onSubmit={handleSubmitClick}>
                     <div style={rowformFieldStyle}>
                         <div style={formFieldStyle}>
-                            <label style={labelStyle}>name</label>
+                            <label style={labelStyle}>Name</label>
                             <input
                                 type="text"
                                 value={name}
@@ -120,7 +127,7 @@ function ChallengeForm() {
                         </div>
                     </div>
                     <div style={rowformFieldStyle}>
-                    <div style={formFieldStyle}>
+                        <div style={formFieldStyle}>
                             <label style={labelStyle}>Flag</label>
                             <input
                                 type="text"
@@ -132,24 +139,46 @@ function ChallengeForm() {
                     </div>
                     <div style={rowformFieldStyle}>
                         <div style={formFieldStyle}>
-                            <label style={labelStyle}>points</label>
-                            <input 
-                                type="number" 
-                                value={points} 
-                                onChange={(e) => setPoints(e.target.value)}
-                                style={inputStyle} 
+                            <label style={labelStyle}>Scoring</label>
+                            <select
+                                value={isDynamic}
+                                onChange={(e) => setIsDynamic(e.target.value === 'true')}
+                                style={selectStyle}
+                            >
+                                <option value="true">Dynamic</option>
+                                <option value="false">Static</option>
+                            </select>
+                        </div>
+                        <div style={formFieldStyle}>
+                            <label style={labelStyle}>Points</label>
+                            <input
+                                type="number"
+                                value={points}
+                                onChange={(e) => setPoints(Number(e.target.value))}
+                                style={inputStyle}
+                            />
+                        </div>
+                    </div>
+                    <div style={rowformFieldStyle}>
+                        <div style={formFieldStyle}>
+                            <label style={labelStyle}>Decay</label>
+                            <input
+                                type="number"
+                                value={decay}
+                                onChange={(e) => setDecay(Number(e.target.value))}
+                                style={!isDynamic ? disabledInputStyle : inputStyle}
+                                disabled={!isDynamic}
                             />
                         </div>
                         <div style={formFieldStyle}>
-                            <label style={labelStyle}>State</label>
-                            <select 
-                                value={state} 
-                                onChange={(e) => setState(e.target.value)}
-                                style={selectStyle}
-                            >
-                                <option points="visible">visible</option>
-                                <option points="hidden">hidden</option>
-                            </select>
+                            <label style={labelStyle}>Minimum Points</label>
+                            <input
+                                type="number"
+                                value={minPoints}
+                                onChange={(e) => setMinPoints(Number(e.target.value))}
+                                style={!isDynamic ? disabledInputStyle : inputStyle}
+                                disabled={!isDynamic}
+                            />
                         </div>
                     </div>
                     <div style={formFieldStyle}>
@@ -163,7 +192,7 @@ function ChallengeForm() {
                                     onMouseEnter={() => setIsUploadHovered(true)}
                                     onMouseLeave={() => setIsUploadHovered(false)}
                                     onClick={handleFileUpload}
-                                    type="button" // type을 "button"으로 수정
+                                    type="button"
                                 >
                                     Upload file →
                                 </button>
@@ -268,7 +297,7 @@ const textareaStyle = {
     backgroundColor: 'white',
     color: '#707070',
     outline: 'none',
-    height: '120px',
+    height: '70px',
     resize: 'none',
 };
 
@@ -312,3 +341,10 @@ const submitButtonStyle = (isHovered) => ({
     transition: 'background-color 0.3s',
     backgroundColor: isHovered ? '#005f7f' : '#006e93',
 });
+
+const disabledInputStyle = {
+    ...inputStyle,
+    backgroundColor: 'var(--light-grey)',
+    color: '#B0B0B0',
+    cursor: 'not-allowed',
+};
