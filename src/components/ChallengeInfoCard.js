@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import editIcon from "../assets/images/edit.png";
 import deleteIcon from "../assets/images/delete.png";
 
-function ChallengeInfoCard({id, title, category, tag, state, onEdit, onDelete}) {
+function ChallengeInfoCard({id, name, category, description, points, createdAt, onEdit, onDelete}) {
     const [isEditHovered, setIsEditHovered] = useState(false);
     const [isDeleteHovered, setIsDeleteHovered] = useState(false);
 
@@ -10,12 +10,13 @@ function ChallengeInfoCard({id, title, category, tag, state, onEdit, onDelete}) 
         <div style={cardContainerStyle}>
             <div style={contentWrapperStyle}>
                 <div style={iconStyle}>
-                    <span>😊</span>
+                    <text>{id}</text>
                 </div>
-                <div style={titleStyle}>{title}</div>
-                <div style={categoryStyle}>{category}</div>
-                <div style={tagStyle}>{tag}</div>
-                <div style={stateStyle}>{state}</div>
+                <text style={categoryStyle}>{category}</text>
+                <text style={titleStyle}>{name}</text>
+                <text style={pointsStyle}>{points}</text>
+                <text style={descriptionStyle}>{description}</text>
+                <text style={timeStampStyle}>{createdAt}</text>
             </div>
             <div style={actionsWrapperStyle}>
                 <span 
@@ -65,6 +66,7 @@ const contentWrapperStyle = {
     flexDirection: 'row',
     gap: '12px',
     padding: '8px',
+    overflow: 'hidden',
 };
 
 const iconStyle = {
@@ -73,22 +75,29 @@ const iconStyle = {
 
 const titleStyle = {
     fontWeight: 'bold',
+    fontSize: '15px',
     color: '#006e93',
 };
 
 const categoryStyle = {
+    fontSize: '12px',
     color: 'grey',
 };
 
-const tagStyle = {
-    color: 'grey',
+const pointsStyle ={
+    fontSize: '15px',
+    color: 'var(--dark-grey)',
 };
 
-const stateStyle ={
-    fontWeight: 'semibold',
-    color: '#006e93',
+const descriptionStyle = {
+    fontSize: '15px',
+    color: 'var(--text-color)',
 };
 
+const timeStampStyle = {
+    size: '7px',
+    color: 'var(--medium-grey)',
+}
 
 const actionsWrapperStyle = {
     alignItems: 'center',

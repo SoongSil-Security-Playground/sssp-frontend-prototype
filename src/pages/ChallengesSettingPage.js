@@ -1,20 +1,15 @@
-import React , { useState } from "react";
+import React , { useState, useEffect } from "react";
 import ChallengeInfoCard from "../components/ChallengeInfoCard";
 import SearchBar from "../components/SearchBar";
+import { fetchAllChallenges } from '../services/challenge';
 import { useNavigate } from "react-router-dom";
-
+import { toast } from 'react-toastify';
+import addIcon from '../assets/images/add.png';
 
 function ChallengesSettingPage() {
-
-    const [challenges, setChallenges] = useState([
-        {id:1, title: "chall1", category: "pwn", tag: "none", state: "visible"},
-        {id:2, title: "chall2", category: "web", tag: "none", state: "visible"},
-        {id:3, title: "chall3", category: "crypto", tag: "none", state: "visible"},
-        {id:4, title: "chall4", category: "rev", tag: "none", state: "visible"},
-        {id:5, title: "chall5", category: "misc", tag: "none", state: "visible"},
-        {id:6, title: "chall6", category: "pwn", tag: "none", state: "hidden"},
-    ]);
-
+    const [challenges, setChallenges] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
 
@@ -39,6 +34,38 @@ function ChallengesSettingPage() {
         (challenges.category && (challenges.category.toLowerCase().includes(searchTerm.toLowerCase())))
     );
 
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    throw new Error("No token found. Please log in.");
+                }
+
+                const data = await fetchAllChallenges(token);
+                setChallenges(data);
+            } catch (error) {
+                console.error("Error fetching challenges:", error.message);
+                toast.error(
+                    <div>
+                        <p className="toast-title">Failed to fetch challenges</p>
+                        <p className="toast-content">{error.message}</p>
+                        <p className="toast-time">{new Date().toLocaleString()}</p>
+                    </div>
+                );
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
     return (
         <div style={mainContainerStyle}>
             <div style={titleContainerStyle}>
@@ -47,15 +74,21 @@ function ChallengesSettingPage() {
             <div style={contentContainerStyle}>
                 <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                 <button style={addChallengeButtonStyle} onClick={handleAdd}>
-                    +
+                    <img 
+                        src={addIcon} 
+                        alt="Add" 
+                        onClick={handleAdd} 
+                    />
                 </button>
                 {filteredChallenges.map(challenge => (
                     <ChallengeInfoCard
                         key={challenge.id}
-                        title={challenge.title}
+                        id={challenge.id}
+                        name={challenge.name}
+                        description={challenge.description}
+                        points={challenge.points}
                         category={challenge.category}
-                        tag={challenge.tag}
-                        state={challenge.state}
+                        createdAt={new Date(challenge.created_at).toLocaleString()}
                         onEdit={() => handleEdit(challenge.id)}
                         onDelete={() => handleDelete(challenge.id)}
                     />
@@ -109,8 +142,6 @@ const addChallengeButtonStyle = {
     textDecoration: 'none',
     border: 'none',
     cursor: 'pointer',
-    backgroundColor: 'var(--dark-blue)',
-    color: 'white',
     alignContent: 'center',
-    width: '150px',
+    width: '100px',
 };
