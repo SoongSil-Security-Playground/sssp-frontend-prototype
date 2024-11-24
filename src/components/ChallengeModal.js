@@ -190,8 +190,8 @@ const informationContainerStyle = {
 const descriptionStyle = {
     fontSize: '16px',
     color: 'grey',
-    marginTop: '10px',
-    marginBottom: '0px',
+    marginTop: '20px',
+    marginBottom: '20px',
 };
 
 const connectionStyle = {

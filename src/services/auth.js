@@ -73,7 +73,7 @@ export const loginUser = async (username, password) => {
     payload.append('username', username);
     payload.append('password', password);
 
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/auth/login`, {
+    const response = await fetch(`${BACKEND_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -118,5 +118,32 @@ export const logoutUser = async (token) => {
         console.log('/auth/logout API call successful');
     } catch (error) {
         console.error('Error during logout API call:', error.message);
+    }
+};
+
+export const checkAdmin = async (token) => {
+    if(!token) return;
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/v1/admin/is_admin`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to verify admin status.');
+        }
+
+        const data = await response.json();
+        console.log(data);
+        return data;
+
+    } catch (error) {
+        console.error('Error checking admin status:', error.message);
+        throw error;
     }
 };

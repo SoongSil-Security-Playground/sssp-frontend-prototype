@@ -52,9 +52,9 @@ function NotificationsPage() {
                 {notifications.length > 0 ? (
                     notifications.map((notification) => (
                         <NotificationCard
+                            key={notification.id}
                             title={notification.title}
                             content={notification.content}
-                            timestamp={new Date(notification.timestamp).toLocaleString()}
                         />
                     ))
                 ) : (

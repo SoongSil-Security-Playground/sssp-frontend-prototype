@@ -1,6 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import { AuthProvider } from '../contexts/AuthContext';
+
+import PrivateRoute from '../routes/PrivateRoute';
+import AdminRoute from '../routes/AdminRoute';
+
 import NavigationBar from './NavigationBar';
 import MainPage from '../pages/MainPage';
 import LoginPage from '../pages/LoginPage';
@@ -11,7 +16,6 @@ import NotificationsPage from '../pages/NotificationsPage';
 import ChallengesPage from '../pages/ChallengesPage';
 import MypagePage from '../pages/MypagePage';
 import ChangePasswordPage from '../pages/ChangePasswordPage';
-import PrivateRoute from '../routes/PrivateRoute';
 
 import ChallengesSettingPage from '../pages/ChallengesSettingPage';
 import UsersSettingPage from '../pages/UsersSettingPage';
@@ -91,32 +95,59 @@ function App() {
             <Route
               path="/admin/challenges"
               element={
-                <PrivateRoute>
+                <AdminRoute>
                   <ChallengesSettingPage />
-                </PrivateRoute>
+                </AdminRoute>
               }
             />
             <Route
               path="/admin/users"
               element={
-                <PrivateRoute>
+                <AdminRoute>
                   <UsersSettingPage />
-                </PrivateRoute>
+                </AdminRoute>
               }
             />
             <Route
               path="/admin/notifications"
               element={
-                <PrivateRoute>
+                <AdminRoute>
                   <NotificationsSettingPage />
-                </PrivateRoute>
+                </AdminRoute>
               }
             />
-            <Route path="/admin/users/edit/:userId" element={<UserForm />} />
-            <Route path="/admin/challenges/add" element={<ChallengeForm />} />
-            <Route path="/admin/challenges/edit/:challengeId" element={<ChallengeForm/>} />
-            <Route path="/admin/notifications/add" element={<NotificationForm/>} />
-            <Route path="/admin/notifications/edit/:notificationId" element={<NotificationForm/>} />
+            <Route
+              path="/admin/challenges/add"
+              element={
+                <AdminRoute>
+                  <ChallengeForm />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/challenges/edit/:challengeId"
+              element={
+                <AdminRoute>
+                  <ChallengeForm />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/notifications/add"
+              element={
+                <AdminRoute>
+                  <NotificationForm />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/notifications/edit/:notificationId"
+              element={
+                <AdminRoute>
+                  <NotificationForm />
+                </AdminRoute>
+              }
+            />
           </Routes>
         </Router>
     </AuthProvider>

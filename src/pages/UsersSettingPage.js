@@ -1,29 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UserInfoCard from "../components/UserInfoCard";
 import SearchBar from "../components/SearchBar";
-import { useNavigate, Link } from "react-router-dom";
-import UserForm from '../components/UserForm';
-import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
+import { useNavigate } from "react-router-dom";
+import { fetchAllUsers } from '../services/user';
+import { toast } from 'react-toastify';
 
 function UsersSettingPage() {
-
-    const [users, setUsers] = useState([
-        { id: 1, name: "User 1", email: "user1@gmail.com", content: "This is user 1's content" },
-        { id: 2, name: "User 2", email: "user2@gmail.com", content: "This is user 2's content" },
-        { id: 3, name: "User 3", email: "user3@gmail.com", content: "This is user 3's content" },
-        { id: 4, name: "User 4", email: "user4@gmail.com", content: "This is user 4's content" },
-        { id: 5, name: "User 5", email: "user5@gmail.com", content: "This is user 5's content" },
-        { id: 6, name: "User 6", email: "user6@gmail.com", content: "This is user 6's content" },
-
-    ]);
-
-    const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
-    const handleEdit = (userId) => {
-        const userToEdit = users.find(user => user.id === userId);
-        navigate(`/edit-user/${userId}`, { state: { user: userToEdit } });
-    };
+
+    // const handleEdit = (userId) => {
+    //     const userToEdit = users.find(user => user.id === userId);
+    //     navigate(`/admin/users/edit/${userId}`, { state: { user: userToEdit } });
+    // };
 
     const handleDelete = (userId) => {
         if (window.confirm("정말로 이 사용자를 삭제하시겠습니까?")) {
@@ -37,6 +30,36 @@ function UsersSettingPage() {
         (user.email && (user.email.toLowerCase().includes(searchTerm.toLowerCase())))
     );
 
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    throw new Error("No token found. Please log in.");
+                }
+                const data = await fetchAllUsers(token);
+                setUsers(data);
+            } catch (error) {
+                console.error("Error fetching Users:", error.message);
+                toast.error(
+                    <div>
+                        <p className="toast-title">Failed to fetch Users</p>
+                        <p className="toast-content">{error.message}</p>
+                        <p className="toast-time">{new Date().toLocaleString()}</p>
+                    </div>
+                );
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [navigate]);
+
     return (
         <div style={mainContainerStyle}>
             <div style={titleContainerStyle}>
@@ -47,10 +70,10 @@ function UsersSettingPage() {
                 {filteredUsers.map(user => (
                     <UserInfoCard
                         key={user.id}
-                        name={user.name}
+                        id={user.id}
+                        name={user.username}
                         email={user.email}
                         content={user.content}
-                        onEdit={() => handleEdit(user.id)}
                         onDelete={() => handleDelete(user.id)}
                     />
                 ))}

@@ -1,18 +1,14 @@
-import React, {useState} from "react";
+import React, {useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import NotificationInfoCard from "../components/NotificationInfoCard";
+import { fetchNotices } from '../services/notice';
+import { toast } from 'react-toastify';
+import NotificationInfoCard from '../components/NotificationInfoCard';
+import addIcon from '../assets/images/add.png';
 
 function NotificationsSettingsPage() {
-
-    const [notifications, setNotifications] = useState([
-        { id: 1, title: "title1", content: "This is noti 1's content", timestamp: "2024.11.23"},
-        { id: 2, title: "title2", content: "This is noti 2's content", timestamp: "2024.11.23"},
-        { id: 3, title: "title3", content: "This is noti 3's content", timestamp: "2024.11.23"},
-        { id: 4, title: "title4", content: "This is noti 4's content", timestamp: "2024.11.23"},
-        { id: 5, title: "title5", content: "This is noti 5's content", timestamp: "2024.11.23"},
-        { id: 6, title: "title6", content: "This is noti 6's content", timestamp: "2024.11.23"},
-
-    ]);
+    const [notifications, setNotifications] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const navigate = useNavigate();
 
@@ -20,23 +16,69 @@ function NotificationsSettingsPage() {
         navigate('/admin/notifications/add');
     }
 
+    const handleEdit = (notificationId) => {
+        const notificationToEdit = notifications.find(notification => notification.id === notificationId);
+        console.log(notificationToEdit);
+        navigate(`/admin/notifications/edit/${notificationId}`, { state: { notification: notificationToEdit } });
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error("No token found. Please log in.");
+                }
+
+                const data = await fetchNotices(token);
+                setNotifications(data); 
+            } catch (error) {
+                console.error("Error fetching notices:", error.message);
+                toast.error(
+                    <div>
+                        <p className="toast-title">Failed to fetch notifications</p>
+                        <p className="toast-content">{error.message}</p>
+                        <p className="toast-time">{new Date().toLocaleString()}</p>
+                    </div>
+                );
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div style={mainContainerStyle}>
             <div style={titleContainerStyle}>
                 <h1 style={headerTextStyle}>Notifications</h1>
             </div>
                 <div style={contentContainerStyle}>
-                    <button style={addChallengeButtonStyle} onClick={handleAdd}>
-                        +
-                    </button>
-                    {notifications.map(notification => (
-                        <NotificationInfoCard
-                            key={notification.id}
-                            title={notification.title}
-                            content={notification.content}
-                            timestamp={notification.timestamp}
+                    <button style={addnotificationButtonStyle} onClick={handleAdd}>
+                        <img 
+                            src={addIcon} 
+                            alt="Add" 
+                            onClick={handleAdd} 
                         />
-                    ))}
+                    </button>
+                    {notifications.length > 0 ? (
+                        notifications.map((notification) => (
+                            <NotificationInfoCard
+                                title={notification.title}
+                                content={notification.content}
+                                onEdit={() => handleEdit(notification.id)}
+                            />
+                        ))
+                    ) : (
+                        <p style={noNotificationsStyle}>
+                            No notifications at the moment.
+                        </p>
+                    )}
                 </div>
         </div>
     );
@@ -74,7 +116,7 @@ const contentContainerStyle = {
     width: '50vw',
 };
 
-const addChallengeButtonStyle = {
+const addnotificationButtonStyle = {
     display: 'flex',
     borderRadius: '16px',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
@@ -87,8 +129,12 @@ const addChallengeButtonStyle = {
     textDecoration: 'none',
     border: 'none',
     cursor: 'pointer',
-    backgroundColor: 'var(--dark-blue)',
-    color: 'white',
     alignContent: 'center',
-    width: '150px',
+    width: '100px',
+};
+
+const noNotificationsStyle = {
+    fontSize: "16px",
+    color: "var(--dark-grey)",
+    marginTop: "150px",
 };

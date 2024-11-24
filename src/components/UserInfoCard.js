@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import editIcon from "../assets/images/edit.png";
 import deleteIcon from "../assets/images/delete.png";
 
-function UserInfoCard({ id, name, email, content, onEdit, onDelete }) {
-    const [isEditHovered, setIsEditHovered] = useState(false);
+function UserInfoCard({ id, name, email, content, onDelete }) {
+    // const [isEditHovered, setIsEditHovered] = useState(false);
     const [isDeleteHovered, setIsDeleteHovered] = useState(false);
 
     return (
@@ -12,12 +12,13 @@ function UserInfoCard({ id, name, email, content, onEdit, onDelete }) {
                 <div style={iconStyle}>
                     <span>😊</span>
                 </div>
+                <div style={idStyle}>{id}</div>
                 <div style={nameStyle}>{name}</div>
                 <div style={emailStyle}>{email}</div>
                 <div style={contentStyle}>{content}</div>
             </div>
             <div style={actionsWrapperStyle}>
-                <span 
+                {/* <span 
                     style={actionStyle(isEditHovered)}
                     onMouseEnter={() => setIsEditHovered(true)} 
                     onMouseLeave={() => setIsEditHovered(false)}
@@ -27,7 +28,7 @@ function UserInfoCard({ id, name, email, content, onEdit, onDelete }) {
                         alt="Edit" 
                         onClick={onEdit} 
                     />
-                </span>
+                </span> */}
                 <span 
                     style={actionStyle(isDeleteHovered)}
                     onMouseEnter={() => setIsDeleteHovered(true)} 
@@ -71,9 +72,14 @@ const iconStyle = {
     marginRight: '8px',
 };
 
+const idStyle = {
+    fontWeight: 'bold',
+    color: 'var(--dark-blue)',
+};
+
 const nameStyle = {
     fontWeight: 'bold',
-    color: '#006e93',
+    color: 'var(--dark-blue)',
 };
 
 const emailStyle = {

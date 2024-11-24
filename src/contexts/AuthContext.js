@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { logoutUser } from '../services/auth';
+import { logoutUser, checkAdmin } from '../services/auth';
 
 const AuthContext = createContext();
 
@@ -7,15 +7,13 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(null);
     const [token, setToken] = useState(null);
 
     const login = (newToken) => {
         localStorage.setItem('token', newToken);
         setToken(newToken);
-        console.log(newToken)
         setIsLoggedIn(true);
-        console.log('login')
     };
 
     const logout = async () => {
@@ -28,6 +26,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem('token');
             setToken(null);
             setIsLoggedIn(false);
+            setIsAdmin(null);
         }
     };
 
@@ -36,13 +35,22 @@ export const AuthProvider = ({ children }) => {
         if (storedToken) {
             setToken(storedToken);
             setIsLoggedIn(true);
+
+            (async () => {
+                try {
+                    const adminStatus = await checkAdmin(storedToken);
+                    setIsAdmin(adminStatus);
+                    console.log('admin', isAdmin);
+                } catch (error) {
+                    console.error('Failed to verify admin status:', error.message);
+                    setIsAdmin(false);
+                }
+            })();
         }
     }, []);
 
-    const toggleAdmin = () => setIsAdmin(prev => !prev);
-
     return (
-        <AuthContext.Provider value={{ isLoggedIn, toggleLogin, isAdmin, toggleAdmin }}>
+        <AuthContext.Provider value={{ isLoggedIn, isAdmin, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

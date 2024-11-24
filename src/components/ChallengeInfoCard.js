@@ -2,20 +2,19 @@ import React, { useState } from "react";
 import editIcon from "../assets/images/edit.png";
 import deleteIcon from "../assets/images/delete.png";
 
-function ChallengeInfoCard({id, title, category, tag, state, onEdit, onDelete}) {
+function ChallengeInfoCard({id, name, category, description, points, createdAt, onEdit, onDelete}) {
     const [isEditHovered, setIsEditHovered] = useState(false);
     const [isDeleteHovered, setIsDeleteHovered] = useState(false);
 
     return (
         <div style={cardContainerStyle}>
             <div style={contentWrapperStyle}>
-                <div style={iconStyle}>
-                    <span>😊</span>
-                </div>
-                <div style={titleStyle}>{title}</div>
-                <div style={categoryStyle}>{category}</div>
-                <div style={tagStyle}>{tag}</div>
-                <div style={stateStyle}>{state}</div>
+                <p>{id}</p>
+                <p style={categoryStyle}>{category}</p>
+                <p style={titleStyle}>{name}</p>
+                <p style={pointsStyle}>{points}</p>
+                <p style={descriptionStyle}>{description}</p>
+                <p style={timeStampStyle}>{createdAt}</p>
             </div>
             <div style={actionsWrapperStyle}>
                 <span 
@@ -65,30 +64,34 @@ const contentWrapperStyle = {
     flexDirection: 'row',
     gap: '12px',
     padding: '8px',
-};
-
-const iconStyle = {
-    marginRight: '8px',
+    overflow: 'hidden',
 };
 
 const titleStyle = {
     fontWeight: 'bold',
+    fontSize: '17px',
     color: '#006e93',
 };
 
 const categoryStyle = {
+    fontSize: '15px',
     color: 'grey',
 };
 
-const tagStyle = {
-    color: 'grey',
+const pointsStyle ={
+    fontSize: '15px',
+    color: 'var(--dark-grey)',
 };
 
-const stateStyle ={
-    fontWeight: 'semibold',
-    color: '#006e93',
+const descriptionStyle = {
+    fontSize: '15px',
+    color: 'var(--p-color)',
 };
 
+const timeStampStyle = {
+    size: '7px',
+    color: 'var(--medium-grey)',
+}
 
 const actionsWrapperStyle = {
     alignItems: 'center',

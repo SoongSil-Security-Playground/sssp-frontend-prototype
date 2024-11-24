@@ -32,6 +32,7 @@ function ChallengesPage() {
                 }
 
                 const data = await fetchAllChallenges(token);
+                console.log(data);
                 setChallenges(data);
             } catch (error) {
                 console.error("Error fetching challenges:", error.message);
