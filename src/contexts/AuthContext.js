@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAdmin, setIsAdmin] = useState(null);
     const [token, setToken] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const login = (newToken) => {
         localStorage.setItem('token', newToken);
@@ -40,14 +41,21 @@ export const AuthProvider = ({ children }) => {
                 try {
                     const adminStatus = await checkAdmin(storedToken);
                     setIsAdmin(adminStatus);
-                    console.log('admin', isAdmin);
                 } catch (error) {
                     console.error('Failed to verify admin status:', error.message);
                     setIsAdmin(false);
+                } finally {
+                    setLoading(false);
                 }
             })();
+        } else {
+            setLoading(false);
         }
     }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <AuthContext.Provider value={{ isLoggedIn, isAdmin, login, logout }}>
