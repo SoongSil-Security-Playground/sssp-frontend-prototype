@@ -5,12 +5,12 @@ import { useAuth } from '../contexts/AuthContext';
 const AdminRoute = ({ children }) => {
     const { isLoggedIn, isAdmin } = useAuth();
 
-    if (!isLoggedIn) {
-        return <Navigate to="/login" />;
+    if (isAdmin === null) {
+        return <div>Loading...</div>;
     }
 
-    if (!isAdmin) {
-        console.log("admin only")
+    if (!isLoggedIn || !isAdmin) {
+        console.log("Access denied: Admin only", isAdmin);
         return <Navigate to="/" />;
     }
 

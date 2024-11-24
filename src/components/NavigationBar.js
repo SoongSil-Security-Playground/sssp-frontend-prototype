@@ -6,7 +6,7 @@ import logo from '../assets/images/logo.png';
 import AdminDropdown from './AdminDropdown';
 
 function NavigationBar() {
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, isAdmin, logout } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -37,7 +37,7 @@ function NavigationBar() {
                 </Link>
             </div>
             <div style={adminBarStyle}>
-                {isLoggedIn ? (
+                {isAdmin ? (
                     <>
                         <AdminDropdown />
                     </>

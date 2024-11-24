@@ -138,7 +138,9 @@ export const checkAdmin = async (token) => {
             throw new Error(errorData.detail || 'Failed to verify admin status.');
         }
 
-        return await response.json();
+        const data = await response.json();
+        console.log(data);
+        return data;
 
     } catch (error) {
         console.error('Error checking admin status:', error.message);
