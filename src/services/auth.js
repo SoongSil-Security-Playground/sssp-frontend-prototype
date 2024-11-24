@@ -120,3 +120,28 @@ export const logoutUser = async (token) => {
         console.error('Error during logout API call:', error.message);
     }
 };
+
+export const checkAdmin = async (token) => {
+    if(!token) return;
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/v1/admin/is_admin`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to verify admin status.');
+        }
+
+        return await response.json();
+
+    } catch (error) {
+        console.error('Error checking admin status:', error.message);
+        throw error;
+    }
+};

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { logoutUser } from '../services/auth';
+import { logoutUser, checkAdmin } from '../services/auth';
 
 const AuthContext = createContext();
 
@@ -36,6 +36,16 @@ export const AuthProvider = ({ children }) => {
         if (storedToken) {
             setToken(storedToken);
             setIsLoggedIn(true);
+
+            (async () => {
+                try {
+                    const adminStatus = await checkAdmin(storedToken);
+                    setIsAdmin(adminStatus?.is_admin || false);
+                } catch (error) {
+                    console.error('Failed to verify admin status:', error.message);
+                    setIsAdmin(false);
+                }
+            })();
         }
     }, []);
     

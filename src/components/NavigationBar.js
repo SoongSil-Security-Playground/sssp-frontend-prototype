@@ -4,10 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/images/logo.png';
 import AdminDropdown from './AdminDropdown';
-import { isAdmin } from '../services/auth';
 
 function NavigationBar() {
-    const { isLoggedIn, isAdmin, logout } = useAuth();
+    const { isLoggedIn, logout } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -38,7 +37,7 @@ function NavigationBar() {
                 </Link>
             </div>
             <div style={adminBarStyle}>
-                {isAdmin && isLoggedIn ? (
+                {isLoggedIn ? (
                     <>
                         <AdminDropdown />
                     </>
