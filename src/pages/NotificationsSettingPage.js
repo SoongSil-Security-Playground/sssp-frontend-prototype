@@ -71,6 +71,7 @@ function NotificationsSettingsPage() {
                             <NotificationInfoCard
                                 title={notification.title}
                                 content={notification.content}
+                                created_at={notification.created_at}
                                 onEdit={() => handleEdit(notification.id)}
                             />
                         ))

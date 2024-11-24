@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import editIcon from "../assets/images/edit.png";
 
-function NotificationInfoCard({ title, content, onEdit}) {
+function NotificationInfoCard({ title, content, created_at, onEdit}) {
     const [isEditHovered, setIsEditHovered] = useState(false);
 
     return (
@@ -10,6 +10,7 @@ function NotificationInfoCard({ title, content, onEdit}) {
             <div>
                 <h3 style={titleStyle}>{title}</h3>
                 <p style={contentStyle}>{content}</p>
+                <p style={timestampStyle}>{created_at}</p>
             </div>
             <div style={actionsWrapperStyle}>
                 <span 
@@ -46,21 +47,29 @@ const cardContainerStyle = {
     justifyContent: 'space-between',
     margin: '8px',
     width: '100%',
+    flexDirection: 'row',
+    textAlign: 'left',
 };
 
 const titleStyle = {
     fontSize: '20px',
     fontWeight: 'bold',
-    color: '#006e93',
+    color: 'var(--dark-blue)',
     margin: 0,
     marginBottom: '0px',
 };
 
 const contentStyle = {
     fontSize: '14px',
-    color: 'black',
+    color: 'var(--text-color)',
     margin: 0,
     marginBottom: '10px',
+};
+
+const timestampStyle = {
+    fontSize: '12px',
+    color: '#a0a0a0',
+    margin: 0,
 };
 
 const actionsWrapperStyle = {
