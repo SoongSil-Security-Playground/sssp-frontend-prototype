@@ -62,13 +62,14 @@ export const submitFlag = async (token, challenge_id, flag) => {
 export const createChallenge = async (formData, token) => {
     console.log("Submitting challenge data:");
     formData.forEach((value, key) => {
-        console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`); // todo: check service works
+        console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`); 
     });
 
     try {
         const response = await fetch(`${BACKEND_URL}/api/v1/admin/challenges/`, {
             method: 'POST',
             headers: {
+                'accept': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
             body: formData,
@@ -76,6 +77,7 @@ export const createChallenge = async (formData, token) => {
         
         if (!response.ok) {
             const errorData = await response.json();
+            console.error("Error from server:", errorData);
             throw new Error(errorData.detail || 'Failed to create challenge.');
         }
 
@@ -97,6 +99,7 @@ export const updateChallenge = async (id, formData, token) => {
         const response = await fetch(`${BACKEND_URL}/api/v1/admin/challenges/${id}`, {
             method: 'PATCH',
             headers: {
+                'accept': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
             body: formData,
