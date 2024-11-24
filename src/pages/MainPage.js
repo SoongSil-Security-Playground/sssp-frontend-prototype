@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import banner from '../assets/images/logo_big.png';
-import logo from '../assets/images/logo.png';
 import ReactMarkdown from 'react-markdown';
 
 function MainPage() {
