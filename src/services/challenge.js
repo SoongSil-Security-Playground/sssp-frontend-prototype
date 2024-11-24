@@ -18,8 +18,8 @@ export const fetchAllChallenges = async (token) => {
     return await response.json();
 };
 
-export const getChallenge = async (token, challenge_id) => {
-    const response = await fetch(`${BACKEND_URL}/api/v1/challenges/${challenge_id}`, {
+export const getChallenge = async (token, challenge_challengeId) => {
+    const response = await fetch(`${BACKEND_URL}/api/v1/challenges/${challenge_challengeId}`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -36,11 +36,11 @@ export const getChallenge = async (token, challenge_id) => {
     return await response.json();   
 };
 
-export const submitFlag = async (token, challenge_id, flag) => {
+export const submitFlag = async (token, challenge_challengeId, flag) => {
     const body = new URLSearchParams();
     body.append('flag', flag);
 
-    const response = await fetch(`${BACKEND_URL}/api/v1/challenges/${challenge_id}/submit`, {
+    const response = await fetch(`${BACKEND_URL}/api/v1/challenges/${challenge_challengeId}/submit`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -89,14 +89,14 @@ export const createChallenge = async (formData, token) => {
     }
 };
 
-export const updateChallenge = async (id, formData, token) => {
+export const updateChallenge = async (challengeId, formData, token) => {
     console.log("Submitting challenge data:");
     formData.forEach((value, key) => {
         console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`);
     });
 
     try {
-        const response = await fetch(`${BACKEND_URL}/api/v1/admin/challenges/${id}`, {
+        const response = await fetch(`${BACKEND_URL}/api/v1/admin/challenges/${challengeId}`, {
             method: 'PATCH',
             headers: {
                 'accept': 'application/json',
@@ -114,6 +114,29 @@ export const updateChallenge = async (id, formData, token) => {
         return data; 
     } catch (error) {
         console.error('Error creating challenge:', error.message);
+        throw error;
+    }
+};
+
+export const deleteChallenge = async (challengechallengeId, token) => {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/v1/admin/challenges/${challengechallengeId}`, {
+            method: 'DELETE',
+            headers: {
+                'accept': '*/*',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to delete challenge.');
+        }
+
+        console.log(`Challenge with challengeId ${challengechallengeId} deleted successfully.`);
+        return { success: true };
+    } catch (error) {
+        console.error('Error deleting challenge:', error.message);
         throw error;
     }
 };

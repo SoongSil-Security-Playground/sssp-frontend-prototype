@@ -1,7 +1,7 @@
 import React , { useState, useEffect } from "react";
 import ChallengeInfoCard from "../components/ChallengeInfoCard";
 import SearchBar from "../components/SearchBar";
-import { fetchAllChallenges } from '../services/challenge';
+import { fetchAllChallenges, deleteChallenge } from '../services/challenge';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import addIcon from '../assets/images/add.png';
@@ -23,10 +23,24 @@ function ChallengesSettingPage() {
         navigate(`/admin/challenges/edit/${challengeId}`, { state: { challenge: challengeToEdit } });
     };
 
-    const handleDelete = (challengeId) => {
-        if (window.confirm("정말로 이 챌린지를 삭제하시겠습니까?")) {
-            const updatedChallenges = challenges.filter(challenge => challenge.id !== challengeId);
-            setChallenges(updatedChallenges);
+    const handleDelete = async (challengeId) => {
+        const confirmation = window.confirm("정말로 이 챌린지를 삭제하시겠습니까?");
+        if (!confirmation) return;
+
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("No token found. Please log in.");
+            }
+    
+            await deleteChallenge(challengeId, token);
+
+            setChallenges((prevChallenges) => prevChallenges.filter(challenge => challenge.id !== challengeId));
+    
+            console.log(`Challenge with ID ${challengeId} deleted successfully.`);
+        } catch (error) {
+            console.error("Failed to delete challenge:", error.message);
+            alert(`Failed to delete challenge: ${error.message}`);
         }
     };
 
