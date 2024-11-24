@@ -28,7 +28,7 @@ function ChallengeCard({ id, name, description, points, category, createdAt, fil
             >
                 <h3 style={{ ...titleStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{name}</h3>
                 <div style={descriptionContainerStyle}>
-                    <p style={pointsStyle}>{points}</p>
+                    <p style={{ ...pointsStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{points}</p>
                     <p style={{ ...descriptionStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{description}</p>
                 </div>
                 <div style={{ ...categoryContainerStyle, ...(isSolved ? whiteBackStyle : blueBackStyle) }}>
