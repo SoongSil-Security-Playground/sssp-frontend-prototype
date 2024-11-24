@@ -12,6 +12,16 @@ function NotificationsSettingsPage() {
 
     const navigate = useNavigate();
 
+    const handleAdd = () => {
+        navigate('/admin/notifications/add');
+    }
+
+    const handleEdit = (notificationId) => {
+        const notificationToEdit = notifications.find(notification => notification.id === notificationId);
+        console.log(notificationToEdit);
+        navigate(`/admin/notifications/edit/${notificationId}`, { state: { notification: notificationToEdit } });
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -42,10 +52,6 @@ function NotificationsSettingsPage() {
 
         fetchData();
     }, []);
-    
-    const handleAdd = () => {
-        navigate('/admin/notifications/add');
-    }
 
     return (
         <div style={mainContainerStyle}>
@@ -53,7 +59,7 @@ function NotificationsSettingsPage() {
                 <h1 style={headerTextStyle}>Notifications</h1>
             </div>
                 <div style={contentContainerStyle}>
-                    <button style={addChallengeButtonStyle} onClick={handleAdd}>
+                    <button style={addnotificationButtonStyle} onClick={handleAdd}>
                         <img 
                             src={addIcon} 
                             alt="Add" 
@@ -65,7 +71,7 @@ function NotificationsSettingsPage() {
                             <NotificationInfoCard
                                 title={notification.title}
                                 content={notification.content}
-                                timestamp={new Date(notification.timestamp).toLocaleString()}
+                                onEdit={() => handleEdit(notification.id)}
                             />
                         ))
                     ) : (
@@ -110,7 +116,7 @@ const contentContainerStyle = {
     width: '50vw',
 };
 
-const addChallengeButtonStyle = {
+const addnotificationButtonStyle = {
     display: 'flex',
     borderRadius: '16px',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',

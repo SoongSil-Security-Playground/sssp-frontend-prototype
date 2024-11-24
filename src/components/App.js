@@ -140,6 +140,14 @@ function App() {
                 </AdminRoute>
               }
             />
+            <Route
+              path="/admin/notifications/edit/:notificationId"
+              element={
+                <AdminRoute>
+                  <NotificationForm />
+                </AdminRoute>
+              }
+            />
           </Routes>
         </Router>
     </AuthProvider>

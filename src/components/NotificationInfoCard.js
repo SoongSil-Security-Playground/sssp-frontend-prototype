@@ -1,22 +1,28 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import editIcon from "../assets/images/edit.png";
 
-function NotificationInfoCard({ title, content, timestamp }) {
-    const [isVisible, setIsVisible] = useState(true);
-
-    
-    const handleDelete = () => {
-        setIsVisible(false);
-    };
-
-    if (!isVisible) return null;
+function NotificationInfoCard({ title, content, onEdit}) {
+    const [isEditHovered, setIsEditHovered] = useState(false);
 
     return (
         <div style={cardContainerStyle}>
             <div>
                 <h3 style={titleStyle}>{title}</h3>
                 <p style={contentStyle}>{content}</p>
-                <p style={timestampStyle}>{timestamp}</p>
+            </div>
+            <div style={actionsWrapperStyle}>
+                <span 
+                    style={actionStyle(isEditHovered)}
+                    onMouseEnter={() => setIsEditHovered(true)} 
+                    onMouseLeave={() => setIsEditHovered(false)}
+                >
+                    <img 
+                        src={editIcon} 
+                        alt="Edit" 
+                        onClick={onEdit} 
+                    />
+                </span>
             </div>
         </div>
     );
@@ -31,27 +37,15 @@ NotificationInfoCard.propTypes = {
 };
 
 const cardContainerStyle = {
-    padding: '15px',
-    borderRadius: '8px',
+    display: 'flex',
+    borderRadius: '16px',
+    padding: '12px 16px',
+    backgroundColor: '#fff',
     boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#ffffff',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: '8px',
     width: '100%',
-    maxWidth: '1000px',
-    marginBottom: '10px',
-    boxSizing: 'border-box',
-    textAlign: 'left',
-    position: 'relative',
-};
-
-const deleteButtonStyle = {
-    position: 'absolute',
-    top: '0px',
-    right: '16px',
-    border: 'none',
-    fontSize: '1.5em',
-    color: '#999',
-    backgroundColor: 'transparent',
-    cursor: 'pointer', 
 };
 
 const titleStyle = {
@@ -69,8 +63,20 @@ const contentStyle = {
     marginBottom: '10px',
 };
 
-const timestampStyle = {
-    fontSize: '12px',
-    color: '#a0a0a0',
-    margin: 0,
+const actionsWrapperStyle = {
+    alignItems: 'center',
+    display: 'flex',
+    gap: '10px',
+    marginRight: '10px',
 };
+
+const actionStyle = (isHovered) => ({
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+    width: '20px',
+    height: '20px',
+    transition: 'transform 0.2s',
+    transform: isHovered ? 'scale(1.1)' : 'none',
+    opacity: isHovered ? '0.8' : '1',
+});

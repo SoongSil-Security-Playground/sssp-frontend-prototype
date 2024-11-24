@@ -44,3 +44,31 @@ export const createNotice = async (title, content, token) => {
         throw error;
     }
 };
+
+export const updateNotice = async (id, title, content, token) => {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/v1/admin/notice?notice_id=${id}`, {
+            method: 'PATCH',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: new URLSearchParams({
+                title: title,
+                content: content,
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to create notice.');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error creating notice:', error.message);
+        throw error;
+    }
+};

@@ -7,7 +7,6 @@ function ChallengeForm() {
     const navigate = useNavigate();
     const location = useLocation();
     const challenge = location.state?.challenge || null;
-    console.log(challenge);
     const isUpdate = !!challenge;
     const [isUploadHovered, setIsUploadHovered] = useState(false);
     const [isSubmitHovered, setIsSubmitHovered] = useState(false);

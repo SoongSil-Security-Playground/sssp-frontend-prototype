@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { createNotice } from "../services/notice";
+import { useLocation } from "react-router-dom";
+import { createNotice, updateNotice } from "../services/notice";
 import { toast } from "react-toastify";
 
 function NotificationForm() {
     const navigate = useNavigate();
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const location = useLocation();
+    const notification = location.state?.notification || null;
+    const isUpdate = !!notification;
+    const [id, setId] = useState(notification ? notification.id : 0);
+    const [title, setTitle] = useState(notification ? notification.title : '');
+    const [content, setContent] = useState(notification ? notification.content : '');
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -25,8 +30,13 @@ function NotificationForm() {
                 navigate('/login');
                 return;
             }
-
-            await createNotice(title, content, token);
+            if (isUpdate) {
+                console.log('update noti');
+                await updateNotice(id, title, content, token);
+            } else {
+                await createNotice(title, content, token);
+            }
+            
             navigate('/admin/notifications');
         } catch (error) {
             console.error("Failed to create notification:", error.message);
@@ -41,6 +51,13 @@ function NotificationForm() {
 
         navigate('/admin/notifications');
     };
+
+    useEffect(() => {
+        if (notification) {
+            setTitle(notification.title);
+            setContent(notification.content);
+        }
+    }, [notification]);
 
     return (
         <div style={mainContainerStyle}>
