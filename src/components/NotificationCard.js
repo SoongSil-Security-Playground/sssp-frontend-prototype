@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function NotificationCard({ title, content, timestamp }) {
+function NotificationCard({ title, content }) {
     return (
         <div style={cardContainerStyle}>
-            <h3 style={titleStyle}>title</h3>
-            <p style={contentStyle}>content</p>
-            <p style={timestampStyle}>timestamp</p>
+            <h3 style={titleStyle}>{title}</h3>
+            <p style={contentStyle}>{content}</p>
         </div>
     );
 }
@@ -14,7 +13,6 @@ function NotificationCard({ title, content, timestamp }) {
 NotificationCard.propTypes = {
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    timestamp: PropTypes.string.isRequired,
 };
 
 const cardContainerStyle = {

@@ -54,7 +54,6 @@ function NotificationsPage() {
                         <NotificationCard
                             title={notification.title}
                             content={notification.content}
-                            timestamp={new Date(notification.timestamp).toLocaleString()}
                         />
                     ))
                 ) : (
