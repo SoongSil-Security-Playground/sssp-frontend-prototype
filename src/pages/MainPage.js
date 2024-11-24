@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import banner from '../assets/images/logo_big.png';
 import logo from '../assets/images/logo.png';
+import ReactMarkdown from 'react-markdown';
 
 function MainPage() {
+    const [markdownContent, setMarkdownContent] = useState('');
+
+    useEffect(() => {
+        const fetchMarkdown = async () => {
+            const response = await fetch('/main.md');
+            const text = await response.text();
+            setMarkdownContent(text);
+        };
+
+        fetchMarkdown();
+    }, []);
+
   return (
     <div style={mainContainerStyle}>
         <div style={contentContainerStyle} >
@@ -11,17 +24,8 @@ function MainPage() {
                 <img src={banner} alt="banner" style={bannerImageStyle} />
             </div>
             <div style={textContainerStyle}>
-                <div style={headerStyle}>
-                    <h1 style={headerTextStyle}>What is </h1>
-                    <img src={logo} alt="logo" style={logoImageStyle} />
-                    <h1 style={headerTextStyle}>?</h1>
-                </div>
                 <div style={bodyStyle}>
-                    <b style={textStyle}>Soongsil Security Playground</b>
-                    <b style={textStyle}>&nbsp;</b>
-                    <b style={textBoldStyle}>• Customize Your Platform</b>
-                    <b style={textBoldStyle}>• Host and Manage Competitions</b>
-                    <b style={textBoldStyle}>• Enjoy the Game!</b>
+                    <ReactMarkdown>{markdownContent}</ReactMarkdown>
                 </div>
             </div>
         </div>
@@ -63,36 +67,26 @@ const textContainerStyle = {
     backgroundColor: 'white',
     minHeight: '500px',
     width: '100%',
-    maxWidth: '800px',
-    margin: '0 auto',
-    padding: '100px',
-    boxSizing: 'border-box',
-    transform: 'translateX(-180px)',
-};
-
-
-const headerStyle = {
-    alignItems: 'center',
-    justifyContents: 'center',
+    maxWidth: '50vw',
+    marginTop: '150px',
     display: 'flex',
-    
-};
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '30px',
+    boxSizing: 'border-box',
+    borderRadius: '8px',
+    border: '2px solid var(--medium-grey)', 
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
 
-const logoImageStyle = {
-    height: '80px',
-};
-
-const headerTextStyle = {
-    color: 'var(--dark-blue)',
-    fontSize: '42px',
 };
 
 const bodyStyle = {
+    marginTop: '50px',
     backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start',
-    paddingLeft: '20px',
+    textAlign: 'left',
+    marginBottom: '100px',
 };
 
 const textStyle = {
