@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { createChallenge } from '../services/challenge';
+import { createChallenge, updateChallenge } from '../services/challenge';
 
 function ChallengeForm() {
     const navigate = useNavigate();
     const location = useLocation();
     const challenge = location.state?.challenge || null;
+    console.log(challenge);
+    const isUpdate = !!challenge;
     const [isUploadHovered, setIsUploadHovered] = useState(false);
     const [isSubmitHovered, setIsSubmitHovered] = useState(false);
 
@@ -68,14 +70,16 @@ function ChallengeForm() {
             if (!token) {
                 throw new Error("No token found. Please log in.");
             }
-    
-            console.log("Submitting challenge data:", Object.fromEntries(formData.entries()));
-    
-            await createChallenge(formData, token);
-    
+
+            if (isUpdate) {
+                await updateChallenge(id, formData, token);
+            } else {
+                await createChallenge(formData, token);
+            }
+
             navigate("/admin/challenges");
         } catch (error) {
-            console.error('challenge create failed:', error);
+            console.error("Challenge operation failed:", error);
         }
     };
 
@@ -117,9 +121,9 @@ function ChallengeForm() {
                         </div>
                     </div>
                     <div style={rowformFieldStyle}>
-                        <div style={formFieldStyle}>
+                    <div style={formFieldStyle}>
                             <label style={labelStyle}>Flag</label>
-                            <textarea
+                            <input
                                 type="text"
                                 value={flag}
                                 onChange={(e) => setFlag(e.target.value)}

@@ -19,6 +19,7 @@ function ChallengesSettingPage() {
 
     const handleEdit = (challengeId) => {
         const challengeToEdit = challenges.find(challenge => challenge.id === challengeId);
+        console.log(challengeToEdit);
         navigate(`/admin/challenges/edit/${challengeId}`, { state: { challenge: challengeToEdit } });
     };
 
@@ -87,6 +88,7 @@ function ChallengesSettingPage() {
                         name={challenge.name}
                         description={challenge.description}
                         points={challenge.points}
+                        flag={challenge.flag}
                         category={challenge.category}
                         createdAt={new Date(challenge.created_at).toLocaleString()}
                         onEdit={() => handleEdit(challenge.id)}
