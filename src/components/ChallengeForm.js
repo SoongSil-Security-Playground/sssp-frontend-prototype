@@ -20,7 +20,7 @@ function ChallengeForm() {
     const [filePath, setFilePath] = useState(challenge ? challenge.filePath : '');
     const [decay, setDecay] = useState(challenge ? challenge.decay : 0);
     const [minPoints, setMinPoints] = useState(challenge ? challenge.minPoints : 0);
-    const [isDynamic, setIsDynamic] = useState(challenge ? challenge.isDynamic : false);
+    const [isDynamic, setIsDynamic] = useState(challenge ? challenge.isDynamic : true);
 
     const handleFileUpload = () => {
         document.getElementById('file').click();
@@ -141,7 +141,7 @@ function ChallengeForm() {
                         <div style={formFieldStyle}>
                             <label style={labelStyle}>Scoring</label>
                             <select
-                                value={isDynamic}
+                                value={isDynamic !== undefined ? isDynamic.toString() : "false"}
                                 onChange={(e) => setIsDynamic(e.target.value === 'true')}
                                 style={selectStyle}
                             >
