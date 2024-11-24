@@ -1,6 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { updatePassword } from '../services/user';
+import { toast } from 'react-toastify';
 
 function ChangePasswordForm() {
+    const [password, setPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        setIsSubmitting(true);
+
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert('You are not authenticated. Please log in.');
+                navigate('/login');
+                return;
+            }
+
+            await updatePassword(password, newPassword, token);
+
+            toast.success(
+                <div>
+                    <p classusername="toast-title">Password Updated!</p>
+                    <p classusername="toast-content">성공적으로 변경되었습니다.</p>
+                    <p classusername="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+            navigate('/mypage'); 
+        } catch (error) {
+            console.error('Failed to update password:', error.message);
+            toast.error(
+                <div>
+                    <p classusername="toast-title">Password Update Failed</p>
+                    <p classusername="toast-content">비밀번호 변경 실패</p>
+                    <p classusername="toast-time">{new Date().toLocaleString()}</p>
+                </div>
+            );
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+
 
     return (
         <div style={pageContainerStyle}>
@@ -8,23 +54,41 @@ function ChangePasswordForm() {
             <div style={profileContainerStyle}>
                 <div style={profileIconStyle}></div>
             </div>
-            <form style={formContainerStyle}>
+            <form style={formContainerStyle} onSubmit={handleSubmit}>
                 <div style={formFieldStyle}>
                     <label style={labelStyle}>Password</label>
                     <input 
-                        type="password" 
-                        style={{ ...inputStyle, ':focus': inputFocusStyle }} 
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        style={{ ...inputStyle, ':focus': inputFocusStyle }}
+                        placeholder="Enter current password"
+                        required
                     />
                 </div>
                 <div style={formFieldStyle}>
                     <label style={labelStyle}>New Password</label>
                     <input 
-                        type="password" 
-                        style={{ ...inputStyle, ':focus': inputFocusStyle }} 
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        style={{ ...inputStyle, ':focus': inputFocusStyle }}
+                        placeholder="Enter new password"
+                        required
                     />
                 </div>
                 <div style={buttonContainerStyle}>
-                    <button style={changePasswordButtonStyle} >change password</button>
+                    <button
+                        style={{
+                            ...changePasswordButtonStyle,
+                            opacity: isSubmitting ? 0.6 : 1,
+                            cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                        }}
+                        type="submit"
+                        disabled={isSubmitting}
+                    >
+                        {isSubmitting ? 'Updating...' : 'Change Password'}
+                    </button>
                 </div>
             </form>
         </div>

@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 function ProfileForm() {
     const navigate = useNavigate();
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [contents, setContents] = useState('');
     const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ function ProfileForm() {
                 }
     
                 const data = await fetchUserInfo(token);
-                setName(data.name || '');
+                setUsername(data.username || '');
                 setEmail(data.email || '');
                 setContents(data.contents || '');
             } catch (error) {
@@ -57,18 +57,18 @@ function ProfileForm() {
             toast.dismiss();
             toast.success(
                 <div>
-                    <p className="toast-title">Profile Updated!</p>
-                    <p className="toast-content">성공적으로 변경되었습니다.</p>
-                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                    <p classusername="toast-title">Profile Updated!</p>
+                    <p classusername="toast-content">성공적으로 변경되었습니다.</p>
+                    <p classusername="toast-time">{new Date().toLocaleString()}</p>
                 </div>
             );
         } catch (error) {
             console.error("Error updating contents:", error.message);
             toast.error(
                     <div>
-                    <p className="toast-title">Profile Update Error</p>
-                    <p className="toast-content">{error.message}</p>
-                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                    <p classusername="toast-title">Profile Update Error</p>
+                    <p classusername="toast-content">{error.message}</p>
+                    <p classusername="toast-time">{new Date().toLocaleString()}</p>
                 </div>
             );
             setError(error.message);
@@ -107,18 +107,18 @@ function ProfileForm() {
             toast.dismiss();
             toast.success(
                 <div>
-                    <p className="toast-title">Account Deleted!</p>
-                    <p className="toast-content">성공적으로 탈퇴되었습니다.</p>
-                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                    <p classusername="toast-title">Account Deleted!</p>
+                    <p classusername="toast-content">성공적으로 탈퇴되었습니다.</p>
+                    <p classusername="toast-time">{new Date().toLocaleString()}</p>
                 </div>
             );
         } catch (error) {
             console.error("Error delete contents:", error.message);
             toast.error(
                     <div>
-                    <p className="toast-title">Account Delete Error</p>
-                    <p className="toast-content">{error.message}</p>
-                    <p className="toast-time">{new Date().toLocaleString()}</p>
+                    <p classusername="toast-title">Account Delete Error</p>
+                    <p classusername="toast-content">{error.message}</p>
+                    <p classusername="toast-time">{new Date().toLocaleString()}</p>
                 </div>
             );
             setError(error.message);
@@ -137,11 +137,11 @@ function ProfileForm() {
             </div>
             <form style={formContainerStyle}>
                 <div style={formFieldStyle}>
-                    <label style={labelStyle}>Name</label>
+                    <label style={labelStyle}>Username</label>
                     <input
                         type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         style={inputStyle}
                     />
                 </div>
@@ -256,6 +256,7 @@ const buttonContainerStyle = {
     justifyContent: 'center',
     marginTop: '20px',
     alignItems: 'center',
+    overflowY: 'hidden',
 };
 
 const changePasswordButtonStyle = {

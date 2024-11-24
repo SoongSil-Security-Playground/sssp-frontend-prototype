@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function NotificationCard({ title, content }) {
+function NotificationCard({ title, content, created_at }) {
     return (
         <div style={cardContainerStyle}>
             <h3 style={titleStyle}>{title}</h3>
             <p style={contentStyle}>{content}</p>
+            <p style={timestampStyle}>{created_at}</p>
         </div>
     );
 }

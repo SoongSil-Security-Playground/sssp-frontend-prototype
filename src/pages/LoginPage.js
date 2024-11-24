@@ -11,7 +11,8 @@ function LoginPage() {
     const navigate = useNavigate();
     const {login} = useAuth();
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
         setError(null);
 
         console.log('Attempting to login with:', { username, password });
@@ -35,11 +36,10 @@ function LoginPage() {
     return (
         <div style={mainContainerStyle}>
             <h1 style={headerTextStyle}>LOGIN</h1>
-            <div style={loginContainerStyle}>
+            <form style={loginContainerStyle} onSubmit={handleLogin}>
                 <label style={labelStyle}>Username</label>
                 <input
                     type="text"
-                    placeholder="Soongsil Kim"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     style={inputStyle}
@@ -48,24 +48,23 @@ function LoginPage() {
                 <label style={labelStyle}>Password</label>
                 <input
                     type="password"
-                    placeholder="Type your Password here..."
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     style={inputStyle}
                 />
 
                 <div style={buttonContainerStyle}>
-                    <button style={loginButtonStyle} onClick={handleLogin}>
+                    <button style={loginButtonStyle} type="submit">
                         login →
                     </button>
-                    <button style={registerButtonStyle} onClick={handleRegister}>
+                    <button style={registerButtonStyle} type="button" onClick={handleRegister}>
                         Register →
                     </button>
                 </div>
 
                 {error && <p style={errorTextStyle}>{error}</p>}
                 {success && <p style={successTextStyle}>redirecting...</p>}
-            </div>
+            </form>
         </div>
     );
 }

@@ -55,6 +55,7 @@ function NotificationsPage() {
                             key={notification.id}
                             title={notification.title}
                             content={notification.content}
+                            created_at={notification.created_at}
                         />
                     ))
                 ) : (
