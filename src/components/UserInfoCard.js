@@ -12,6 +12,7 @@ function UserInfoCard({ id, name, email, content, onEdit, onDelete }) {
                 <div style={iconStyle}>
                     <span>😊</span>
                 </div>
+                <div style={idStyle}>{id}</div>
                 <div style={nameStyle}>{name}</div>
                 <div style={emailStyle}>{email}</div>
                 <div style={contentStyle}>{content}</div>
@@ -71,9 +72,14 @@ const iconStyle = {
     marginRight: '8px',
 };
 
+const idStyle = {
+    fontWeight: 'bold',
+    color: 'var(--dark-blue)',
+};
+
 const nameStyle = {
     fontWeight: 'bold',
-    color: '#006e93',
+    color: 'var(--dark-blue)',
 };
 
 const emailStyle = {
