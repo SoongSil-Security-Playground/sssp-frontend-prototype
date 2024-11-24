@@ -9,12 +9,12 @@ function ChallengeInfoCard({id, name, category, description, points, createdAt, 
     return (
         <div style={cardContainerStyle}>
             <div style={contentWrapperStyle}>
-                <text>{id}</text>
-                <text style={categoryStyle}>{category}</text>
-                <text style={titleStyle}>{name}</text>
-                <text style={pointsStyle}>{points}</text>
-                <text style={descriptionStyle}>{description}</text>
-                <text style={timeStampStyle}>{createdAt}</text>
+                <p>{id}</p>
+                <p style={categoryStyle}>{category}</p>
+                <p style={titleStyle}>{name}</p>
+                <p style={pointsStyle}>{points}</p>
+                <p style={descriptionStyle}>{description}</p>
+                <p style={timeStampStyle}>{createdAt}</p>
             </div>
             <div style={actionsWrapperStyle}>
                 <span 
@@ -85,7 +85,7 @@ const pointsStyle ={
 
 const descriptionStyle = {
     fontSize: '15px',
-    color: 'var(--text-color)',
+    color: 'var(--p-color)',
 };
 
 const timeStampStyle = {
