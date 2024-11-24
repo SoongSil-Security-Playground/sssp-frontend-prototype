@@ -39,7 +39,6 @@ function LoginPage() {
                 <label style={labelStyle}>Username</label>
                 <input
                     type="text"
-                    placeholder="Soongsil Kim"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     style={inputStyle}
@@ -48,7 +47,6 @@ function LoginPage() {
                 <label style={labelStyle}>Password</label>
                 <input
                     type="password"
-                    placeholder="Type your Password here..."
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     style={inputStyle}
