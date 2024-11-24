@@ -117,14 +117,6 @@ function App() {
               }
             />
             <Route
-              path="/admin/users/edit/:userId"
-              element={
-                <AdminRoute>
-                  <UserForm />
-                </AdminRoute>
-              }
-            />
-            <Route
               path="/admin/challenges/add"
               element={
                 <AdminRoute>

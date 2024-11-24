@@ -13,10 +13,10 @@ function UsersSettingPage() {
     const [searchTerm, setSearchTerm] = useState('');
 
 
-    const handleEdit = (userId) => {
-        const userToEdit = users.find(user => user.id === userId);
-        navigate(`/edit-user/${userId}`, { state: { user: userToEdit } });
-    };
+    // const handleEdit = (userId) => {
+    //     const userToEdit = users.find(user => user.id === userId);
+    //     navigate(`/admin/users/edit/${userId}`, { state: { user: userToEdit } });
+    // };
 
     const handleDelete = (userId) => {
         if (window.confirm("정말로 이 사용자를 삭제하시겠습니까?")) {
@@ -74,7 +74,6 @@ function UsersSettingPage() {
                         name={user.username}
                         email={user.email}
                         content={user.content}
-                        onEdit={() => handleEdit(user.id)}
                         onDelete={() => handleDelete(user.id)}
                     />
                 ))}
