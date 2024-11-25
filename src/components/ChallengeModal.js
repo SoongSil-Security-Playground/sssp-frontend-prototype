@@ -192,6 +192,9 @@ const descriptionStyle = {
     color: 'grey',
     marginTop: '20px',
     marginBottom: '20px',
+    whiteSpace: 'pre-wrap',
+    wordBreak: 'break-all',
+    overflowWrap: 'break-word',
 };
 
 const connectionStyle = {

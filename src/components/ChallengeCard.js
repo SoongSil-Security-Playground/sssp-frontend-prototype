@@ -110,6 +110,7 @@ const descriptionContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
     overflow: 'hidden',
+    whiteSpace: 'pre-line',
 };
 
 const descriptionStyle = {
