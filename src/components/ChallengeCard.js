@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ChallengeModal from './ChallengeModal';
 
-function ChallengeCard({ id, name, description, points, category, createdAt, filePath, initialSolved}) {
+function ChallengeCard({ id, name, description, points, category, solvedCnt, createdAt, filePath, initialSolved}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSolved, setIsSolved] = useState(initialSolved);
 
@@ -29,7 +29,9 @@ function ChallengeCard({ id, name, description, points, category, createdAt, fil
                 <h3 style={{ ...titleStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{name}</h3>
                 <div style={descriptionContainerStyle}>
                     <p style={{ ...pointsStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{points}</p>
-                    <p style={{ ...descriptionStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{description}</p>
+                    <p style={{ ...countStyle, ...(isSolved ? whiteTextStyle : greyTextStyle)}}>{solvedCnt} solved</p>
+                    {/* <p style={{ ...descriptionStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{description}</p> */}
+
                 </div>
                 <div style={{ ...categoryContainerStyle, ...(isSolved ? whiteBackStyle : blueBackStyle) }}>
                     <p style={{ ...categoryStyle, ...(isSolved ? blueTextStyle : whiteTextStyle) }}>{category}</p>
@@ -44,6 +46,7 @@ function ChallengeCard({ id, name, description, points, category, createdAt, fil
                 description={description}
                 points={points}
                 category={category}
+                solvedCnt={solvedCnt}
                 createdAt={new Date(createdAt).toLocaleString()}
                 filePath={filePath}
                 isSolved={isSolved}
@@ -72,7 +75,6 @@ const cardContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
     border: '1px solid var(--dark-blue)',
-    overflow: 'hidden',
     cursor: 'pointer',
 };
 
@@ -86,6 +88,10 @@ const blueBackStyle = {
 
 const whiteTextStyle = {
     color: 'white',
+};
+
+const greyTextStyle = {
+    color: 'var(--dark-grey)',
 };
 
 const blueTextStyle = {
@@ -125,7 +131,13 @@ const pointsStyle = {
     color: 'var(--dark-blue)',
     margin: 0,
     fontWeight: 'bold',
-    marginBottom: '10px',
+    marginBottom: '20px',
+};
+
+const countStyle = {
+    fontSize: '12px',
+    color: 'var(--dark-blue)',
+    margin: 0,
 };
 
 const categoryContainerStyle = {
@@ -133,7 +145,7 @@ const categoryContainerStyle = {
     backgroundColor: 'var(--dark-blue)',
     width: '6vw',
     height: '3.5vh',
-    margin: '10px auto',
+    margin: '5px auto',
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',

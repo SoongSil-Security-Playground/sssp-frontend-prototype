@@ -88,6 +88,7 @@ function ChallengesPage() {
                         description={challenge.description}
                         points={challenge.points}
                         category={challenge.category}
+                        solvedCnt='1'
                         createdAt={new Date(challenge.created_at).toLocaleString()}
                         filePath={challenge.file_path}
                         isSolved={challenge.is_user_solved}

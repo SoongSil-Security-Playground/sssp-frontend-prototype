@@ -23,7 +23,7 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run build && cd build && git add . && git commit -m 'Update GitHub Pages build'"
   },
   "eslintConfig": {
     "extends": [

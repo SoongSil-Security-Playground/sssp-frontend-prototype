@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { submitFlag } from '../services/challenge';
 import { toast } from 'react-toastify';
 
-function ChallengeModal({ isOpen, onClose, id, name, description, points, category, createdAt, filePath, isSolved: initialSolved, onSolvedChange }) {
+function ChallengeModal({ isOpen, onClose, id, name, description, points, category, solvedCnt, createdAt, filePath, isSolved: initialSolved, onSolvedChange }) {
     const [isSolved, setIsSolved] = useState(initialSolved);
     const [flag, setFlag] = useState('');
     const [loading, setLoading] = useState(false);
@@ -78,6 +78,7 @@ function ChallengeModal({ isOpen, onClose, id, name, description, points, catego
                     <p style={categoryStyle}>{category}</p>
                 </div>
                 <div style={informationContainerStyle}>
+                    <p style={countStyle}>{solvedCnt} solved</p>
                     <p style={descriptionStyle}>{description}</p>
                     {filePath && (
                         <button style={downloadButtonStyle} onClick={handleDownload}>
@@ -182,7 +183,7 @@ const informationContainerStyle = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    overflow: 'hidden',
+    overflow: 'auto',
     padding: 0,
     gap: 0,
 };
@@ -201,6 +202,12 @@ const connectionStyle = {
     fontSize: '16px',
     color: 'var(--medium-blue)',
     marginTop: '0px',
+};
+
+const countStyle = {
+    fontSize: '12px',
+    color: 'var(--dark-grey)',
+    margin: 0,
 };
 
 const downloadButtonStyle = {
