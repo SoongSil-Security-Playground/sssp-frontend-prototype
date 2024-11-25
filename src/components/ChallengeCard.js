@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ChallengeModal from './ChallengeModal';
 
-function ChallengeCard({ id, name, description, points, category, solvedCnt, createdAt, filePath, initialSolved}) {
+function ChallengeCard({ id, name, description, points, category, solveCnt, createdAt, filePath, initialSolved}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSolved, setIsSolved] = useState(initialSolved);
 
     const handleOpenModal = () => {
         console.log("Opening modal");
+        console.log('solve cnt ', solveCnt);
+        console.log('category', category);
         setIsModalOpen(true);
     };
 
@@ -29,7 +31,7 @@ function ChallengeCard({ id, name, description, points, category, solvedCnt, cre
                 <h3 style={{ ...titleStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{name}</h3>
                 <div style={descriptionContainerStyle}>
                     <p style={{ ...pointsStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{points}</p>
-                    <p style={{ ...countStyle, ...(isSolved ? whiteTextStyle : greyTextStyle)}}>{solvedCnt} solved</p>
+                    <p style={{ ...countStyle, ...(isSolved ? whiteTextStyle : greyTextStyle)}}>{solveCnt} solved</p>
                     {/* <p style={{ ...descriptionStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{description}</p> */}
 
                 </div>
@@ -46,7 +48,7 @@ function ChallengeCard({ id, name, description, points, category, solvedCnt, cre
                 description={description}
                 points={points}
                 category={category}
-                solvedCnt={solvedCnt}
+                solveCnt={solveCnt}
                 createdAt={new Date(createdAt).toLocaleString()}
                 filePath={filePath}
                 isSolved={isSolved}
