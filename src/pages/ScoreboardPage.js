@@ -22,6 +22,7 @@ function ScoreboardPage() {
                 }
 
                 const data = await fetchAllScores(token);
+                console.log(data);
                 const sortedScores = data.sort((a, b) => b.total_score - a.total_score);
                 
                 setScores(sortedScores);

@@ -1,11 +1,26 @@
 import React from 'react';
+import Avatar from 'react-avatar';
 
 function UserRankCard({ rank, name, score }) {
+    const customColors = [
+        getCSSVariable("--light-blue"),
+        getCSSVariable("--light-green"),
+        getCSSVariable("--medium-blue"),
+        getCSSVariable("--dark-blue"),
+        getCSSVariable("--medium-grey"),
+    ];
+
     return (
         <div style={cardContainerStyle}>
             <div style={rankStyle}>{rank}</div>
             <div style={profileImageContainerStyle}>
-                <span style={profileIconStyle}></span>
+                <Avatar 
+                    name={name} 
+                    round={true} 
+                    size="40" 
+                    textSizeRatio={2} 
+                    colors={customColors}
+                />
             </div>
             <div style={textContainerStyle}>
                 <p style={nameStyle}>{name}</p>
@@ -14,6 +29,10 @@ function UserRankCard({ rank, name, score }) {
         </div>
     );
 }
+
+const getCSSVariable = (variableName) => {
+    return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+};
 
 const cardContainerStyle = {
     display: 'flex',
