@@ -3,8 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { fetchUserInfo, updateUserInfo, deleteUserInfo } from '../services/user';
 import { toast, } from 'react-toastify';
 import { useAuth } from '../contexts/AuthContext';
+import Avatar from 'react-avatar';
 
 function ProfileForm() {
+    const customColors = [
+        getCSSVariable("--light-blue"),
+        getCSSVariable("--light-green"),
+        getCSSVariable("--medium-blue"),
+        getCSSVariable("--dark-blue"),
+        getCSSVariable("--medium-grey"),
+    ];
+
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -132,8 +141,14 @@ function ProfileForm() {
 
     return (
         <div style={pageContainerStyle}>
-            <div style={profileContainerStyle}>
-                <div style={profileIconStyle}></div>
+            <div style={profileImageContainerStyle}>
+                <Avatar 
+                    name={username} 
+                    round={true} 
+                    size="40" 
+                    textSizeRatio={2} 
+                    colors={customColors}
+                />
             </div>
             <form style={formContainerStyle}>
                 <div style={formFieldStyle}>
@@ -178,6 +193,10 @@ function ProfileForm() {
     );
 }
 
+const getCSSVariable = (variableName) => {
+    return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+};
+
 const pageContainerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -190,23 +209,11 @@ const pageContainerStyle = {
     padding: '30px',
 };
 
-const profileContainerStyle = {
+const profileImageContainerStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: '5px',
-};
-
-const profileIconStyle = {
-    height: '60px',
-    width: '60px',
-    borderRadius: '50%',
-    backgroundColor: 'var(--sky-blue)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '24px',
-    color: '#9CA3AF',
 };
 
 const formContainerStyle = {
