@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="refresh" content="0; url=/" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="0; url=/#" />
+    <title>Redirecting...</title>
     <script>
-      window.location.replace(
-        window.location.origin + '/#' + window.location.pathname
-      );
+      const hashPath = window.location.pathname + window.location.search;
+      const newUrl = window.location.origin + '/#' + hashPath;
+      window.location.replace(newUrl);
     </script>
   </head>
   <body></body>
