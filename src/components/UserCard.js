@@ -1,10 +1,25 @@
 import React from 'react';
+import Avatar from 'react-avatar';
 
 function UserCard({ name, description }) {
+    const customColors = [
+        getCSSVariable("--light-blue"),
+        getCSSVariable("--light-green"),
+        getCSSVariable("--medium-blue"),
+        getCSSVariable("--dark-blue"),
+        getCSSVariable("--medium-grey"),
+    ];
+
     return (
         <div style={cardContainerStyle}>
             <div style={profileImageContainerStyle}>
-                <span style={profileIconStyle}></span>
+                <Avatar 
+                    name={name} 
+                    round={true} 
+                    size="40" 
+                    textSizeRatio={2} 
+                    colors={customColors}
+                />
             </div>
             <div style={textContainerStyle}>
                 <h3 style={nameStyle}>{name}</h3>
@@ -13,6 +28,10 @@ function UserCard({ name, description }) {
         </div>
     );
 }
+
+const getCSSVariable = (variableName) => {
+    return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+};
 
 const cardContainerStyle = {
     display: 'flex',
@@ -37,11 +56,6 @@ const profileImageContainerStyle = {
     backgroundColor: '#f0f0f0',
     marginLeft: '10px',
     marginRight: '15px',
-};
-
-const profileIconStyle = {
-    fontSize: '20px',
-    color: '#5a5a5a',
 };
 
 const textContainerStyle = {

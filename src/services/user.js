@@ -72,7 +72,10 @@ export const fetchAllUsers = async (token) => {
         throw new Error(errorData.detail || "Failed to fetch users.")
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log(data);
+
+    return data;
 
 };
 
