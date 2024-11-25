@@ -77,15 +77,21 @@ export const fetchAllUsers = async (token) => {
 };
 
 export const updatePassword = async (curPassword, newPassword, token) => {
-    const response = await fetch(`${BACKEND_URL}/api/v1/user/update_password?cur_password=${curPassword}&new_password=${newPassword}`, {
-        method: 'GET',
+    const response = await fetch(`${BACKEND_URL}/api/v1/user/update_password`, {
+        method: 'PUT',
         headers: {
             'accept': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json', 
+            'Authorization': `Bearer ${token}`, 
         },
+        body: JSON.stringify({ 
+            cur_password: curPassword,
+            new_password: newPassword,
+        }),
     });
+
     console.log(response);
-    
+
     if (!response.ok) {
         const errorData = await response.json();
         console.log(errorData);
