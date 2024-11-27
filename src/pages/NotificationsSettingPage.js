@@ -69,6 +69,7 @@ function NotificationsSettingsPage() {
                     {notifications.length > 0 ? (
                         notifications.map((notification) => (
                             <NotificationInfoCard
+                                key={notification.created_at}
                                 title={notification.title}
                                 content={notification.content}
                                 created_at={notification.created_at}
