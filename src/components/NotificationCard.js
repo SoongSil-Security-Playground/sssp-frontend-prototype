@@ -43,6 +43,7 @@ const contentStyle = {
     color: 'var(--text-color)',
     margin: 0,
     marginBottom: '10px',
+    whiteSpace: 'pre-wrap',
 };
 
 const timestampStyle = {

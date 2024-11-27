@@ -71,32 +71,33 @@ function ChallengesPage() {
                 <h1 style={headerTextStyle}>Challenges</h1>
             </div>
             <div style={contentWrapperStyle}>
-                <FilterSidebar
-                    categories={challengeCategories}
-                    selectedCategory={selectedCategory}
-                    onSelectCategory={handleCategorySelect}
-                    selectedState={selectedState}
-                    onSelectState={handleStateSelect}
-                />
-
-            <div style={contentContainerStyle}>
-                {filteredChallenges.map((challenge) => (
-                    <ChallengeCard
-                        key={challenge.id}
-                        id={challenge.id}
-                        name={challenge.name}
-                        description={challenge.description}
-                        points={challenge.points}
-                        category={challenge.category}
-                        solveCnt={challenge.solve_count}
-                        createdAt={new Date(challenge.created_at).toLocaleString()}
-                        filePath={challenge.file_path}
-                        isSolved={challenge.is_user_solved}
-                        initialSolved={challenge.is_user_solved}
+                <div style={sidebarContainerStyle}>
+                    <FilterSidebar
+                        categories={challengeCategories}
+                        selectedCategory={selectedCategory}
+                        onSelectCategory={handleCategorySelect}
+                        selectedState={selectedState}
+                        onSelectState={handleStateSelect}
                     />
-                ))}
                 </div>
-            </div>
+                <div style={contentContainerStyle}>
+                    {filteredChallenges.map((challenge) => (
+                        <ChallengeCard
+                            key={challenge.id}
+                            id={challenge.id}
+                            name={challenge.name}
+                            description={challenge.description}
+                            points={challenge.points}
+                            category={challenge.category}
+                            solveCnt={challenge.solve_count}
+                            createdAt={new Date(challenge.created_at).toLocaleString()}
+                            filePath={challenge.file_path}
+                            isSolved={challenge.is_user_solved}
+                            initialSolved={challenge.is_user_solved}
+                        />
+                    ))}
+                    </div>
+                </div>
             <Footer />
         </div>
     );
@@ -127,24 +128,27 @@ const headerTextStyle = {
 const contentWrapperStyle = {
     display: 'flex',
     alignItems: 'flex-start',
-    paddingLeft: '100px',
     width: '100%',
-    padding: '20px',
     boxSizing: 'border-box',
     flexGrow: 1,
 };
 
+const sidebarContainerStyle = {
+    flex: '1',
+};
+
 const contentContainerStyle = {
+    flex: '5',
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
     rowGap: '10px',
     columnGap: '10px',
     width: '100%',
-    marginLeft: '300px',
-    marginRight: '100px',
+    marginLeft: '50px',
+    marginRight: '50px',
     boxSizing: 'border-box',
-    justifyItems: 'center',
-    alignItems: 'start',
+    alignItems: 'flex-start',
+    marginTop: '-10px',
 };
 
 

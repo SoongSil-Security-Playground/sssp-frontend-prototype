@@ -22,6 +22,7 @@ function NotificationsPage() {
 
                 const data = await fetchNotices(token);
                 setNotifications(data); 
+                console.log(data);
             } catch (error) {
                 console.error("Error fetching notices:", error.message);
                 toast.error(

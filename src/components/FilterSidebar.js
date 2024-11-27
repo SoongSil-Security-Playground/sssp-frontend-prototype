@@ -41,15 +41,13 @@ function FilterSidebar({ categories, selectedCategory, onSelectCategory, selecte
 }
 
 const sidebarStyle = {
-    position: 'fixed',
-    top: '30vh',
-    left: '4vw',
-    width: '12vw',
+    minWidth: '12vw',
     padding: '10px',
     border: '1px solid lightgrey',
     borderRadius: '8px',
     backgroundColor: 'white',
     boxSizing: 'border-box',
+    marginLeft: '5vw',
 };
 
 const sectionStyle = {
