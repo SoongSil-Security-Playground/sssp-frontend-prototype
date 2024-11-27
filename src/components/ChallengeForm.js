@@ -78,6 +78,10 @@ function ChallengeForm() {
             }
 
             if (isUpdate) {
+                if (!flag) {
+                    formData.delete('flag');
+                }            
+                console.log(formData);
                 await updateChallenge(id, formData, token);
             } else {
                 await createChallenge(formData, token);
@@ -132,6 +136,7 @@ function ChallengeForm() {
                             <input
                                 type="text"
                                 value={flag}
+                                placeholder={isUpdate && !flag ? "Leave empty to keep current flag..." : "Enter new flag..."}
                                 onChange={(e) => setFlag(e.target.value)}
                                 style={inputStyle}
                             />
