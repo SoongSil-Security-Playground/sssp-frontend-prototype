@@ -31,7 +31,6 @@ function NotificationForm() {
                 return;
             }
             if (isUpdate) {
-                console.log('update noti');
                 await updateNotice(id, title, content, token);
             } else {
                 await createNotice(title, content, token);

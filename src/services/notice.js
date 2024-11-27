@@ -66,6 +66,7 @@ export const updateNotice = async (id, title, content, token) => {
         }
 
         const data = await response.json();
+        console.log(data);
         return data;
     } catch (error) {
         console.error('Error creating notice:', error.message);
