@@ -66,7 +66,7 @@ function SolvedListModal({isOpen, onClose}) {
                             />
                         ))
                     ) : (
-                        <p>
+                        <p style={emptyTextContainer}>
                             solved challenges empty
                         </p>
                     )}
@@ -117,7 +117,7 @@ const titleStyle = {
 const contentContainerStyle = {
     display: 'flex',
     flexDirection: 'column', 
-    alignItems: 'flex-start',
+    alignItems: 'center',
     gap: '10px',
     maxHeight: '60vh',
     overflowY: 'auto', 
@@ -125,6 +125,16 @@ const contentContainerStyle = {
     paddingRight: '5px',
     width: '100%',
     marginBottom: '10px',
+    justifyContent: 'flex-start',
+};
+
+const emptyTextContainer = {
+    fontSize: '12px',
+    color: 'var(--medium-grey)',
+    justifyContent: 'center',
+    alignItems: 'center', 
+    height: '100%',
+    display: 'flex',
 };
 
 export default SolvedListModal;
