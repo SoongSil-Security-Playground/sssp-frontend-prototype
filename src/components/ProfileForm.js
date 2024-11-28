@@ -177,6 +177,13 @@ function ProfileForm() {
                         style={textareaStyle}
                     ></textarea>
                 </div>
+                <div style={formFieldStyle}>
+                    <label style={labelStyle}>Score</label>
+                    <div style={scoreContainerStyle}>
+                        <text style={scoreTextStyle}>score</text>
+                        <button style={openModalButtonStyle}>Solved</button>
+                    </div>
+                </div>
                 <div style={buttonContainerStyle}>
                     <button style={changePasswordButtonStyle} onClick={handleChangePasswordClick}>
                         Change Password
@@ -256,6 +263,33 @@ const textareaStyle = {
     resize: 'none',
 };
 
+const scoreContainerStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+};
+
+const scoreTextStyle = {
+    flex: '3',
+    color: 'var(--text-color)',
+    textAlign: 'left',
+    fontSize: '16px',
+};
+
+const openModalButtonStyle = {
+    flex: '1',
+    backgroundColor: 'var(--light-blue)',
+    color: 'white',
+    padding: '10px 20px',
+    borderRadius: '8px',
+    border: 'none',
+    cursor: 'pointer',
+    height: '100%',
+    fontSize: '12px',
+};
+
 const buttonContainerStyle = {
     display: 'flex',
     gap: '12px',
@@ -266,12 +300,12 @@ const buttonContainerStyle = {
 };
 
 const changePasswordButtonStyle = {
-    backgroundColor: 'white',
-    color: 'var(--dark-blue)',
+    backgroundColor: 'var(--dark-blue)',
+    color: 'white',
     fontWeight: 'bold',
     padding: '10px 20px',
     borderRadius: '8px',
-    border: '1px solid var(--dark-blue)',
+    border: 'none',
     cursor: 'pointer',
     height: '50px',
 };
@@ -288,15 +322,15 @@ const deleteAccountButtonStyle = {
 };
 
 const saveButtonStyle = {
-    backgroundColor: 'var(--dark-blue)',
-    color: 'white',
+    backgroundColor: 'white',
+    color: 'var(--dark-blue)',
     fontWeight: 'bold',
     padding: '10px 20px',
     borderRadius: '8px',
-    border: 'none',
+    border: '1px solid var(--dark-blue)',
     cursor: 'pointer',
-    marginLeft: '25px',
     height: '50px',
+    marginLeft: '25px',
 };
 
 export default ProfileForm;
