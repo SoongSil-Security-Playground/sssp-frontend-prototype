@@ -1,11 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { fetchUserSolvedChallenge } from '../services/challenge';
+import ChallengeSimpleCard from './ChallengeSimpleCard';
 
-function SolvedListModal({isOpen, onClose, solvedChallenges}) {
+function SolvedListModal({isOpen, onClose}) {
+    const [solvedCallenges, setSolvedChallenges] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         console.log("SolvedListModal isOpen prop:", isOpen);
+
+        const fetchData = async () => {
+            setLoading(true);
+            setError(null);
+    
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    setError('No token found. Redirecting to login...');
+                    navigate('/login');
+                    return;
+                }
+    
+                const data = await fetchUserSolvedChallenge(token);
+                console.log(data);
+                setSolvedChallenges(data);
+            } catch (error) {
+                console.error('Error fetching user data:', error.message);
+                setError(error.message || 'Failed to fetch user data.');
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchData();
     }, [isOpen]);
 
     if (!isOpen) return null;
@@ -25,7 +55,21 @@ function SolvedListModal({isOpen, onClose, solvedChallenges}) {
                 <button onClick={onClose} style={closeButtonStyle}>×</button>
                 <h2 style={titleStyle}>Solved</h2>
                 <div style={contentContainerStyle}>
-                    hi
+                    {solvedCallenges.length > 0 ? (
+                        solvedCallenges.map((challenge) => (
+                            <ChallengeSimpleCard
+                                key={challenge.id}
+                                name={challenge.name}
+                                points={challenge.points}
+                                solveCnt={challenge.solved_count}
+                                category={challenge.category}
+                            />
+                        ))
+                    ) : (
+                        <p>
+                            solved challenges empty
+                        </p>
+                    )}
                 </div>
             </div>
         </div>
@@ -48,10 +92,10 @@ const overlayStyle = {
 const modalContainerStyle = {
     backgroundColor: 'white',
     borderRadius: '8px',
-    padding: '20px',
     width: '27vw',
     position: 'relative',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+    overflow: 'hidden',
 };
 
 const closeButtonStyle = {
@@ -71,7 +115,16 @@ const titleStyle = {
 };
 
 const contentContainerStyle = {
-    backgroundColor: 'green',
+    display: 'flex',
+    flexDirection: 'column', 
+    alignItems: 'flex-start',
+    gap: '10px',
+    maxHeight: '60vh',
+    overflowY: 'auto', 
+    overflowX: 'hidden', 
+    paddingRight: '5px',
+    width: '100%',
+    marginBottom: '10px',
 };
 
 export default SolvedListModal;

@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import editIcon from "../assets/images/edit.png";
 import deleteIcon from "../assets/images/delete.png";
+import { useAuth } from "../contexts/AuthContext";
 
 function ChallengeInfoCard({id, name, category, description, points, createdAt, onEdit, onDelete}) {
+    const { isAdmin } = useAuth();
     const [isEditHovered, setIsEditHovered] = useState(false);
     const [isDeleteHovered, setIsDeleteHovered] = useState(false);
+
+
 
     return (
         <div style={cardContainerStyle}>
@@ -13,10 +17,11 @@ function ChallengeInfoCard({id, name, category, description, points, createdAt, 
                 <p style={categoryStyle}>{category}</p>
                 <p style={titleStyle}>{name}</p>
                 <p style={pointsStyle}>{points}</p>
-                <p style={descriptionStyle}>{description}</p>
+                {/* <p style={descriptionStyle}>{description}</p> */}
                 <p style={timeStampStyle}>{createdAt}</p>
             </div>
-            <div style={actionsWrapperStyle}>
+            { isAdmin && (
+                <div style={actionsWrapperStyle}>
                 <span 
                     style={actionStyle(isEditHovered)}
                     onMouseEnter={() => setIsEditHovered(true)} 
@@ -40,6 +45,7 @@ function ChallengeInfoCard({id, name, category, description, points, createdAt, 
                     />
                 </span>
             </div>
+            )}
         </div>
     );
 }
@@ -58,6 +64,7 @@ const cardContainerStyle = {
 };
 
 const contentWrapperStyle = {
+    flex: '5',
     alignItems: 'center',
     display: 'flex',
     width: '100%',
@@ -86,6 +93,8 @@ const pointsStyle ={
 const descriptionStyle = {
     fontSize: '15px',
     color: 'var(--p-color)',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
 };
 
 const timeStampStyle = {
@@ -100,6 +109,7 @@ const actionsWrapperStyle = {
 };
 
 const actionStyle = (isHovered) => ({
+    flex: '1',
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',

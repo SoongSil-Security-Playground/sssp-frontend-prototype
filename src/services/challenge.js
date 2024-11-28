@@ -140,3 +140,21 @@ export const deleteChallenge = async (challengechallengeId, token) => {
         throw error;
     }
 };
+
+export const fetchUserSolvedChallenge = async (token) => {
+    const response = await fetch(`${BACKEND_URL}/api/v1/challenges/solved/me`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/json",
+        },
+    });
+    console.log(response);
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Failed to get challenges.");
+    }
+
+    return await response.json();   
+}
