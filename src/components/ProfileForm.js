@@ -253,7 +253,6 @@ const textareaStyle = {
     border: '1px solid #D1D5DB',
     backgroundColor: 'white',
     outline: 'none',
-    height: '6vh',
     resize: 'none',
 };
 
@@ -274,6 +273,7 @@ const changePasswordButtonStyle = {
     borderRadius: '8px',
     border: '1px solid var(--dark-blue)',
     cursor: 'pointer',
+    height: '50px',
 };
 
 const deleteAccountButtonStyle = {
@@ -284,6 +284,7 @@ const deleteAccountButtonStyle = {
     borderRadius: '8px',
     border: '1px solid var(--dark-grey)',
     cursor: 'pointer',
+    height: '50px',
 };
 
 const saveButtonStyle = {
@@ -295,6 +296,7 @@ const saveButtonStyle = {
     border: 'none',
     cursor: 'pointer',
     marginLeft: '25px',
+    height: '50px',
 };
 
 export default ProfileForm;
