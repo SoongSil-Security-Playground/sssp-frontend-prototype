@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserInfo, updateUserInfo, deleteUserInfo } from '../services/user';
+import { fetchUserScore } from '../services/score';
 import { toast, } from 'react-toastify';
 import { useAuth } from '../contexts/AuthContext';
+import SolvedListModal from './SolvedListModal';
 import Avatar from 'react-avatar';
 
 function ProfileForm() {
@@ -15,13 +17,25 @@ function ProfileForm() {
     ];
 
     const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [contents, setContents] = useState('');
+    const [score, setScore] = useState(0);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const {logout} = useAuth();
+
+    const handleOpenModal = () => {
+        console.log("Opening modal");
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        console.log("Closing modal");
+        setIsModalOpen(false);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,10 +50,16 @@ function ProfileForm() {
                     return;
                 }
     
-                const data = await fetchUserInfo(token);
-                setUsername(data.username || '');
-                setEmail(data.email || '');
-                setContents(data.contents || '');
+                const userData = await fetchUserInfo(token);
+                setUsername(userData.username || '');
+                setEmail(userData.email || '');
+                setContents(userData.contents || '');
+
+                const scoreData = await fetchUserScore(token);
+                setScore(scoreData.total_score)
+                console.log(scoreData.total_score);
+                console.log('loading: ', loading);
+                console.log('score: ',score);
             } catch (error) {
                 console.error('Error fetching user data:', error.message);
                 setError(error.message || 'Failed to fetch user data.');
@@ -49,7 +69,7 @@ function ProfileForm() {
         };
     
         fetchData();
-    }, [navigate]);
+    }, [navigate, score]);
     
     const handleSaveClick = async () => {
         setLoading(true);
@@ -180,8 +200,8 @@ function ProfileForm() {
                 <div style={formFieldStyle}>
                     <label style={labelStyle}>Score</label>
                     <div style={scoreContainerStyle}>
-                        <text style={scoreTextStyle}>score</text>
-                        <button style={openModalButtonStyle}>Solved</button>
+                        <span style={scoreTextStyle}>{score}</span>
+                        <button style={openModalButtonStyle} onClick={handleOpenModal}>Solved</button>
                     </div>
                 </div>
                 <div style={buttonContainerStyle}>
@@ -196,6 +216,11 @@ function ProfileForm() {
                     </button>
                 </div>
             </form>
+
+            <SolvedListModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+            />
         </div>
     );
 }
