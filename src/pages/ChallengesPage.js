@@ -9,7 +9,7 @@ import { logoutUser } from '../services/auth';
 import { useAuth } from '../contexts/AuthContext';
 
 function ChallengesPage() {
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, logout } = useAuth();
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [selectedState, setSelectedState] = useState("All");
     const [challenges, setChallenges] = useState([]);
@@ -42,6 +42,9 @@ function ChallengesPage() {
             } catch (error) {
                 console.log('login: ', isLoggedIn);
                 console.error("Error fetching challenges:", error.message);
+                if (error.message === "Failed to verify JWT token.") {
+                    logout();
+                }
                 toast.error(
                     <div>
                         <p className="toast-title">Failed to fetch challenges</p>

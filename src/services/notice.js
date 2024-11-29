@@ -11,6 +11,7 @@ export const fetchNotices = async (token) => {
 
     if (!response.ok) {
         const errorData = await response.json();
+        console.log(errorData.detail);
         throw new Error(errorData.detail || "Failed to fetch notices.");
     }
 

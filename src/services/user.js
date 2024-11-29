@@ -11,7 +11,6 @@ export const fetchUserInfo = async (token) => {
 
     if (!response.ok) {
         const errorData = await response.json();
-        console.log('fail');
         throw new Error(errorData.detail || 'Error fetching user information');
     }
 

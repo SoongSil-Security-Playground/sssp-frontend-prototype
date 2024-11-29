@@ -3,8 +3,10 @@ import NotificationCard from '../components/NotificationCard';
 import Footer from '../components/Footer';
 import { fetchNotices } from '../services/notice';
 import { toast } from 'react-toastify';
+import { useAuth } from '../contexts/AuthContext';
 
 function NotificationsPage() {
+    const { logout } = useAuth();
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -24,6 +26,9 @@ function NotificationsPage() {
                 setNotifications(data); 
                 console.log(data);
             } catch (error) {
+                if (error.message === "Failed to verify JWT token.") {
+                    logout();
+                }
                 console.error("Error fetching notices:", error.message);
                 toast.error(
                     <div>

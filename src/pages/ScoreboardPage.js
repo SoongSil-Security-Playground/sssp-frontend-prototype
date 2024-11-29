@@ -4,8 +4,10 @@ import RankCard from '../components/RankCard';
 import Footer from '../components/Footer';
 import { fetchAllScores } from '../services/score';
 import { toast } from 'react-toastify';
+import { useAuth } from '../contexts/AuthContext';
 
 function ScoreboardPage() {
+    const { logout } = useAuth();
     const [scores, setScores] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -22,11 +24,15 @@ function ScoreboardPage() {
                 }
 
                 const data = await fetchAllScores(token);
-                console.log(data);
+                console.log('data', data);
                 const sortedScores = data.sort((a, b) => b.total_score - a.total_score);
                 
                 setScores(sortedScores);
             } catch (error) {
+                console.log('error', error);
+                if (error.message === "Failed to verify JWT token.") {
+                    logout();
+                }
                 console.error("Error fetching scores:", error.message);
                 toast.error(
                     <div>

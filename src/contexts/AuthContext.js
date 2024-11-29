@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         } else {
             setLoading(false);
         }
-    }, []);
+    }, [isLoggedIn]);
 
     if (loading) {
         return <div>Loading...</div>;
