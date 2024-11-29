@@ -4,13 +4,18 @@ import FilterSidebar from '../components/FilterSidebar';
 import Footer from '../components/Footer';
 import { fetchAllChallenges } from '../services/challenge';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../services/auth';
+import { useAuth } from '../contexts/AuthContext';
 
 function ChallengesPage() {
+    const { isLoggedIn } = useAuth();
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [selectedState, setSelectedState] = useState("All");
     const [challenges, setChallenges] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const handleCategorySelect = (category) => {
         setSelectedCategory(category);
@@ -31,10 +36,11 @@ function ChallengesPage() {
                     throw new Error("No token found. Please log in.");
                 }
 
-                const data = await fetchAllChallenges(token);
+                const data = await fetchAllChallenges(token, navigate);
                 console.log(data);
                 setChallenges(data);
             } catch (error) {
+                console.log('login: ', isLoggedIn);
                 console.error("Error fetching challenges:", error.message);
                 toast.error(
                     <div>
@@ -50,7 +56,7 @@ function ChallengesPage() {
         };
 
         fetchData();
-    }, []);
+    }, [navigate]);
 
     const challengeCategories = ["All",...new Set(challenges.map(item => item.category))];
 

@@ -1,18 +1,30 @@
 import React, { useState } from "react";
-import editIcon from "../assets/images/edit.png";
+import Avatar from 'react-avatar';
 import deleteIcon from "../assets/images/delete.png";
 
 function UserInfoCard({ id, name, email, content, onDelete }) {
+    const customColors = [
+        getCSSVariable("--light-blue"),
+        getCSSVariable("--light-green"),
+        getCSSVariable("--medium-blue"),
+        getCSSVariable("--dark-blue"),
+        getCSSVariable("--medium-grey"),
+    ];
+
     // const [isEditHovered, setIsEditHovered] = useState(false);
     const [isDeleteHovered, setIsDeleteHovered] = useState(false);
 
     return (
         <div style={cardContainerStyle}>
             <div style={contentWrapperStyle}>
-                <div style={iconStyle}>
-                    <span>😊</span>
-                </div>
                 <div style={idStyle}>{id}</div>
+                <Avatar 
+                    name={name} 
+                    round={true} 
+                    size="40" 
+                    textSizeRatio={2} 
+                    colors={customColors}
+                />
                 <div style={nameStyle}>{name}</div>
                 <div style={emailStyle}>{email}</div>
                 <div style={contentStyle}>{content}</div>
@@ -47,6 +59,9 @@ function UserInfoCard({ id, name, email, content, onDelete }) {
 
 export default UserInfoCard;
 
+const getCSSVariable = (variableName) => {
+    return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+};
 
 const cardContainerStyle = {
     display: 'flex',

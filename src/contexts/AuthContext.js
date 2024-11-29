@@ -43,7 +43,9 @@ export const AuthProvider = ({ children }) => {
                     setIsAdmin(adminStatus);
                 } catch (error) {
                     console.error('Failed to verify admin status:', error.message);
-                    setIsAdmin(false);
+                    if (error.message === 'Token expired or invalid. Please login again.') {
+                        logout();
+                    }
                 } finally {
                     setLoading(false);
                 }

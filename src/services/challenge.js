@@ -1,6 +1,9 @@
+import { logoutUser } from '../services/auth'; 
+import { useNavigate } from 'react-router-dom';
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-export const fetchAllChallenges = async (token) => {
+export const fetchAllChallenges = async (token, navigate) => {
     const response = await fetch(`${BACKEND_URL}/api/v1/challenges/get_all_challenge`, {
         method: "GET",
         headers: {
@@ -12,6 +15,15 @@ export const fetchAllChallenges = async (token) => {
 
     if (!response.ok) {
         const errorData = await response.json();
+
+        if (response.status === 401) {
+            const storedToken = localStorage.getItem('token');
+            await logoutUser(storedToken);
+            localStorage.removeItem('token');
+            navigate('/login');
+            throw new Error('Unauthorized - Logged out');
+        }
+
         throw new Error(errorData.detail || "Failed to fetch challenges.");
     }
 
