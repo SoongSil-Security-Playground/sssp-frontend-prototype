@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchNotices } from '../services/notice';
+import { fetchNotices, deleteNotice } from '../services/notice';
 import { toast } from 'react-toastify';
 import NotificationInfoCard from '../components/NotificationInfoCard';
 import addIcon from '../assets/images/add.png';
@@ -21,6 +21,28 @@ function NotificationsSettingsPage() {
         console.log(notificationToEdit);
         navigate(`/admin/notifications/edit/${notificationId}`, { state: { notification: notificationToEdit } });
     };
+
+    const handleDelete = async (notificationId) => {
+        const confirmation = window.confirm("정말로 이 공지를 삭제하시겠습니까?");
+        if (!confirmation) return;
+
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("No token found. Please log in.");
+            }
+    
+            await deleteNotice(notificationId, token);
+
+            const updatedNotices = await fetchNotices(token);
+            setNotifications(updatedNotices);
+
+            console.log(`Notice with ID ${notificationId} deleted successfully.`);
+        } catch (error) {
+            console.error("Failed to delete notice:", error.message);
+            alert(`Failed to delete notice: ${error.message}`);
+        }
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -74,6 +96,7 @@ function NotificationsSettingsPage() {
                                 content={notification.content}
                                 created_at={notification.created_at}
                                 onEdit={() => handleEdit(notification.id)}
+                                onDelete={() => handleDelete(notification.id)}
                             />
                         ))
                     ) : (

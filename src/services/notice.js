@@ -73,3 +73,27 @@ export const updateNotice = async (id, title, content, token) => {
         throw error;
     }
 };
+
+export const deleteNotice = async (id, token) => {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/v1/admin/notice?notice_id=${id}`, {
+            method: 'DELETE',
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to delete notice.');
+        }
+
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('Error creating notice:', error.message);
+        throw error;
+    }
+};

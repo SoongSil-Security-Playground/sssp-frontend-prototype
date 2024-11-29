@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import editIcon from "../assets/images/edit.png";
+import deleteIcon from "../assets/images/delete.png";
 
-function NotificationInfoCard({ title, content, created_at, onEdit}) {
+function NotificationInfoCard({ title, content, created_at, onEdit, onDelete}) {
     const [isEditHovered, setIsEditHovered] = useState(false);
+    const [isDeleteHovered, setIsDeleteHovered] = useState(false);
 
     return (
         <div style={cardContainerStyle}>
@@ -22,6 +24,17 @@ function NotificationInfoCard({ title, content, created_at, onEdit}) {
                         src={editIcon} 
                         alt="Edit" 
                         onClick={onEdit} 
+                    />
+                </span>
+                <span 
+                    style={actionStyle(isDeleteHovered)}
+                    onMouseEnter={() => setIsDeleteHovered(true)} 
+                    onMouseLeave={() => setIsDeleteHovered(false)}
+                >
+                    <img 
+                        src={deleteIcon} 
+                        alt="Delete" 
+                        onClick={onDelete} 
                     />
                 </span>
             </div>
