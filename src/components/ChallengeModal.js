@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { submitFlag } from '../services/challenge';
 import { toast } from 'react-toastify';
 
-function ChallengeModal({ isOpen, onClose, id, name, description, points, category, solveCnt, createdAt, filePath, isSolved: initialSolved, onSolvedChange }) {
+function ChallengeModal({ isOpen, onClose, id, name, description, points, category, solveCnt, level, createdAt, filePath, isSolved: initialSolved, onSolvedChange }) {
     const [isSolved, setIsSolved] = useState(initialSolved);
     const [flag, setFlag] = useState('');
     const [loading, setLoading] = useState(false);
@@ -78,6 +78,7 @@ function ChallengeModal({ isOpen, onClose, id, name, description, points, catego
                     <p style={categoryStyle}>{category}</p>
                 </div>
                 <div style={informationContainerStyle}>
+                    <p style={levelStyle}>{level}</p>
                     <p style={countStyle}>{solveCnt} solved</p>
                     <p style={descriptionStyle}>{description}</p>
                     {filePath && (
@@ -184,8 +185,13 @@ const informationContainerStyle = {
     justifyContent: 'flex-start',
     alignItems: 'center',
     overflow: 'auto',
-    padding: 0,
     gap: 0,
+};
+
+const levelStyle = {
+    fontSize: '12px',
+    color: 'var(--medium-blue)',
+    margin: '5px',
 };
 
 const descriptionStyle = {

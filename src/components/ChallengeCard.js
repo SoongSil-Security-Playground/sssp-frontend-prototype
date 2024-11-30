@@ -46,6 +46,7 @@ function ChallengeCard({ id, name, description, points, category, solveCnt, leve
                 name={name}
                 description={description}
                 points={points}
+                level={level}
                 category={category}
                 solveCnt={solveCnt}
                 createdAt={new Date(createdAt).toLocaleString()}
