@@ -143,6 +143,9 @@ function ProfileForm() {
             );
         } catch (error) {
             console.error("Error delete contents:", error.message);
+            if (error.message === "Failed to verify JWT token.") {
+                logout();
+            }
             toast.error(
                     <div>
                     <p classusername="toast-title">Account Delete Error</p>
