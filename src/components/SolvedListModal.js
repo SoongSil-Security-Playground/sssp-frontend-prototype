@@ -62,6 +62,7 @@ function SolvedListModal({isOpen, onClose}) {
                                 name={challenge.name}
                                 points={challenge.points}
                                 solveCnt={challenge.solved_count}
+                                level={challenge.level}
                                 category={challenge.category}
                             />
                         ))

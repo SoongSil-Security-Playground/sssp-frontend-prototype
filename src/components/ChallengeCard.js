@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ChallengeModal from './ChallengeModal';
 
-function ChallengeCard({ id, name, description, points, category, solveCnt, createdAt, filePath, initialSolved}) {
+function ChallengeCard({ id, name, description, points, category, solveCnt, level, createdAt, filePath, initialSolved}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSolved, setIsSolved] = useState(initialSolved);
 
@@ -30,10 +30,9 @@ function ChallengeCard({ id, name, description, points, category, solveCnt, crea
             >
                 <h3 style={{ ...titleStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{name}</h3>
                 <div style={descriptionContainerStyle}>
+                    <p style={{ ...levelStyle, ...(isSolved ? lightGreyTextStyle : mediumBlueTextStyle) }}>{level}</p>
                     <p style={{ ...pointsStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{points}</p>
                     <p style={{ ...countStyle, ...(isSolved ? whiteTextStyle : greyTextStyle)}}>{solveCnt} solved</p>
-                    {/* <p style={{ ...descriptionStyle, ...(isSolved ? whiteTextStyle : blueTextStyle) }}>{description}</p> */}
-
                 </div>
                 <div style={{ ...categoryContainerStyle, ...(isSolved ? whiteBackStyle : blueBackStyle) }}>
                     <p style={{ ...categoryStyle, ...(isSolved ? blueTextStyle : whiteTextStyle) }}>{category}</p>
@@ -66,18 +65,19 @@ ChallengeCard.propTypes = {
 };
 
 const cardContainerStyle = {
-    padding: '15px',
+    padding: '10px',
     borderRadius: '8px',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
     backgroundColor: '#ffffff',
     width: '22vw',
-    height: '25vh',
     margin: '10px auto',
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'flex-start',
     border: '1px solid var(--dark-blue)',
     cursor: 'pointer',
+    overflow: 'hidden',
 };
 
 const whiteBackStyle = {
@@ -92,6 +92,10 @@ const whiteTextStyle = {
     color: 'white',
 };
 
+const lightGreyTextStyle = {
+    color: 'var(--light-grey)',
+};
+
 const greyTextStyle = {
     color: 'var(--dark-grey)',
 };
@@ -100,46 +104,47 @@ const blueTextStyle = {
     color: 'var(--dark-blue)',
 };
 
+const mediumBlueTextStyle = {
+    color: 'var(--medium-blue)',
+};
+
 const titleStyle = {
     fontSize: '24px',
     fontWeight: 'bold',
     color: 'var(--dark-blue)',
     margin: 0,
-    marginBottom: '0px',
 };
 
 const descriptionContainerStyle = {
-    backgroundColor: 'transparent',
     width: '100%',
     maxWidth: '22vw',
-    height: '90px',
-    margin: '10px auto',
     boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden',
     whiteSpace: 'pre-line',
+    marginTop: 0,
+    paddingTop: 0,
+    gap: '0px',
 };
 
-const descriptionStyle = {
-    fontSize: '16px',
-    color: 'var(--dark-blue)',
-    margin: 0,
-    marginBottom: '10px',
-};
+const levelStyle = {
+    fontSize: '12px',
+    color: 'var(--medium-blue)',
+    margin: '5px',
+}
 
 const pointsStyle = {
     fontSize: '16px',
     color: 'var(--dark-blue)',
-    margin: 0,
     fontWeight: 'bold',
-    marginBottom: '20px',
+    marginTop: 0,
+    marginBottom: '10px',
 };
 
 const countStyle = {
     fontSize: '12px',
     color: 'var(--dark-blue)',
-    margin: 0,
+    margin: '5px',
 };
 
 const categoryContainerStyle = {

@@ -1,6 +1,6 @@
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-export const fetchAllChallenges = async (token, navigate) => {
+export const fetchAllChallenges = async (token) => {
     const response = await fetch(`${BACKEND_URL}/api/v1/challenges/get_all_challenge`, {
         method: "GET",
         headers: {
@@ -8,7 +8,7 @@ export const fetchAllChallenges = async (token, navigate) => {
             "Accept": "application/json",
         },
     });
-    console.log(response);
+    console.log('challenges', response);
 
     if (!response.ok) {
         const errorData = await response.json();

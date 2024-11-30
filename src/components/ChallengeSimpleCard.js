@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-function ChallengeSimpleCard({id, name, category, points, createdAt,}) {
+function ChallengeSimpleCard({id, name, category, points, level,}) {
 
     return (
         <div style={cardContainerStyle}>
             <div style={contentWrapperStyle}>
                 <p>{id}</p>
                 <p style={categoryStyle}>{category}</p>
+                <p style={levelStyle}>{level}</p>
                 <p style={titleStyle}>{name}</p>
                 <p style={pointsStyle}>{points}</p>
             </div>
@@ -46,6 +47,11 @@ const titleStyle = {
 const categoryStyle = {
     fontSize: '15px',
     color: 'grey',
+};
+
+const levelStyle = {
+    fontSize: '15px',
+    color: 'var(--medium-blue)',
 };
 
 const pointsStyle ={

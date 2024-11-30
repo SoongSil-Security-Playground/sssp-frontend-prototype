@@ -36,7 +36,7 @@ function ChallengesPage() {
                     throw new Error("No token found. Please log in.");
                 }
 
-                const data = await fetchAllChallenges(token, navigate);
+                const data = await fetchAllChallenges(token);
                 console.log(data);
                 setChallenges(data);
             } catch (error) {
@@ -98,6 +98,7 @@ function ChallengesPage() {
                             description={challenge.description}
                             points={challenge.points}
                             category={challenge.category}
+                            level={challenge.level}
                             solveCnt={challenge.solve_count}
                             createdAt={new Date(challenge.created_at).toLocaleString()}
                             filePath={challenge.file_path}

@@ -103,6 +103,7 @@ function ChallengesSettingPage() {
                         description={challenge.description}
                         points={challenge.points}
                         flag={challenge.flag}
+                        level={challenge.level}
                         category={challenge.category}
                         createdAt={new Date(challenge.created_at).toLocaleString()}
                         onEdit={() => handleEdit(challenge.id)}
