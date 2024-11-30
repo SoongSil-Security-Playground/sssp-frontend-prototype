@@ -62,6 +62,11 @@ function ProfileForm() {
                 console.log('score: ',score);
             } catch (error) {
                 console.error('Error fetching user data:', error.message);
+
+                if (error.message === "Failed to verify JWT token.") {
+                    logout();
+                }
+
                 setError(error.message || 'Failed to fetch user data.');
             } finally {
                 setLoading(false);
