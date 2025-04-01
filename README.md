@@ -1,4 +1,4 @@
-# sssp-frontend
+# sssp-frontend-prototype
 ## Overview
 soongsil security playground Ctf Platform frontend
 
